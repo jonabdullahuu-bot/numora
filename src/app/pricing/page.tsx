@@ -1,5 +1,6 @@
-﻿'use client';
+'use client';
 
+import { SiteHeader, SiteFooter } from "../../components/SiteChrome";
 import React, { useEffect, useState } from 'react';
 import { initializePaddle, Paddle } from '@paddle/paddle-js';
 import {
@@ -89,26 +90,10 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-100 flex flex-col">
-      <header className="border-b border-white/[0.07] bg-[#060913]/80 backdrop-blur-xl sticky top-0 z-20">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5 text-white font-bold text-lg">
-            <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-sky-500 flex items-center justify-center text-sm font-extrabold">
-              N
-            </span>
-            <span>Numora</span>
-          </a>
-          <a
-            href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Lookup
-          </a>
-        </div>
-      </header>
+    <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
+      <SiteHeader />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-16 space-y-12">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-16 space-y-12 animate-fade-up">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-semibold">
             <CreditCard className="w-3.5 h-3.5" />
@@ -125,7 +110,7 @@ export default function PricingPage() {
         </div>
 
         {message && (
-          <div className="max-w-2xl mx-auto p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-sm text-emerald-200 flex items-center justify-between gap-4">
+          <div className="max-w-2xl mx-auto p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-sm text-emerald-200 flex items-center justify-between gap-4 numora-card">
             <span>{message}</span>
             <a
               href="/"
@@ -257,14 +242,14 @@ export default function PricingPage() {
         </div>
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-400">
-          <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-start gap-3">
+          <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-start gap-3 numora-card">
             <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <p>
               <strong className="text-slate-200">Merchant of Record:</strong> All payments,
               invoices, and applicable sales taxes/VAT are securely processed by Paddle.com.
             </p>
           </div>
-          <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-start gap-3">
+          <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-start gap-3 numora-card">
             <Scale className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
             <p>
               <strong className="text-slate-200">Informational Use Only:</strong> Numora is not a
@@ -275,15 +260,7 @@ export default function PricingPage() {
         </div>
       </main>
 
-      <footer className="border-t border-white/[0.07] py-8 px-6 text-center text-xs text-slate-500 space-y-2">
-        <div className="flex flex-wrap justify-center gap-6 text-slate-400">
-          <a href="/" className="hover:text-white">Home</a>
-          <a href="/terms" className="hover:text-white">Terms & Refund Policy</a>
-          <a href="/privacy" className="hover:text-white">Privacy Policy</a>
-          <a href="/opt-out" className="hover:text-white">Opt-Out</a>
-        </div>
-        <p>© 2026 Numora Intelligence. All rights reserved.</p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

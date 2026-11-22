@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BLOG_POSTS } from "../../../data/blogPosts";
+import { SiteHeader, SiteFooter } from "../../../components/SiteChrome";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -62,38 +63,32 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+    <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
+      <SiteHeader />
 
-      <div className="max-w-3xl mx-auto">
-        <nav className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/blog" className="hover:text-white transition-colors">
-              Blog
-            </Link>
-            <span>/</span>
-            <span className="text-emerald-400 truncate max-w-[160px] sm:max-w-xs">
-              {post.category}
-            </span>
-          </div>
-          <Link
-            href="/"
-            className="rounded-lg bg-emerald-500 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-colors"
-          >
-            Check a Number
+      <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 animate-fade-up">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-8 pb-4 border-b border-slate-800/80">
+          <Link href="/" className="hover:text-white transition-colors">
+            Home
           </Link>
-        </nav>
+          <span>/</span>
+          <Link href="/blog" className="hover:text-white transition-colors">
+            Blog
+          </Link>
+          <span>/</span>
+          <span className="text-emerald-400 truncate max-w-[200px] sm:max-w-xs">
+            {post.category}
+          </span>
+        </div>
 
         <article className="animate-fade-up">
           <header className="mb-8">
@@ -113,7 +108,7 @@ export default async function BlogPostPage({ params }: Props) {
             </p>
           </header>
 
-          <div className="my-8 rounded-2xl border border-emerald-500/30 bg-slate-900/90 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="my-8 rounded-2xl border border-emerald-500/30 bg-slate-900/90 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 numora-card">
             <div>
               <p className="text-sm font-bold text-white">
                 Want to check a suspicious phone number right now?
@@ -124,7 +119,7 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
             <Link
               href="/"
-              className="w-full sm:w-auto text-center rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-emerald-400 transition-all shrink-0"
+              className="w-full sm:w-auto text-center rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-emerald-400 transition-all shrink-0 numora-btn"
             >
               Run Lookup →
             </Link>
@@ -146,7 +141,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {post.faqs.length > 0 && (
-            <section className="mt-12 pt-8 border-t border-slate-800">
+            <section className="mt-12 pt-8 border-t border-slate-800 animate-fade-up-1">
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-5">
                 Frequently Asked Questions
               </h2>
@@ -154,7 +149,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.faqs.map((faq) => (
                   <div
                     key={faq.question}
-                    className="rounded-xl border border-slate-800 bg-slate-900/60 p-5"
+                    className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 numora-card"
                   >
                     <h3 className="font-semibold text-white mb-2">
                       {faq.question}
@@ -169,14 +164,14 @@ export default async function BlogPostPage({ params }: Props) {
           )}
         </article>
 
-        <section className="mt-14 pt-8 border-t border-slate-800">
+        <section className="mt-14 pt-8 border-t border-slate-800 animate-fade-up-1">
           <h2 className="text-lg font-bold text-white mb-4">Related Safety Guides</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {relatedPosts.map((rel) => (
               <Link
                 key={rel.slug}
                 href={`/blog/${rel.slug}`}
-                className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 hover:border-emerald-500/40 transition-all"
+                className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 hover:border-emerald-500/40 transition-all numora-card"
               >
                 <span className="text-xs text-emerald-400 font-medium">
                   {rel.category}
@@ -188,7 +183,9 @@ export default async function BlogPostPage({ params }: Props) {
             ))}
           </div>
         </section>
-      </div>
-    </main>
+      </main>
+
+      <SiteFooter />
+    </div>
   );
 }

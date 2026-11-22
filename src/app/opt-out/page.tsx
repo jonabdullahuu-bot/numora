@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { ArrowLeft, ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';

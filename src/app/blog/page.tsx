@@ -1,6 +1,7 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BLOG_POSTS } from "../../data/blogPosts";
+import { SiteHeader, SiteFooter } from "../../components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Phone Scam & Reverse Lookup Safety Blog | Numora",
@@ -13,25 +14,10 @@ export const metadata: Metadata = {
 
 export default function BlogIndexPage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-      <div className="max-w-5xl mx-auto">
-        {/* Top Navigation */}
-        <nav className="flex items-center justify-between mb-12 pb-4 border-b border-slate-800/80">
-          <Link
-            href="/"
-            className="text-xl font-bold tracking-tight text-white hover:text-emerald-400 transition-colors"
-          >
-            Numora
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-all duration-200 shadow-lg shadow-emerald-500/20"
-          >
-            Lookup a Number
-          </Link>
-        </nav>
+    <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
+      <SiteHeader />
 
-        {/* Hero Header */}
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 animate-fade-up">
         <header className="text-center max-w-2xl mx-auto mb-14 animate-fade-up">
           <span className="inline-block rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-medium text-emerald-400 mb-4">
             Phone Intelligence & Scam Prevention
@@ -44,12 +30,11 @@ export default function BlogIndexPage() {
           </p>
         </header>
 
-        {/* Responsive Blog Cards Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 animate-fade-up-1">
           {BLOG_POSTS.map((post) => (
             <article
               key={post.slug}
-              className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30"
+              className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 numora-card"
             >
               <div>
                 <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
@@ -77,22 +62,23 @@ export default function BlogIndexPage() {
           ))}
         </section>
 
-        {/* Bottom Conversion CTA */}
-        <section className="mt-16 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-slate-900 to-emerald-950/30 p-8 sm:p-10 text-center">
+        <section className="mt-16 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-slate-900 to-emerald-950/30 p-8 sm:p-10 text-center animate-fade-up-1 numora-card">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Have a Suspicious Number Right Now?
           </h2>
           <p className="text-slate-300 max-w-xl mx-auto mb-6 text-sm sm:text-base">
-            Run an instant, 100% anonymous carrier and line-type lookup across 190+ countries.
+            Run an instant, 100% anonymous carrier and line-type lookup across 200+ countries.
           </p>
           <Link
             href="/"
-            className="inline-block rounded-xl bg-emerald-500 px-6 py-3.5 text-sm sm:text-base font-bold text-slate-950 hover:bg-emerald-400 transition-all duration-200 hover:scale-[1.02]"
+            className="inline-block rounded-xl bg-emerald-500 px-6 py-3.5 text-sm sm:text-base font-bold text-slate-950 hover:bg-emerald-400 transition-all duration-200 hover:scale-[1.02] numora-btn"
           >
             Start Free Phone Lookup →
           </Link>
         </section>
-      </div>
-    </main>
+      </main>
+
+      <SiteFooter />
+    </div>
   );
 }

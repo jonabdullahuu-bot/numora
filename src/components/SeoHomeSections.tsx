@@ -19,7 +19,7 @@ const HOME_FAQS = [
   },
   {
     q: "Which countries are supported?",
-    a: "Numora supports E.164 international phone number lookups across 190+ countries including the US, UK, Canada, Australia, and Europe.",
+    a: "Numora supports E.164 international phone number lookups across 200+ countries and regions including the US, UK, Canada, Australia, and Europe.",
   },
 ];
 
@@ -37,65 +37,30 @@ export function SeoHomeSections() {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-20 text-slate-100">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-14 space-y-16 text-slate-100">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <section className="animate-fade-up">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-            How to Check a Phone Number in 3 Steps
+      {/* Interactive FAQ Accordion */}
+      <section id="faq" className="relative max-w-3xl mx-auto animate-fade-up animate-fade-up-1 z-0">
+        <div className="text-center mb-8">
+          <span className="inline-block rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-medium text-emerald-400 mb-3">
+            Answers & Transparency
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Frequently Asked Questions
           </h2>
-          <p className="text-sm sm:text-base text-slate-400">
-            Instant telecom verification before you reply to an unfamiliar text, dating match, or missed call.
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              step: "01",
-              title: "Enter Any Number",
-              desc: "Paste an unfamiliar local or international number with its country code.",
-            },
-            {
-              step: "02",
-              title: "Live Carrier & Line Scan",
-              desc: "We inspect telecom routing, network carrier, and VoIP vs. real SIM signals.",
-            },
-            {
-              step: "03",
-              title: "Unlock Full Report",
-              desc: "Review instant risk signals and unlock deeper intelligence in seconds.",
-            },
-          ].map((item) => (
-            <div
-              key={item.step}
-              className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40"
-            >
-              <span className="inline-block text-xs font-bold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-md px-2.5 py-1 mb-4">
-                STEP {item.step}
-              </span>
-              <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="max-w-3xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center mb-8">
-          Frequently Asked Questions
-        </h2>
         <div className="space-y-3">
           {HOME_FAQS.map((item, i) => {
             const isOpen = openFaq === i;
             return (
               <div
                 key={item.q}
-                className="rounded-xl border border-slate-800 bg-slate-900/70 overflow-hidden transition-colors"
+                className="rounded-xl border border-slate-800 bg-slate-900/70 overflow-hidden transition-all duration-200 hover:border-slate-700 numora-card"
               >
                 <button
                   type="button"
@@ -103,7 +68,7 @@ export function SeoHomeSections() {
                   className="w-full flex items-center justify-between text-left px-5 py-4 font-semibold text-sm sm:text-base text-white hover:text-emerald-400 transition-colors"
                 >
                   <span>{item.q}</span>
-                  <span className="ml-4 text-emerald-400 text-lg">
+                  <span className="ml-4 text-emerald-400 text-lg font-bold">
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
@@ -118,10 +83,14 @@ export function SeoHomeSections() {
         </div>
       </section>
 
-      <section>
+      {/* Latest Scam & Caller Safety Guides */}
+      <section className="relative animate-fade-up animate-fade-up-1 z-0">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+              Numora Safety Hub
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
               Latest Scam & Caller Safety Guides
             </h2>
             <p className="text-sm text-slate-400 mt-1">
@@ -130,7 +99,7 @@ export function SeoHomeSections() {
           </div>
           <Link
             href="/blog"
-            className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all self-start sm:self-auto numora-btn"
           >
             View all articles →
           </Link>
@@ -141,7 +110,7 @@ export function SeoHomeSections() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40"
+              className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 numora-card"
             >
               <div>
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
@@ -150,8 +119,11 @@ export function SeoHomeSections() {
                 <h3 className="text-base font-bold text-white mt-2 mb-2 group-hover:text-emerald-400 transition-colors line-clamp-3">
                   {post.title}
                 </h3>
+                <p className="text-xs text-slate-400 line-clamp-2">
+                  {post.description}
+                </p>
               </div>
-              <span className="text-xs text-slate-400 mt-4">
+              <span className="text-xs font-medium text-emerald-400/90 mt-4 group-hover:translate-x-1 transition-transform inline-block">
                 {post.readTime} →
               </span>
             </Link>
