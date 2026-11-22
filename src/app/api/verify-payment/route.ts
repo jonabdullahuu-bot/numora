@@ -1,5 +1,16 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase';
+
+function generateAccessToken(): string {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = crypto.randomBytes(8);
+  let code = '';
+  for (let i = 0; i < 8; i++) {
+    code += alphabet[bytes[i] % alphabet.length];
+  }
+  return `NMR-${code}`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,7 +30,8 @@ export async function POST(req: NextRequest) {
     const proPriceId = process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID?.trim();
 
     let verifiedStatus = 'completed';
-    let creditsGranted = planHint === 'pro' ? 12 : 4;
+    let resolvedPlan: 'single' | 'pro' = planHint === 'pro' ? 'pro' : 'single';
+    let creditsGranted = resolvedPlan === 'pro' ? 12 : 4;
 
     if (paddleApiKey) {
       const paddleRes = await fetch(
@@ -38,7 +50,6 @@ export async function POST(req: NextRequest) {
       if (!paddleRes.ok || !paddleJson?.data) {
         const detail = paddleJson?.error?.detail || `HTTP ${paddleRes.status}`;
         console.warn('[Numora] Paddle verify warning:', detail);
-        // In sandbox, allow valid txn_ IDs if API key lacks Transactions:Read permission
         if (!isSandbox || !transactionId.startsWith('txn_')) {
           return NextResponse.json(
             { error: `Could not verify Paddle transaction (${detail}).` },
@@ -57,26 +68,84 @@ export async function POST(req: NextRequest) {
         const items = Array.isArray(paddleJson.data.items) ? paddleJson.data.items : [];
         const matchedPriceId = items[0]?.price?.id || items[0]?.price_id || '';
         if (proPriceId && matchedPriceId === proPriceId) {
+          resolvedPlan = 'pro';
           creditsGranted = 12;
         } else if (singlePriceId && matchedPriceId === singlePriceId) {
+          resolvedPlan = 'single';
           creditsGranted = 4;
         }
       }
     }
 
+    const cleanNumber = typeof e164Number === 'string' && e164Number.trim() ? e164Number.trim() : null;
+
     await supabaseAdmin.from('unlocked_reports').upsert(
       {
         paddle_transaction_id: transactionId,
-        e164_number: e164Number || null,
+        e164_number: cleanNumber,
       },
       { onConflict: 'paddle_transaction_id' }
     );
+
+    const planLabel =
+      resolvedPlan === 'pro' ? 'Premium Pass (12 Credits)' : 'Standard Pass (4 Credits)';
+
+    // Return existing token if this transaction was already verified
+    const { data: existing } = await supabaseAdmin
+      .from('access_tokens')
+      .select('*')
+      .eq('paddle_transaction_id', transactionId)
+      .maybeSingle();
+
+    if (existing) {
+      return NextResponse.json({
+        verified: true,
+        transactionId,
+        status: verifiedStatus,
+        accessToken: existing.token,
+        planId: existing.plan_id,
+        planLabel: existing.plan_label,
+        creditsGranted,
+        creditsRemaining: existing.credits_remaining,
+        unlockedNumbers: existing.unlocked_numbers || [],
+        expiresAt: existing.expires_at,
+      });
+    }
+
+    const accessToken = generateAccessToken();
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    const initialUnlocked = cleanNumber ? [cleanNumber] : [];
+    const initialRemaining = cleanNumber ? Math.max(0, creditsGranted - 1) : creditsGranted;
+
+    const { error: insertErr } = await supabaseAdmin.from('access_tokens').insert({
+      token: accessToken,
+      paddle_transaction_id: transactionId,
+      plan_id: resolvedPlan,
+      plan_label: planLabel,
+      credits_remaining: initialRemaining,
+      unlocked_numbers: initialUnlocked,
+      expires_at: expiresAt,
+    });
+
+    if (insertErr) {
+      console.error('[Numora] Failed to save access token:', insertErr.message);
+      return NextResponse.json(
+        { error: 'Payment verified, but token storage failed. Please contact support with your transaction ID.' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       verified: true,
       transactionId,
       status: verifiedStatus,
+      accessToken,
+      planId: resolvedPlan,
+      planLabel,
       creditsGranted,
+      creditsRemaining: initialRemaining,
+      unlockedNumbers: initialUnlocked,
+      expiresAt,
     });
   } catch (err: any) {
     return NextResponse.json(

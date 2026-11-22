@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildDemoReport, fetchGlobalPhoneData, PhoneReport } from '@/lib/phoneLookup';
@@ -8,53 +8,143 @@ function sanitizeText(val: unknown, fallback: string): string {
   if (
     !s ||
     s.toLowerCase().includes('api access key') ||
-    s.toLowerCase().includes('support@apilayer.com') || s.toLowerCase().includes('paid identity source required')
+    s.toLowerCase().includes('support@apilayer.com') ||
+    s.toLowerCase().includes('paid identity source required')
   ) {
     return fallback;
   }
   return s;
 }
 
-async function verifyPaddleReceipt(transactionId: string): Promise<boolean> {
+function normalizeToken(raw: unknown): string {
+  return String(raw || '')
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9-]/g, '');
+}
+
+interface TokenSpendOutcome {
+  unlocked: boolean;
+  walletState?: {
+    accessToken: string;
+    transactionId: string;
+    planId: 'single' | 'pro';
+    planLabel: string;
+    creditsRemaining: number;
+    unlockedNumbers: string[];
+    expiresAt: string;
+  };
+}
+
+async function authorizeWithAccessToken(
+  rawToken: unknown,
+  e164: string
+): Promise<TokenSpendOutcome> {
+  const token = normalizeToken(rawToken);
+  if (!token) return { unlocked: false };
+
+  const { data, error } = await supabaseAdmin
+    .from('access_tokens')
+    .select('*')
+    .eq('token', token)
+    .maybeSingle();
+
+  if (error || !data) return { unlocked: false };
+
+  if (data.expires_at && new Date(data.expires_at).getTime() < Date.now()) {
+    return { unlocked: false };
+  }
+
+  const existingUnlocked: string[] = Array.isArray(data.unlocked_numbers)
+    ? data.unlocked_numbers
+    : [];
+
+  // Already unlocked on this token -> 0 credits spent
+  if (existingUnlocked.includes(e164)) {
+    return {
+      unlocked: true,
+      walletState: {
+        accessToken: data.token,
+        transactionId: data.paddle_transaction_id,
+        planId: data.plan_id === 'pro' ? 'pro' : 'single',
+        planLabel: data.plan_label,
+        creditsRemaining: data.credits_remaining ?? 0,
+        unlockedNumbers: existingUnlocked,
+        expiresAt: data.expires_at,
+      },
+    };
+  }
+
+  // No credits remaining -> keep report redacted
+  if ((data.credits_remaining ?? 0) <= 0) {
+    return {
+      unlocked: false,
+      walletState: {
+        accessToken: data.token,
+        transactionId: data.paddle_transaction_id,
+        planId: data.plan_id === 'pro' ? 'pro' : 'single',
+        planLabel: data.plan_label,
+        creditsRemaining: 0,
+        unlockedNumbers: existingUnlocked,
+        expiresAt: data.expires_at,
+      },
+    };
+  }
+
+  // Atomically deduct 1 credit and append e164 to unlocked_numbers
+  const nextCredits = data.credits_remaining - 1;
+  const nextUnlocked = [...existingUnlocked, e164];
+  const nextExpires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data: updated, error: updateErr } = await supabaseAdmin
+    .from('access_tokens')
+    .update({
+      credits_remaining: nextCredits,
+      unlocked_numbers: nextUnlocked,
+      expires_at: nextExpires,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('token', token)
+    .eq('credits_remaining', data.credits_remaining)
+    .select('*')
+    .maybeSingle();
+
+  if (updateErr || !updated) {
+    return { unlocked: false };
+  }
+
+  return {
+    unlocked: true,
+    walletState: {
+      accessToken: updated.token,
+      transactionId: updated.paddle_transaction_id,
+      planId: updated.plan_id === 'pro' ? 'pro' : 'single',
+      planLabel: updated.plan_label,
+      creditsRemaining: updated.credits_remaining,
+      unlockedNumbers: updated.unlocked_numbers || nextUnlocked,
+      expiresAt: updated.expires_at,
+    },
+  };
+}
+
+async function verifyLegacyReceiptForNumber(
+  transactionId: string,
+  e164: string
+): Promise<boolean> {
   const tx = transactionId.trim();
   if (!tx) return false;
 
-  // 1. Check Supabase unlocked_reports first
   try {
     const { data: receipt } = await supabaseAdmin
       .from('unlocked_reports')
-      .select('id')
+      .select('id, e164_number')
       .eq('paddle_transaction_id', tx)
       .maybeSingle();
-    if (receipt) return true;
-  } catch {
-    // continue to Paddle API check
-  }
-
-  // 2. Verify directly with Paddle API (works even if Supabase RLS blocks reads/writes)
-  const paddleApiKey = process.env.PADDLE_API_KEY?.trim();
-  if (paddleApiKey && tx.startsWith('txn_')) {
-    const isSandbox = (process.env.NEXT_PUBLIC_PADDLE_ENV || 'sandbox') === 'sandbox';
-    const baseUrl = isSandbox
-      ? 'https://sandbox-api.paddle.com'
-      : 'https://api.paddle.com';
-
-    try {
-      const res = await fetch(`${baseUrl}/transactions/${encodeURIComponent(tx)}`, {
-        headers: {
-          Authorization: `Bearer ${paddleApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
-      });
-      const json = await res.json().catch(() => ({}));
-      const status = String(json?.data?.status || '').toLowerCase();
-      if (res.ok && ['completed', 'paid', 'billed'].includes(status)) {
-        return true;
-      }
-    } catch {
-      // fall through
+    if (receipt && (!receipt.e164_number || receipt.e164_number === e164)) {
+      return true;
     }
+  } catch {
+    // fall through
   }
 
   return false;
@@ -65,7 +155,7 @@ export async function POST(req: NextRequest) {
   let countryFallback = 'INTL';
 
   try {
-    const { rawNumber, transactionId } = await req.json();
+    const { rawNumber, transactionId, accessToken } = await req.json();
 
     const parsed = parsePhoneNumberFromString(String(rawNumber || ''));
     if (!parsed || !parsed.isValid()) {
@@ -91,8 +181,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isUnlocked = transactionId ? await verifyPaddleReceipt(String(transactionId)) : false;
-
+    // Fetch or build report first so failed/invalid numbers never burn a credit
     const { data: cached } = await supabaseAdmin
       .from('phone_cache')
       .select('*')
@@ -137,12 +226,25 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Authorize strictly via server-side Access Token first, with legacy fallback
+    let isUnlocked = false;
+    let walletState: TokenSpendOutcome['walletState'] = undefined;
+
+    if (accessToken) {
+      const outcome = await authorizeWithAccessToken(accessToken, e164);
+      isUnlocked = outcome.unlocked;
+      walletState = outcome.walletState;
+    } else if (transactionId) {
+      isUnlocked = await verifyLegacyReceiptForNumber(String(transactionId), e164);
+    }
+
     if (isUnlocked) {
-      return NextResponse.json({ unlocked: true, report });
+      return NextResponse.json({ unlocked: true, report, walletState });
     }
 
     return NextResponse.json({
       unlocked: false,
+      walletState,
       report: {
         e164: report.e164,
         country: report.country,
@@ -160,5 +262,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: sanitizeText(msg, 'Lookup failed') }, { status: 500 });
   }
 }
-
-

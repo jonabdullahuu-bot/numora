@@ -3,13 +3,13 @@ import Link from "next/link";
 export function SiteHeader() {
   return (
     <>
-<header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="/" className="flex items-center gap-3 group">
             <img src="/logo.jpg" alt="Numora Logo" className="h-9 w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card" />
             <div className="flex items-baseline gap-2">
               <span className="text-xl font-bold tracking-tight text-white">Numora</span>
-              </div>
+            </div>
           </a>
 
           <nav className="flex items-center gap-6 text-sm">
@@ -45,14 +45,17 @@ export function SiteFooter() {
           </div>
 
           <div className="flex flex-wrap items-center gap-5 sm:gap-6 text-slate-400">
-            <Link href="/" className="hover:text-white numora-link">
-              Home
+            <Link href="/terms" className="hover:text-white numora-link">
+              Terms of Service
             </Link>
-            <Link href="/pricing" className="hover:text-white numora-link">
-              Pricing
+            <Link href="/privacy" className="hover:text-white numora-link">
+              Privacy Policy
             </Link>
-            <Link href="/blog" className="hover:text-white numora-link">
-              Blog
+            <Link href="/refund" className="hover:text-white numora-link">
+              Refund Policy
+            </Link>
+            <Link href="/opt-out" className="hover:text-white numora-link">
+              Opt-Out
             </Link>
           </div>
         </div>

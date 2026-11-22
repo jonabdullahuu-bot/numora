@@ -1,22 +1,16 @@
-﻿import React from 'react';
-import { ArrowLeft, Scale } from 'lucide-react';
+import React from 'react';
+import { Scale } from 'lucide-react';
+import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-200 flex flex-col">
-      <header className="border-b border-white/[0.07] bg-[#060913]/85 sticky top-0 z-20 backdrop-blur-xl">
-        <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="font-bold text-white text-lg">Numora</a>
-          <a href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white">
-            <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
-          </a>
-        </div>
-      </header>
+    <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-200">
+      <SiteHeader />
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-14 space-y-8 text-sm leading-relaxed text-slate-300">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-14 space-y-8 text-sm leading-relaxed text-slate-300 animate-fade-up">
         <div>
-          <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold">Legal & Billing</p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-1">Terms of Service & Refund Policy</h1>
+          <p className="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Legal & Billing</p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-1">Terms of Service</h1>
           <p className="text-xs text-slate-500 mt-2">Last Updated: November 2026</p>
         </div>
 
@@ -53,36 +47,30 @@ export default function TermsPage() {
           </p>
           <p>
             Our order process is conducted by our online reseller <strong>Paddle.com</strong>. Paddle.com is the
-            Merchant of Record for all our orders, provides all customer service inquiries related to payment processing,
-            and handles returns and tax/VAT collection.
+            Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.
           </p>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-lg font-bold text-white">4. Refund Policy</h2>
+          <h2 className="text-lg font-bold text-white">4. Refunds & Buyer Support</h2>
           <p>
-            Because Numora delivers instant digital telecom intelligence upon unlocking a dossier:
+            Refund eligibility and procedures are governed by our{' '}
+            <a href="/refund" className="text-emerald-400 underline hover:text-emerald-300">
+              Refund Policy
+            </a>
+            . Unused passes may be refunded within 14 calendar days of purchase.
           </p>
-          <ul className="list-disc pl-5 space-y-1.5 text-slate-300">
-            <li>
-              <strong>Unused Passes:</strong> If you purchased a Standard or Premium Pass and have used zero (0) report
-              credits, you may request a full refund within 14 days of purchase.
-            </li>
-            <li>
-              <strong>Technical Failures:</strong> If a technical error prevents a verified pass from unlocking a valid
-              report and our support team cannot resolve it, you are eligible for a full refund.
-            </li>
-            <li>
-              <strong>Data Availability:</strong> Telecommunications carriers restrict private subscriber names and emails
-              in many jurisdictions. Unlisted subscriber status on an unlocked carrier report does not constitute a service defect.
-            </li>
-          </ul>
           <p className="text-slate-400">
-            To request billing assistance or a refund, contact <span className="text-indigo-300">support@numora.app</span> or
-            use the receipt link provided in your Paddle confirmation email.
+            For customer support or billing assistance, contact{' '}
+            <a href="mailto:support@numoralookup.com" className="text-emerald-400 hover:underline">
+              support@numoralookup.com
+            </a>{' '}
+            or use the receipt link provided in your Paddle confirmation email.
           </p>
         </section>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

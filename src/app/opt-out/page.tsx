@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowLeft, ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
 
 export default function OptOutPage() {
   const [phone, setPhone] = useState('');
@@ -38,17 +39,10 @@ export default function OptOutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-200 flex flex-col">
-      <header className="border-b border-white/[0.07] bg-[#060913]/85 sticky top-0 z-20 backdrop-blur-xl">
-        <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="font-bold text-white text-lg">Numora</a>
-          <a href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white">
-            <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
-          </a>
-        </div>
-      </header>
+    <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-200">
+      <SiteHeader />
 
-      <main className="flex-1 max-w-xl mx-auto w-full px-6 py-16 space-y-8">
+      <main className="flex-1 max-w-xl mx-auto w-full px-6 py-16 space-y-8 animate-fade-up">
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -66,7 +60,7 @@ export default function OptOutPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 sm:p-8 space-y-5 shadow-xl"
+          className="rounded-3xl bg-[#0c1120] border border-slate-800/90 p-6 sm:p-8 space-y-5 shadow-xl numora-card"
         >
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
@@ -78,7 +72,7 @@ export default function OptOutPage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+1 212 555 0199"
-              className="w-full px-4 py-3 rounded-xl bg-[#060913] border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400 tabular-nums"
+              className="w-full px-4 py-3 rounded-xl bg-[#050811] border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 tabular-nums"
             />
           </div>
 
@@ -91,14 +85,14 @@ export default function OptOutPage() {
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Personal privacy preference"
-              className="w-full px-4 py-3 rounded-xl bg-[#060913] border border-white/[0.1] text-white placeholder-slate-500 focus:outline-none focus:border-indigo-400"
+              className="w-full px-4 py-3 rounded-xl bg-[#050811] border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition cursor-pointer disabled:opacity-50"
+            className="w-full py-3.5 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition cursor-pointer disabled:opacity-50"
           >
             {loading ? 'Processing Suppression...' : 'Suppress Number from Numora'}
           </button>
@@ -121,6 +115,8 @@ export default function OptOutPage() {
           )}
         </form>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

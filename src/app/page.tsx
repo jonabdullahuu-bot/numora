@@ -45,6 +45,8 @@ interface CountryOption {
 
 interface PassWallet {
   transactionId: string;
+  accessToken?: string;
+  expiresAt?: string;
   planId: 'single' | 'pro';
   planLabel: string;
   creditsRemaining: number;
@@ -631,13 +633,14 @@ export default function NumoraHome() {
                 verifyData?.creditsGranted || (planHint === 'pro' ? 12 : 4)
               );
 
-              const nextWallet: PassWallet = {
+              const nextWallet: PassWallet = {accessToken: typeof verifyData?.accessToken === 'string' ? verifyData.accessToken : undefined,
+                
                 transactionId: txId,
                 planId: planHint,
                 planLabel:
                   planHint === 'pro' ? 'Premium Pass (12 Credits)' : 'Standard Pass (4 Credits)',
-                creditsRemaining: Math.max(0, granted - 1),
-                unlockedNumbers: [targetNum],
+                creditsRemaining: typeof verifyData?.creditsRemaining === 'number' ? verifyData.creditsRemaining : Math.max(0, granted - 1),
+                unlockedNumbers: Array.isArray(verifyData?.unlockedNumbers) && verifyData.unlockedNumbers.length > 0 ? verifyData.unlockedNumbers : [targetNum],
               };
               persistWallet(nextWallet);
 
