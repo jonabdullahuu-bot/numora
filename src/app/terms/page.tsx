@@ -17,7 +17,7 @@ export default function TermsPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">1. Overview of Service</h2>
           <p>
-            NumoraLookup (â€œwe,â€ â€œour,â€ or â€œusâ€) provides browser-based telephone number
+            NumoraLookup (“we,” “our,” or “us”) provides browser-based telephone number
             formatting, carrier routing telemetry, line-type classification (mobile, landline, or VoIP),
             regional origin metadata, and available public directory status across international numbering plans.
           </p>
@@ -28,7 +28,7 @@ export default function TermsPage() {
           <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-400/25 text-xs text-amber-100 flex items-start gap-3">
             <Scale className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
             <p>
-              NumoraLookup is NOT a Consumer Reporting Agency as defined by the Fair Credit Reporting Act (15 U.S.C. Â§ 1681 et seq.).
+              NumoraLookup is NOT a Consumer Reporting Agency as defined by the Fair Credit Reporting Act (15 U.S.C. § 1681 et seq.).
               You may not use NumoraLookup or any report obtained through NumoraLookup to evaluate eligibility for credit, employment,
               tenant housing, insurance, or any other FCRA-regulated purpose.
             </p>

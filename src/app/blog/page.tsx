@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
                     {post.category}
                   </span>
                   <span>{post.readTime}</span>
-                  <span>â€¢</span>
+                  <span>•</span>
                   <time dateTime={post.publishedAt}>{post.publishedAt}</time>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
@@ -56,7 +56,7 @@ export default function BlogIndexPage() {
                 href={`/blog/${post.slug}`}
                 className="inline-flex items-center text-sm font-semibold text-emerald-400 group-hover:translate-x-1 transition-transform"
               >
-                Read full guide â†’
+                Read full guide →
               </Link>
             </article>
           ))}
@@ -73,7 +73,7 @@ export default function BlogIndexPage() {
             href="/"
             className="inline-block rounded-xl bg-emerald-500 px-6 py-3.5 text-sm sm:text-base font-bold text-slate-950 hover:bg-emerald-400 transition-all duration-200 hover:scale-[1.02] numora-btn"
           >
-            Start Free Phone Lookup â†’
+            Start Free Phone Lookup →
           </Link>
         </section>
       </main>

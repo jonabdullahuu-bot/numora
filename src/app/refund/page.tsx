@@ -69,7 +69,7 @@ export default function RefundPolicyPage() {
             <li>
               <strong>Public Directory Availability:</strong> Telecom carriers and privacy laws
               restrict subscriber names or email addresses on certain mobile/VoIP lines. An
-              â€œUnlistedâ€ subscriber record on a completed carrier report does not
+              “Unlisted” subscriber record on a completed carrier report does not
               constitute a defective product.
             </li>
           </ul>
@@ -106,7 +106,7 @@ export default function RefundPolicyPage() {
               >
                 support@numoralookup.com
               </a>{' '}
-              and we will respond within 1â€“2 business days.
+              and we will respond within 1–2 business days.
             </li>
           </ul>
         </section>

@@ -407,7 +407,7 @@ const FORENSICS_MODULES = [
     title: 'Subscriber & Contact Clues',
     subtitle: 'Corroborate name, email, and address records when available',
     description:
-      'Surfaces available subscriber attributesÃ¢â‚¬â€such as registered name, linked email, and locationÃ¢â‚¬â€behind a clean unlock flow.',
+      'Surfaces available subscriber attributes—such as registered name, linked email, and location—behind a clean unlock flow.',
     specs: [
       ['Report Fields', 'Name, Email & Address'],
       ['Privacy Controls', 'Self-Serve Opt-Out Registry'],
@@ -437,7 +437,7 @@ const FORENSICS_MODULES = [
     description:
       'Brings carrier, line type, risk level, and subscriber fields into one clean dossier view instead of guessing.',
     specs: [
-      ['Access Mode', 'Browser-Based Ã‚Â· No App'],
+      ['Access Mode', 'Browser-Based · No App'],
       ['Compliance', 'Non-FCRA Informational Use'],
     ],
     icon: Share2,
@@ -916,7 +916,7 @@ export default function NumoraHome() {
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
-            Know whoÃ¢â‚¬â„¢s behind{' '}
+            Know who’s behind{' '}
             <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-300 bg-clip-text text-transparent">
               any phone number.
             </span>
@@ -1083,7 +1083,7 @@ export default function NumoraHome() {
                 )}
                 <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  Verified Line Ã‚Â· {result.lineType}
+                  Verified Line · {result.lineType}
                 </span>
               </div>
             </div>
@@ -1167,7 +1167,7 @@ export default function NumoraHome() {
                       <div>
                         <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-indigo-300">
                           <CreditCard className="w-3.5 h-3.5" />
-                          <span>One-Time Pass Selection Ã‚Â· No Recurring Billing</span>
+                          <span>One-Time Pass Selection · No Recurring Billing</span>
                         </div>
                         <h4 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
                           Select a Pass to Reveal Dossier for{' '}
@@ -1175,14 +1175,14 @@ export default function NumoraHome() {
                         </h4>
                         <p className="text-xs sm:text-sm text-slate-400 mt-1">
                           Unlock this subscriber record immediately and keep extra credits for future
-                          lookupsÃ¢â‚¬â€pay once, use anytime.
+                          lookups—pay once, use anytime.
                         </p>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 text-[11px] text-slate-300 bg-white/[0.04] border border-white/[0.08] px-3 py-2 rounded-xl shrink-0">
                       <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span>Instant Unblur Ã‚Â· Paddle Secured</span>
+                      <span>Instant Unblur · Paddle Secured</span>
                     </div>
                   </div>
 
@@ -1195,7 +1195,7 @@ export default function NumoraHome() {
                           credits remaining)
                         </p>
                         <p className="text-xs text-emerald-300/80 mt-0.5">
-                          Reveal {result.e164} right now with 1 creditÃ¢â‚¬â€no payment modal needed.
+                          Reveal {result.e164} right now with 1 credit—no payment modal needed.
                         </p>
                       </div>
                       <button
@@ -1211,7 +1211,7 @@ export default function NumoraHome() {
 
                   {/* Interactive Side-by-Side Pass Cards */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 text-left">
-                    {/* Standard Pass ($7.95 Ã‚Â· 4 Credits) */}
+                    {/* Standard Pass ($7.95 · 4 Credits) */}
                     <div
                       role="button"
                       tabIndex={0}
@@ -1238,7 +1238,7 @@ export default function NumoraHome() {
                             $7.95
                           </span>
                           <span className="text-xs font-semibold text-indigo-300">
-                            one-time Ã‚Â· 4 full credits
+                            one-time · 4 full credits
                           </span>
                         </div>
 
@@ -1280,12 +1280,12 @@ export default function NumoraHome() {
                         <span>
                           {checkoutOpening === 'single'
                             ? 'Opening Secure Checkout...'
-                            : 'Unlock Now Ã¢â‚¬â€ Standard ($7.95)'}
+                            : 'Unlock Now — Standard ($7.95)'}
                         </span>
                       </button>
                     </div>
 
-                    {/* Premium Pass ($15.95 Ã‚Â· 12 Credits) */}
+                    {/* Premium Pass ($15.95 · 12 Credits) */}
                     <div
                       role="button"
                       tabIndex={0}
@@ -1302,7 +1302,7 @@ export default function NumoraHome() {
                           Premium Pass
                         </span>
                         <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-sky-400/20 to-indigo-400/20 text-sky-200 border border-sky-400/35 tabular-nums">
-                          Best Value Ã‚Â· $1.33 / lookup
+                          Best Value · $1.33 / lookup
                         </span>
                       </div>
 
@@ -1312,12 +1312,12 @@ export default function NumoraHome() {
                             $15.95
                           </span>
                           <span className="text-xs font-semibold text-sky-300">
-                            one-time Ã‚Â· 12 full credits
+                            one-time · 12 full credits
                           </span>
                         </div>
 
                         <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                          Save 33% per report vs. Standard PassÃ¢â‚¬â€built for dating checks, marketplace
+                          Save 33% per report vs. Standard Pass—built for dating checks, marketplace
                           vetting, and ongoing number screening.
                         </p>
 
@@ -1332,7 +1332,7 @@ export default function NumoraHome() {
                           </li>
                           <li className="flex items-center gap-2">
                             <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                            <span>One-time payment Ã‚Â· Instant dossier reveal</span>
+                            <span>One-time payment · Instant dossier reveal</span>
                           </li>
                         </ul>
                       </div>
@@ -1352,7 +1352,7 @@ export default function NumoraHome() {
                             ? 'Opening Secure Checkout...'
                             : verifyingPayment
                             ? 'Verifying Payment...'
-                            : 'Unlock Now Ã¢â‚¬â€ Premium ($15.95)'}
+                            : 'Unlock Now — Premium ($15.95)'}
                         </span>
                       </button>
                     </div>
@@ -1365,10 +1365,10 @@ export default function NumoraHome() {
                         <strong className="text-slate-200">Standard ($7.95):</strong> 4 credits (~$1.99 each)
                       </span>
                       <span>
-                        <strong className="text-sky-300">Premium ($15.95):</strong> 12 credits (~$1.33 each Ã‚Â· 33% lower cost per lookup)
+                        <strong className="text-sky-300">Premium ($15.95):</strong> 12 credits (~$1.33 each · 33% lower cost per lookup)
                       </span>
                     </div>
-                    <span className="text-slate-400">Single charge via Paddle Ã‚Â· No subscription</span>
+                    <span className="text-slate-400">Single charge via Paddle · No subscription</span>
                   </div>
                 </div>
               )}
@@ -1387,7 +1387,7 @@ export default function NumoraHome() {
               </h2>
             </div>
             <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              Investigate unknown calls, texts, and profiles in three structured stepsÃ¢â‚¬â€right in your
+              Investigate unknown calls, texts, and profiles in three structured steps—right in your
               browser with no app download required.
             </p>
           </div>
@@ -1458,7 +1458,7 @@ export default function NumoraHome() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-400">
-                Telecom Forensics Ã‚Â· Signal Breakdown
+                Telecom Forensics · Signal Breakdown
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-2">
                 What Can NumoraLookup Reveal About a Phone Number?

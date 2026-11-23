@@ -11,7 +11,7 @@ const HOME_FAQS = [
   },
   {
     q: "Is my reverse phone lookup 100% anonymous?",
-    a: "Yes. Searches are completely confidentialâ€”the owner of the phone number never receives any text, missed call, or notification.",
+    a: "Yes. Searches are completely confidential—the owner of the phone number never receives any text, missed call, or notification.",
   },
   {
     q: "Can NumoraLookup detect VoIP burner numbers like Google Voice or TextNow?",
@@ -69,7 +69,7 @@ export function SeoHomeSections() {
                 >
                   <span>{item.q}</span>
                   <span className="ml-4 text-emerald-400 text-lg font-bold">
-                    {isOpen ? "âˆ’" : "+"}
+                    {isOpen ? "−" : "+"}
                   </span>
                 </button>
                 {isOpen && (
@@ -101,7 +101,7 @@ export function SeoHomeSections() {
             href="/blog"
             className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all self-start sm:self-auto numora-btn"
           >
-            View all articles â†’
+            View all articles →
           </Link>
         </div>
 
@@ -124,7 +124,7 @@ export function SeoHomeSections() {
                 </p>
               </div>
               <span className="text-xs font-medium text-emerald-400/90 mt-4 group-hover:translate-x-1 transition-transform inline-block">
-                {post.readTime} â†’
+                {post.readTime} →
               </span>
             </Link>
           ))}
