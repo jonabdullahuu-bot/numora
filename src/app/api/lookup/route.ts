@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildDemoReport, fetchGlobalPhoneData, PhoneReport } from '@/lib/phoneLookup';
@@ -59,7 +59,6 @@ async function authorizeWithAccessToken(
     ? data.unlocked_numbers
     : [];
 
-  // Already unlocked on this token -> 0 credits spent
   if (existingUnlocked.includes(e164)) {
     return {
       unlocked: true,
@@ -75,7 +74,6 @@ async function authorizeWithAccessToken(
     };
   }
 
-  // No credits remaining -> keep report redacted
   if ((data.credits_remaining ?? 0) <= 0) {
     return {
       unlocked: false,
@@ -91,7 +89,6 @@ async function authorizeWithAccessToken(
     };
   }
 
-  // Atomically deduct 1 credit and append e164 to unlocked_numbers
   const nextCredits = data.credits_remaining - 1;
   const nextUnlocked = [...existingUnlocked, e164];
   const nextExpires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
@@ -176,12 +173,11 @@ export async function POST(req: NextRequest) {
 
     if (optedOut) {
       return NextResponse.json(
-        { error: 'This number has been restricted from public lookup per the owner’s privacy request.' },
+        { error: "This number has been restricted from public lookup per the owner's privacy request." },
         { status: 403 }
       );
     }
 
-    // Fetch or build report first so failed/invalid numbers never burn a credit
     const { data: cached } = await supabaseAdmin
       .from('phone_cache')
       .select('*')
@@ -226,7 +222,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Authorize strictly via server-side Access Token first, with legacy fallback
     let isUnlocked = false;
     let walletState: TokenSpendOutcome['walletState'] = undefined;
 
@@ -252,9 +247,9 @@ export async function POST(req: NextRequest) {
         lineType: report.lineType,
         location: report.location,
         spamRisk: report.spamRisk,
-        ownerName: '████████ ██████',
-        ownerEmail: '█████@████.com',
-        ownerAddress: '███ █████████ St, ████',
+        ownerName: '\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588',
+        ownerEmail: '\u2588\u2588\u2588\u2588\u2588@\u2588\u2588\u2588\u2588.com',
+        ownerAddress: '\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 St, \u2588\u2588\u2588\u2588',
       },
     });
   } catch (err: any) {

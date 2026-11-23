@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
         {
           paddle_transaction_id: tx.id,
           customer_email: tx.customerId || 'customer@numora.io',
-          e164_number: customData.searchedNumber || 'ALL',
+          e164_number: customData.searchedNumber || null,
           plan_type: customData.planType || (isPro ? 'pro_pass' : 'single_report'),
         },
         { onConflict: 'paddle_transaction_id' }
@@ -62,8 +62,8 @@ export async function POST(req: NextRequest) {
 
       const { data: existingTx } = await supabaseAdmin
         .from('access_tokens')
-        .select('access_token, credits_remaining')
-        .eq('transaction_id', tx.id)
+        .select('token, credits_remaining')
+        .eq('paddle_transaction_id', tx.id)
         .maybeSingle();
 
       if (!existingTx) {
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
         const { data: existingTokenRow } = await supabaseAdmin
           .from('access_tokens')
           .select('credits_remaining')
-          .eq('access_token', accessToken)
+          .eq('token', accessToken)
           .maybeSingle();
 
         if (existingTokenRow) {
@@ -83,14 +83,14 @@ export async function POST(req: NextRequest) {
               credits_remaining: (existingTokenRow.credits_remaining || 0) + creditsToGrant,
               plan_id: planId,
               plan_label: planLabel,
-              transaction_id: tx.id,
+              paddle_transaction_id: tx.id,
               expires_at: expiresAt,
             })
-            .eq('access_token', accessToken);
+            .eq('token', accessToken);
         } else {
           await supabaseAdmin.from('access_tokens').insert({
-            access_token: accessToken,
-            transaction_id: tx.id,
+            token: accessToken,
+            paddle_transaction_id: tx.id,
             plan_id: planId,
             plan_label: planLabel,
             credits_remaining: creditsToGrant,
