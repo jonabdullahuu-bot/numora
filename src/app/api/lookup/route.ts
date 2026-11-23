@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildDemoReport, fetchGlobalPhoneData, PhoneReport } from '@/lib/phoneLookup';
@@ -247,9 +247,9 @@ export async function POST(req: NextRequest) {
         lineType: report.lineType,
         location: report.location,
         spamRisk: report.spamRisk,
-        ownerName: '\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588',
-        ownerEmail: '\u2588\u2588\u2588\u2588\u2588@\u2588\u2588\u2588\u2588.com',
-        ownerAddress: '\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 St, \u2588\u2588\u2588\u2588',
+        ownerName: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022\u2022\u2022',
+        ownerEmail: '\u2022\u2022\u2022\u2022\u2022@\u2022\u2022\u2022\u2022.com',
+        ownerAddress: '\u2022\u2022\u2022 \u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022 St, \u2022\u2022\u2022\u2022',
       },
     });
   } catch (err: any) {

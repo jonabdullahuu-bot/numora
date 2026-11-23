@@ -1,4 +1,4 @@
-﻿import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 export interface PhoneReport {
   e164: string;
@@ -17,7 +17,7 @@ export function buildDemoReport(e164: string, country: string): PhoneReport {
     e164,
     country: country || 'INTL',
     carrier: 'Global Carrier Network (Demo)',
-    lineType: 'Mobile · Physical SIM',
+    lineType: 'Mobile \u00b7 Physical SIM',
     location: country || 'Verified Region',
     spamRisk: 'Low',
     ownerName: 'Private Carrier Subscriber (Unlisted)',
@@ -88,13 +88,13 @@ export async function fetchGlobalPhoneData(e164: string, country: string): Promi
       e164: data?.international_format || e164,
       country: resolvedCountry,
       carrier: data?.carrier || 'Verified Regional Operator',
-      lineType: isVoip ? `${formattedLineType} · Virtual Line` : `${formattedLineType} · Carrier Line`,
+      lineType: isVoip ? `${formattedLineType} \u00b7 Virtual Line` : `${formattedLineType} \u00b7 Carrier Line`,
       location,
       spamRisk: inferRisk(formattedLineType),
       ownerName: isVoip
         ? 'Virtual / App-Assigned Subscriber (Unlisted)'
         : 'Private Carrier Subscriber (Unlisted)',
-      ownerEmail: `National Format: ${nationalFormat} · No Public Email`,
+      ownerEmail: `National Format: ${nationalFormat} \u00b7 No Public Email`,
       ownerAddress: location,
     };
   } catch (err: any) {
