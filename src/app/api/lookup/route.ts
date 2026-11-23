@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildDemoReport, fetchGlobalPhoneData, PhoneReport } from '@/lib/phoneLookup';
@@ -38,7 +38,8 @@ interface TokenSpendOutcome {
 
 async function authorizeWithAccessToken(
   rawToken: unknown,
-  e164: string
+  e164: string,
+  onlyIfAlreadyUnlocked = false
 ): Promise<TokenSpendOutcome> {
   const token = normalizeToken(rawToken);
   if (!token) return { unlocked: false };
@@ -59,34 +60,26 @@ async function authorizeWithAccessToken(
     ? data.unlocked_numbers
     : [];
 
+  const baseWallet = {
+    accessToken: data.token,
+    transactionId: data.paddle_transaction_id,
+    planId: (data.plan_id === 'pro' ? 'pro' : 'single') as 'single' | 'pro',
+    planLabel: data.plan_label,
+    creditsRemaining: data.credits_remaining ?? 0,
+    unlockedNumbers: existingUnlocked,
+    expiresAt: data.expires_at,
+  };
+
   if (existingUnlocked.includes(e164)) {
-    return {
-      unlocked: true,
-      walletState: {
-        accessToken: data.token,
-        transactionId: data.paddle_transaction_id,
-        planId: data.plan_id === 'pro' ? 'pro' : 'single',
-        planLabel: data.plan_label,
-        creditsRemaining: data.credits_remaining ?? 0,
-        unlockedNumbers: existingUnlocked,
-        expiresAt: data.expires_at,
-      },
-    };
+    return { unlocked: true, walletState: baseWallet };
+  }
+
+  if (onlyIfAlreadyUnlocked) {
+    return { unlocked: false, walletState: baseWallet };
   }
 
   if ((data.credits_remaining ?? 0) <= 0) {
-    return {
-      unlocked: false,
-      walletState: {
-        accessToken: data.token,
-        transactionId: data.paddle_transaction_id,
-        planId: data.plan_id === 'pro' ? 'pro' : 'single',
-        planLabel: data.plan_label,
-        creditsRemaining: 0,
-        unlockedNumbers: existingUnlocked,
-        expiresAt: data.expires_at,
-      },
-    };
+    return { unlocked: false, walletState: { ...baseWallet, creditsRemaining: 0 } };
   }
 
   const nextCredits = data.credits_remaining - 1;
@@ -152,7 +145,7 @@ export async function POST(req: NextRequest) {
   let countryFallback = 'INTL';
 
   try {
-    const { rawNumber, transactionId, accessToken } = await req.json();
+    const { rawNumber, transactionId, accessToken, onlyIfAlreadyUnlocked } = await req.json();
 
     const parsed = parsePhoneNumberFromString(String(rawNumber || ''));
     if (!parsed || !parsed.isValid()) {
@@ -226,7 +219,11 @@ export async function POST(req: NextRequest) {
     let walletState: TokenSpendOutcome['walletState'] = undefined;
 
     if (accessToken) {
-      const outcome = await authorizeWithAccessToken(accessToken, e164);
+      const outcome = await authorizeWithAccessToken(
+        accessToken,
+        e164,
+        Boolean(onlyIfAlreadyUnlocked)
+      );
       isUnlocked = outcome.unlocked;
       walletState = outcome.walletState;
     } else if (transactionId) {

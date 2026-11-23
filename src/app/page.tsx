@@ -554,16 +554,34 @@ export default function NumoraHome() {
   }, [selectedPlan]);
 
   useEffect(() => {
+    let loadedWallet: PassWallet | null = null;
     try {
       const saved = window.localStorage.getItem(WALLET_STORAGE_KEY);
       if (saved) {
         const parsed: PassWallet = JSON.parse(saved);
-        if (parsed?.transactionId) {
+        if (parsed?.transactionId || parsed?.accessToken) {
+          loadedWallet = parsed;
           setWallet(parsed);
         }
       }
     } catch {
       // ignore storage access issues
+    }
+
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const numberParam = params.get('number')?.trim();
+      if (numberParam) {
+        setPhoneInput(numberParam);
+        const normalized = numberParam.replace(/[^\d+]/g, '');
+        const matched = [...COUNTRY_CODES]
+          .sort((a, b) => b.dialCode.replace('-', '').length - a.dialCode.replace('-', '').length)
+          .find((c) => normalized.startsWith(c.dialCode.replace('-', '')));
+        if (matched) setSelectedCountry(matched);
+        runLookup(numberParam, loadedWallet?.transactionId, loadedWallet?.accessToken, true);
+      }
+    } catch {
+      // ignore URL parsing issues
     }
   }, []);
 
@@ -644,7 +662,7 @@ export default function NumoraHome() {
               };
               persistWallet(nextWallet);
 
-              await runLookup(targetNum, txId);
+              await runLookup(targetNum, txId, nextWallet.accessToken, true);
               setPaymentStatusMessage(
                 `Pass verified! ${Math.max(0, granted - 1)} bonus ${
                   Math.max(0, granted - 1) === 1 ? 'credit' : 'credits'
@@ -693,7 +711,12 @@ export default function NumoraHome() {
 
   const currentUseCase = USE_CASES.find((u) => u.id === activeUseCase) || USE_CASES[0];
 
-  const runLookup = async (targetNumber: string, txId?: string) => {
+  const runLookup = async (
+    targetNumber: string,
+    txId?: string,
+    accessToken?: string,
+    onlyIfAlreadyUnlocked = false
+  ) => {
     setError('');
     setPaymentStatusMessage('');
     setLoading(true);
@@ -703,7 +726,12 @@ export default function NumoraHome() {
       const res = await fetch('/api/lookup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rawNumber: targetNumber, transactionId: txId }),
+        body: JSON.stringify({
+          rawNumber: targetNumber,
+          transactionId: txId,
+          accessToken,
+          onlyIfAlreadyUnlocked,
+        }),
       });
       const data = await res.json();
 
@@ -713,6 +741,9 @@ export default function NumoraHome() {
       } else {
         setResult(data.report);
         setUnlocked(Boolean(data.unlocked));
+        if (data.walletState) {
+          persistWallet(data.walletState);
+        }
       }
     } catch {
       setError('Network error. Please try again.');
@@ -727,7 +758,7 @@ export default function NumoraHome() {
     const activeTx =
       txId ||
       (wallet && wallet.unlockedNumbers.includes(fullNumber) ? wallet.transactionId : undefined);
-    await runLookup(fullNumber, activeTx);
+    await runLookup(fullNumber, activeTx, wallet?.accessToken, true);
   };
 
   const handleSampleClick = async (sample: (typeof SAMPLE_NUMBERS)[number]) => {
@@ -738,7 +769,7 @@ export default function NumoraHome() {
     const fullNum = `${sample.dialCode} ${sample.localNumber}`;
     const existingTx =
       wallet && wallet.unlockedNumbers.includes(fullNum) ? wallet.transactionId : undefined;
-    await runLookup(fullNum, existingTx);
+    await runLookup(fullNum, existingTx, wallet?.accessToken, true);
   };
 
   const handleUseCreditUnlock = async () => {
@@ -782,6 +813,8 @@ export default function NumoraHome() {
         body: JSON.stringify({
           rawNumber: result.e164,
           transactionId: wallet.transactionId,
+          accessToken: wallet.accessToken,
+          onlyIfAlreadyUnlocked: true,
         }),
       });
       const lookupData = await lookupRes.json();

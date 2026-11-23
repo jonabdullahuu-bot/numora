@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase';
 
@@ -20,6 +20,67 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing transactionId' }, { status: 400 });
     }
 
+    const cleanTxId = transactionId.trim();
+    const cleanNumber =
+      typeof e164Number === 'string' && e164Number.trim() ? e164Number.trim() : null;
+
+    // Fast path: if the signed webhook (or a prior verify call) already created the token,
+    // still unlock cleanNumber and deduct 1 credit if it hasn't been unlocked yet.
+    const { data: existing } = await supabaseAdmin
+      .from('access_tokens')
+      .select('*')
+      .eq('paddle_transaction_id', cleanTxId)
+      .maybeSingle();
+
+    if (existing) {
+      let creditsRemaining = Number(existing.credits_remaining ?? 0);
+      let unlockedNumbers: string[] = Array.isArray(existing.unlocked_numbers)
+        ? existing.unlocked_numbers
+        : [];
+
+      if (cleanNumber && !unlockedNumbers.includes(cleanNumber)) {
+        if (creditsRemaining <= 0) {
+          return NextResponse.json(
+            { error: 'No credits remaining on this access token.' },
+            { status: 402 }
+          );
+        }
+
+        unlockedNumbers = [...unlockedNumbers, cleanNumber];
+        creditsRemaining = Math.max(0, creditsRemaining - 1);
+
+        const { error: updateErr } = await supabaseAdmin
+          .from('access_tokens')
+          .update({
+            credits_remaining: creditsRemaining,
+            unlocked_numbers: unlockedNumbers,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('token', existing.token);
+
+        if (updateErr) {
+          console.error('[Numora] Failed to deduct credit on existing token:', updateErr.message);
+          return NextResponse.json(
+            { error: 'Could not update token balance. Please try again.' },
+            { status: 500 }
+          );
+        }
+      }
+
+      return NextResponse.json({
+        verified: true,
+        transactionId: cleanTxId,
+        status: 'completed',
+        accessToken: existing.token,
+        planId: existing.plan_id,
+        planLabel: existing.plan_label,
+        creditsGranted: existing.plan_id === 'pro' ? 12 : 4,
+        creditsRemaining,
+        unlockedNumbers,
+        expiresAt: existing.expires_at,
+      });
+    }
+
     const paddleApiKey = process.env.PADDLE_API_KEY?.trim();
     const isSandbox = (process.env.NEXT_PUBLIC_PADDLE_ENV || 'sandbox') === 'sandbox';
     const baseUrl = isSandbox
@@ -35,7 +96,7 @@ export async function POST(req: NextRequest) {
 
     if (paddleApiKey) {
       const paddleRes = await fetch(
-        `${baseUrl}/transactions/${encodeURIComponent(transactionId)}`,
+        `${baseUrl}/transactions/${encodeURIComponent(cleanTxId)}`,
         {
           headers: {
             Authorization: `Bearer ${paddleApiKey}`,
@@ -50,7 +111,7 @@ export async function POST(req: NextRequest) {
       if (!paddleRes.ok || !paddleJson?.data) {
         const detail = paddleJson?.error?.detail || `HTTP ${paddleRes.status}`;
         console.warn('[Numora] Paddle verify warning:', detail);
-        if (!isSandbox || !transactionId.startsWith('txn_')) {
+        if (!isSandbox || !cleanTxId.startsWith('txn_')) {
           return NextResponse.json(
             { error: `Could not verify Paddle transaction (${detail}).` },
             { status: 402 }
@@ -77,11 +138,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const cleanNumber = typeof e164Number === 'string' && e164Number.trim() ? e164Number.trim() : null;
-
     await supabaseAdmin.from('unlocked_reports').upsert(
       {
-        paddle_transaction_id: transactionId,
+        paddle_transaction_id: cleanTxId,
         e164_number: cleanNumber,
       },
       { onConflict: 'paddle_transaction_id' }
@@ -90,28 +149,6 @@ export async function POST(req: NextRequest) {
     const planLabel =
       resolvedPlan === 'pro' ? 'Premium Pass (12 Credits)' : 'Standard Pass (4 Credits)';
 
-    // Return existing token if this transaction was already verified
-    const { data: existing } = await supabaseAdmin
-      .from('access_tokens')
-      .select('*')
-      .eq('paddle_transaction_id', transactionId)
-      .maybeSingle();
-
-    if (existing) {
-      return NextResponse.json({
-        verified: true,
-        transactionId,
-        status: verifiedStatus,
-        accessToken: existing.token,
-        planId: existing.plan_id,
-        planLabel: existing.plan_label,
-        creditsGranted,
-        creditsRemaining: existing.credits_remaining,
-        unlockedNumbers: existing.unlocked_numbers || [],
-        expiresAt: existing.expires_at,
-      });
-    }
-
     const accessToken = generateAccessToken();
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
     const initialUnlocked = cleanNumber ? [cleanNumber] : [];
@@ -119,7 +156,7 @@ export async function POST(req: NextRequest) {
 
     const { error: insertErr } = await supabaseAdmin.from('access_tokens').insert({
       token: accessToken,
-      paddle_transaction_id: transactionId,
+      paddle_transaction_id: cleanTxId,
       plan_id: resolvedPlan,
       plan_label: planLabel,
       credits_remaining: initialRemaining,
@@ -137,7 +174,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       verified: true,
-      transactionId,
+      transactionId: cleanTxId,
       status: verifiedStatus,
       accessToken,
       planId: resolvedPlan,

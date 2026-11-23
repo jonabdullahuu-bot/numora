@@ -30,9 +30,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 });
   }
 
+  let eventData;
   try {
-    const eventData = await paddle.webhooks.unmarshal(rawBody, secretKey, signature);
+    eventData = await paddle.webhooks.unmarshal(rawBody, secretKey, signature);
+  } catch (e) {
+    console.error('Paddle webhook verification failed:', e);
+    return NextResponse.json({ error: 'Invalid Paddle webhook signature' }, { status: 400 });
+  }
 
+  try {
     if (eventData.eventType === 'transaction.completed') {
       const tx = eventData.data;
       const customData = (tx.customData as Record<string, string>) || {};
@@ -50,34 +56,49 @@ export async function POST(req: NextRequest) {
         ? 'Premium Pass (12 Credits)'
         : 'Standard Pass (4 Credits)';
 
-      await supabaseAdmin.from('unlocked_reports').upsert(
-        {
-          paddle_transaction_id: tx.id,
-          customer_email: tx.customerId || 'customer@numora.io',
-          e164_number: customData.searchedNumber || null,
-          plan_type: customData.planType || (isPro ? 'pro_pass' : 'single_report'),
-        },
-        { onConflict: 'paddle_transaction_id' }
-      );
+      const { error: reportErr } = await supabaseAdmin
+        .from('unlocked_reports')
+        .upsert(
+          {
+            paddle_transaction_id: tx.id,
+            e164_number: customData.searchedNumber || null,
+          },
+          { onConflict: 'paddle_transaction_id' }
+        );
 
-      const { data: existingTx } = await supabaseAdmin
+      if (reportErr) {
+        console.error('unlocked_reports upsert error:', reportErr);
+        return NextResponse.json({ error: 'Failed to record report', details: reportErr.message }, { status: 500 });
+      }
+
+      const { data: existingTx, error: existingTxErr } = await supabaseAdmin
         .from('access_tokens')
         .select('token, credits_remaining')
         .eq('paddle_transaction_id', tx.id)
         .maybeSingle();
 
+      if (existingTxErr) {
+        console.error('access_tokens lookup by tx error:', existingTxErr);
+        return NextResponse.json({ error: 'Database lookup failed', details: existingTxErr.message }, { status: 500 });
+      }
+
       if (!existingTx) {
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
         const accessToken = customData.accessToken || generateAccessToken();
 
-        const { data: existingTokenRow } = await supabaseAdmin
+        const { data: existingTokenRow, error: existingTokenErr } = await supabaseAdmin
           .from('access_tokens')
           .select('credits_remaining')
           .eq('token', accessToken)
           .maybeSingle();
 
+        if (existingTokenErr) {
+          console.error('access_tokens lookup by token error:', existingTokenErr);
+          return NextResponse.json({ error: 'Token lookup failed', details: existingTokenErr.message }, { status: 500 });
+        }
+
         if (existingTokenRow) {
-          await supabaseAdmin
+          const { error: updateErr } = await supabaseAdmin
             .from('access_tokens')
             .update({
               credits_remaining: (existingTokenRow.credits_remaining || 0) + creditsToGrant,
@@ -87,8 +108,13 @@ export async function POST(req: NextRequest) {
               expires_at: expiresAt,
             })
             .eq('token', accessToken);
+
+          if (updateErr) {
+            console.error('access_tokens update error:', updateErr);
+            return NextResponse.json({ error: 'Token update failed', details: updateErr.message }, { status: 500 });
+          }
         } else {
-          await supabaseAdmin.from('access_tokens').insert({
+          const { error: insertErr } = await supabaseAdmin.from('access_tokens').insert({
             token: accessToken,
             paddle_transaction_id: tx.id,
             plan_id: planId,
@@ -97,13 +123,20 @@ export async function POST(req: NextRequest) {
             unlocked_numbers: [],
             expires_at: expiresAt,
           });
+
+          if (insertErr) {
+            console.error('access_tokens insert error:', insertErr);
+            return NextResponse.json({ error: 'Token insert failed', details: insertErr.message }, { status: 500 });
+          }
         }
       }
     }
 
     return NextResponse.json({ received: true });
   } catch (e) {
-    console.error('Paddle webhook verification failed:', e);
-    return NextResponse.json({ error: 'Invalid Paddle webhook signature' }, { status: 400 });
+    console.error('Paddle webhook processing error:', e);
+    return NextResponse.json({ error: 'Webhook processing error' }, { status: 500 });
   }
 }
+
+
