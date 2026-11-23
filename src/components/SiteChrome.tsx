@@ -57,6 +57,9 @@ export function SiteFooter() {
             <Link href="/opt-out" className="hover:text-white numora-link">
               Opt-Out
             </Link>
+            <a href="mailto:support@numoralookup.com" className="hover:text-white numora-link">
+              support@numoralookup.com
+            </a>
           </div>
         </div>
 
