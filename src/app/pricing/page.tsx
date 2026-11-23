@@ -135,7 +135,7 @@ export default function PricingPage() {
         : process.env.NEXT_PUBLIC_PADDLE_SINGLE_PRICE_ID;
 
     if (!priceId || !paddle) {
-      setMessage('Checkout is still initializing—please wait a moment and try again.');
+      setMessage('Checkout is still initializingâ€”please wait a moment and try again.');
       return;
     }
 
@@ -207,13 +207,13 @@ export default function PricingPage() {
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-semibold">
             <CreditCard className="w-3.5 h-3.5" />
-            <span>Simple One-Time Passes · No Subscriptions</span>
+            <span>Simple One-Time Passes Â· No Subscriptions</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
             Pay Once. Unlock Dossiers Anytime.
           </h1>
           <p className="text-slate-400 text-base leading-relaxed">
-            Every Numora Pass is a single one-time purchase with zero recurring monthly fees.
+            Every NumoraLookup Pass is a single one-time purchase with zero recurring monthly fees.
             Inspect carrier routing, virtual/VoIP line classification, regional telemetry, and
             available directory status across 200+ countries.
           </p>
@@ -227,7 +227,7 @@ export default function PricingPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                 <div className="space-y-1">
                   <div className="text-[11px] uppercase tracking-wider text-emerald-300/80 font-semibold">
-                    Your Private Access Token · {activeWallet.creditsRemaining} Credit{activeWallet.creditsRemaining === 1 ? '' : 's'} Remaining
+                    Your Private Access Token Â· {activeWallet.creditsRemaining} Credit{activeWallet.creditsRemaining === 1 ? '' : 's'} Remaining
                   </div>
                   <div className="font-mono text-base sm:text-lg font-bold tracking-wider text-white">
                     {activeWallet.accessToken}
@@ -273,7 +273,7 @@ export default function PricingPage() {
                   $7.95
                 </span>
                 <span className="text-xs font-semibold text-indigo-300">
-                  one-time · 4 credits
+                  one-time Â· 4 credits
                 </span>
               </div>
 
@@ -297,7 +297,7 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span>One-time charge · No auto-renewal</span>
+                  <span>One-time charge Â· No auto-renewal</span>
                 </li>
               </ul>
             </div>
@@ -310,7 +310,7 @@ export default function PricingPage() {
             >
               <Lock className="w-4 h-4" />
               <span>
-                {openingTier === 'single' ? 'Opening Checkout...' : 'Get Standard Pass — $7.95'}
+                {openingTier === 'single' ? 'Opening Checkout...' : 'Get Standard Pass â€” $7.95'}
               </span>
             </button>
           </div>
@@ -323,7 +323,7 @@ export default function PricingPage() {
                   Premium Pass
                 </span>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-sky-400/15 border border-sky-400/35 text-sky-200 tabular-nums">
-                  Best Value · $1.33 / lookup
+                  Best Value Â· $1.33 / lookup
                 </span>
               </div>
 
@@ -332,12 +332,12 @@ export default function PricingPage() {
                   $15.95
                 </span>
                 <span className="text-xs font-semibold text-sky-300">
-                  one-time · 12 credits
+                  one-time Â· 12 credits
                 </span>
               </div>
 
               <p className="text-sm text-slate-300 mt-3 leading-relaxed">
-                Save 33% per report vs. Standard Pass—ideal for ongoing call screening, dating
+                Save 33% per report vs. Standard Passâ€”ideal for ongoing call screening, dating
                 safety checks, and marketplace due diligence.
               </p>
 
@@ -356,7 +356,7 @@ export default function PricingPage() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>Single one-time payment · Never auto-renews</span>
+                  <span>Single one-time payment Â· Never auto-renews</span>
                 </li>
               </ul>
             </div>
@@ -369,7 +369,7 @@ export default function PricingPage() {
             >
               <Sparkles className="w-4 h-4" />
               <span>
-                {openingTier === 'pro' ? 'Opening Checkout...' : 'Get Premium Pass — $15.95'}
+                {openingTier === 'pro' ? 'Opening Checkout...' : 'Get Premium Pass â€” $15.95'}
               </span>
             </button>
           </div>
@@ -506,7 +506,7 @@ export default function PricingPage() {
           <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-start gap-3 numora-card">
             <Scale className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
             <p>
-              <strong className="text-slate-200">Informational Use Only:</strong> Numora is not a
+              <strong className="text-slate-200">Informational Use Only:</strong> NumoraLookup is not a
               Consumer Reporting Agency under the FCRA and cannot be used for credit, tenant, or
               employment screening.
             </p>

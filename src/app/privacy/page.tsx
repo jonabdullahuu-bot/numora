@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">1. Information We Process</h2>
           <p>
-            When you perform a lookup on Numora, we normalize the entered phone number into international E.164 format
+            When you perform a lookup on NumoraLookup, we normalize the entered phone number into international E.164 format
             and query telecom carrier registries to retrieve carrier operator, line classification, and country/region metadata.
             We never notify the owner of a searched phone number.
           </p>
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-white">2. Payment & Access Token Data</h2>
           <p>
             Payment card details are processed exclusively by <strong>Paddle.com</strong> (our Merchant of Record) and
-            never touch Numora servers. We store only your Paddle transaction identifier (e.g.,{' '}
+            never touch NumoraLookup servers. We store only your Paddle transaction identifier (e.g.,{' '}
             <code className="text-emerald-300">txn_...</code>) and generated Access Token (e.g.,{' '}
             <code className="text-emerald-300">NMR-...</code>) to verify report unlocks and manage pass credits across
             your sessions.
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">3. Opt-Out & Suppression Rights</h2>
           <p>
-            Any individual may request that their phone number be suppressed from Numora lookups at any time via our{' '}
+            Any individual may request that their phone number be suppressed from NumoraLookup lookups at any time via our{' '}
             <a href="/opt-out" className="text-emerald-400 underline hover:text-emerald-300">
               Opt-Out / Remove My Info
             </a>{' '}

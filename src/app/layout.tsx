@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Numora — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
-    template: "%s | Numora",
+    default: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
+    template: "%s | NumoraLookup",
   },
   description:
     "Check any unknown phone number in seconds. Identify carrier routing, VoIP burner lines (Google Voice, TextNow), country origin, and spam/catfish risk signals anonymously.",
   keywords: [
-    "Numora",
+    "NumoraLookup",
     "reverse phone lookup",
     "phone number lookup",
     "who called me",
@@ -39,16 +39,16 @@ export const metadata: Metadata = {
     apple: "/logo.jpg?v=2",
   },
   openGraph: {
-    title: "Numora — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
+    title: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
     description:
       "Inspect carrier routing, mobile vs. VoIP line type, and scam risk signals for any phone number in seconds.",
-    siteName: "Numora",
+    siteName: "NumoraLookup",
     type: "website",
     images: ["/logo.jpg?v=2"],
   },
   twitter: {
     card: "summary",
-    title: "Numora — Reverse Phone Lookup & Scam Checker",
+    title: "NumoraLookup — Reverse Phone Lookup & Scam Checker",
     description:
       "Verify unknown callers, detect VoIP burners, and check carrier telemetry in seconds.",
     images: ["/logo.jpg?v=2"],

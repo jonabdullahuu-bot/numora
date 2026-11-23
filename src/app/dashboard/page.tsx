@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -133,7 +133,7 @@ export default function DashboardPage() {
               <span>Token Wallet & Lookup History</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              Numora Dashboard
+              NumoraLookup Dashboard
             </h1>
             <p className="text-sm sm:text-base text-slate-400 max-w-xl">
               Check your remaining lookup credits, back up or restore your Private Access

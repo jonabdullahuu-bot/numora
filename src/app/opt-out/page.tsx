@@ -54,7 +54,7 @@ export default function OptOutPage() {
           <p className="text-sm text-slate-400 leading-relaxed">
             Enter your international phone number (including country code such as <code className="text-slate-200">+1</code>,{' '}
             <code className="text-slate-200">+44</code>, or <code className="text-slate-200">+383</code>) to purge any cached
-            entry and block future lookups on Numora.
+            entry and block future lookups on NumoraLookup.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function OptOutPage() {
             disabled={loading}
             className="w-full py-3.5 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition cursor-pointer disabled:opacity-50"
           >
-            {loading ? 'Processing Suppression...' : 'Suppress Number from Numora'}
+            {loading ? 'Processing Suppression...' : 'Suppress Number from NumoraLookup'}
           </button>
 
           {error && (

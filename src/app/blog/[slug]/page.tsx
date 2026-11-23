@@ -15,10 +15,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = BLOG_POSTS.find((p) => p.slug === slug);
-  if (!post) return { title: "Article Not Found | Numora" };
+  if (!post) return { title: "Article Not Found | NumoraLookup" };
 
   return {
-    title: `${post.title} | Numora`,
+    title: `${post.title} | NumoraLookup`,
     description: post.description,
     keywords: post.keywords,
     alternates: {
@@ -46,7 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     datePublished: post.publishedAt,
-    author: { "@type": "Organization", name: "Numora" },
+    author: { "@type": "Organization", name: "NumoraLookup" },
   };
 
   const faqJsonLd = {

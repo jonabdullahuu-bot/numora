@@ -30,7 +30,7 @@ export default function RefundPolicyPage() {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">1. One-Time Passes & Digital Delivery</h2>
           <p>
-            Numora sells one-time lookup credit passes (Standard Pass: $7.95 USD for 4 credits;
+            NumoraLookup sells one-time lookup credit passes (Standard Pass: $7.95 USD for 4 credits;
             Premium Pass: $15.95 USD for 12 credits). Passes do not auto-renew into recurring
             subscriptions. Credits are issued immediately upon payment verification via a private
             Access Token.
@@ -69,7 +69,7 @@ export default function RefundPolicyPage() {
             <li>
               <strong>Public Directory Availability:</strong> Telecom carriers and privacy laws
               restrict subscriber names or email addresses on certain mobile/VoIP lines. An
-              “Unlisted” subscriber record on a completed carrier report does not
+              â€œUnlistedâ€ subscriber record on a completed carrier report does not
               constitute a defective product.
             </li>
           </ul>
@@ -99,14 +99,14 @@ export default function RefundPolicyPage() {
               .
             </li>
             <li>
-              <strong>Numora Support:</strong> Email{' '}
+              <strong>NumoraLookup Support:</strong> Email{' '}
               <a
                 href="mailto:support@numoralookup.com"
                 className="text-emerald-400 hover:underline"
               >
                 support@numoralookup.com
               </a>{' '}
-              and we will respond within 1–2 business days.
+              and we will respond within 1â€“2 business days.
             </li>
           </ul>
         </section>

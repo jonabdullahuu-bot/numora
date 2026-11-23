@@ -4,7 +4,7 @@ import { BLOG_POSTS } from "../../data/blogPosts";
 import { SiteHeader, SiteFooter } from "../../components/SiteChrome";
 
 export const metadata: Metadata = {
-  title: "Phone Scam & Reverse Lookup Safety Blog | Numora",
+  title: "Phone Scam & Reverse Lookup Safety Blog | NumoraLookup",
   description:
     "Guides on spotting VoIP burner numbers, verifying unknown callers, avoiding dating app catfish, and understanding reverse phone lookup privacy.",
   alternates: {
@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
                     {post.category}
                   </span>
                   <span>{post.readTime}</span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <time dateTime={post.publishedAt}>{post.publishedAt}</time>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
@@ -56,7 +56,7 @@ export default function BlogIndexPage() {
                 href={`/blog/${post.slug}`}
                 className="inline-flex items-center text-sm font-semibold text-emerald-400 group-hover:translate-x-1 transition-transform"
               >
-                Read full guide →
+                Read full guide â†’
               </Link>
             </article>
           ))}
@@ -73,7 +73,7 @@ export default function BlogIndexPage() {
             href="/"
             className="inline-block rounded-xl bg-emerald-500 px-6 py-3.5 text-sm sm:text-base font-bold text-slate-950 hover:bg-emerald-400 transition-all duration-200 hover:scale-[1.02] numora-btn"
           >
-            Start Free Phone Lookup →
+            Start Free Phone Lookup â†’
           </Link>
         </section>
       </main>

@@ -6,20 +6,20 @@ import { BLOG_POSTS } from "../data/blogPosts";
 
 const HOME_FAQS = [
   {
-    q: "How does Numora check an unknown phone number?",
-    a: "Numora queries international telecommunications routing and carrier intelligence to identify the country prefix, network operator, and line type (mobile, landline, or virtual VoIP).",
+    q: "How does NumoraLookup check an unknown phone number?",
+    a: "NumoraLookup queries international telecommunications routing and carrier intelligence to identify the country prefix, network operator, and line type (mobile, landline, or virtual VoIP).",
   },
   {
     q: "Is my reverse phone lookup 100% anonymous?",
-    a: "Yes. Searches are completely confidential—the owner of the phone number never receives any text, missed call, or notification.",
+    a: "Yes. Searches are completely confidentialâ€”the owner of the phone number never receives any text, missed call, or notification.",
   },
   {
-    q: "Can Numora detect VoIP burner numbers like Google Voice or TextNow?",
+    q: "Can NumoraLookup detect VoIP burner numbers like Google Voice or TextNow?",
     a: "Yes. Line-type classification helps distinguish between standard wireless carrier lines and non-fixed VoIP numbers commonly used for disposable burner accounts.",
   },
   {
     q: "Which countries are supported?",
-    a: "Numora supports E.164 international phone number lookups across 200+ countries and regions including the US, UK, Canada, Australia, and Europe.",
+    a: "NumoraLookup supports E.164 international phone number lookups across 200+ countries and regions including the US, UK, Canada, Australia, and Europe.",
   },
 ];
 
@@ -69,7 +69,7 @@ export function SeoHomeSections() {
                 >
                   <span>{item.q}</span>
                   <span className="ml-4 text-emerald-400 text-lg font-bold">
-                    {isOpen ? "−" : "+"}
+                    {isOpen ? "âˆ’" : "+"}
                   </span>
                 </button>
                 {isOpen && (
@@ -88,7 +88,7 @@ export function SeoHomeSections() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-              Numora Safety Hub
+              NumoraLookup Safety Hub
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
               Latest Scam & Caller Safety Guides
@@ -101,7 +101,7 @@ export function SeoHomeSections() {
             href="/blog"
             className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all self-start sm:self-auto numora-btn"
           >
-            View all articles →
+            View all articles â†’
           </Link>
         </div>
 
@@ -124,7 +124,7 @@ export function SeoHomeSections() {
                 </p>
               </div>
               <span className="text-xs font-medium text-emerald-400/90 mt-4 group-hover:translate-x-1 transition-transform inline-block">
-                {post.readTime} →
+                {post.readTime} â†’
               </span>
             </Link>
           ))}

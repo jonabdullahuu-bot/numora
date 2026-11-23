@@ -1,4 +1,4 @@
-﻿export interface BlogPost {
+export interface BlogPost {
   slug: string;
   title: string;
   description: string;
@@ -50,7 +50,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "How to Verify a Line Before You Respond",
         body: [
-          "Before replying or sharing personal details, run the full phone number with its country code through Numora's lookup tool. Checking the upstream carrier and line type immediately tells you whether you are dealing with a real mobile subscriber or a disposable internet line—with 100% search privacy.",
+          "Before replying or sharing personal details, run the full phone number with its country code through NumoraLookup's lookup tool. Checking the upstream carrier and line type immediately tells you whether you are dealing with a real mobile subscriber or a disposable internet line—with 100% search privacy.",
         ],
       },
     ],
@@ -180,9 +180,9 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
     faqs: [
       {
-        question: "Can Numora check international dating app numbers?",
+        question: "Can NumoraLookup check international dating app numbers?",
         answer:
-          "Yes. Numora supports international E.164 phone number lookups across more than 190 countries, including the US, UK, Canada, Australia, and Europe.",
+          "Yes. NumoraLookup supports international E.164 phone number lookups across more than 190 countries, including the US, UK, Canada, Australia, and Europe.",
       },
     ],
   },
