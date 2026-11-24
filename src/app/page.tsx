@@ -912,28 +912,28 @@ export default function NumoraHome() {
       />
 
       <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
           <a href="/" className="flex items-center gap-3 group">
-            <img src="/logo.jpg" alt="NumoraLookup Logo" className="h-9 w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card" />
+            <img src="/logo.jpg" alt="NumoraLookup Logo" className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card" />
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold tracking-tight text-white">NumoraLookup</span>
+              <span className="text-base sm:text-xl font-bold tracking-tight text-white truncate">NumoraLookup</span>
               </div>
           </a>
 
-          <nav className="flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm shrink-0">
             <a href="/pricing" className="text-slate-300 hover:text-white transition font-medium">
               Pricing
             </a>
             <Link href="/blog" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">Blog</Link>
             {wallet && wallet.creditsRemaining > 0 ? (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold tabular-nums">
+              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] sm:text-xs font-semibold tabular-nums">
                 <Coins className="w-3.5 h-3.5" />
                 {wallet.creditsRemaining} Credits Left
               </span>
             ) : (
               <a
                 href="/dashboard"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.1] text-white text-xs font-semibold transition"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.1] text-white text-[11px] sm:text-xs font-semibold transition"
               >Dashboard</a>
             )}
           </nav>
@@ -941,21 +941,21 @@ export default function NumoraHome() {
       </header>
       <div className="h-16 w-full shrink-0" aria-hidden="true" />
 
-      <main className="relative flex-1 max-w-6xl mx-auto w-full px-6 pt-14 pb-24 animate-fade-up z-20">
+      <main className="relative flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-14 pb-16 sm:pb-24 animate-fade-up z-20">
         <div className="text-center space-y-5 max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-medium shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
             <span>Global Number Intelligence, Carrier & Risk Lookup</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
             Know who’s behind{' '}
             <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-300 bg-clip-text text-transparent">
               any phone number.
             </span>
           </h1>
 
-          <p className="text-slate-400 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-1">
             Pick a country flag & dial code or enter a full international number to inspect
             carrier routing, line type, spam risk, and registered subscriber records in seconds.
           </p>
@@ -978,7 +978,7 @@ export default function NumoraHome() {
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute left-0 mt-2 w-72 max-h-80 rounded-2xl bg-[#0b101f] border border-white/[0.12] shadow-2xl flex flex-col ove<div className= z-[9999]">
+                    <div className="absolute left-0 mt-2 w-[min(18rem,calc(100vw-2.5rem))] sm:w-80 max-h-72 sm:max-h-80 rounded-2xl bg-[#0b101f] border border-white/[0.12] shadow-2xl flex flex-col overflow-hidden z-[9999]">
       <div className="relative p-2 border-b border-white/[0.08]">
 
                         <input
@@ -1091,8 +1091,8 @@ export default function NumoraHome() {
         </form>
 
         {result && (
-          <div className="mt-12 bg-[#0c1120]/90 backdrop-blur-xl border border-white/[0.09] rounded-3xl overflow-x-clip shadow-2xl">
-            <div className="p-6 sm:px-8 border-b border-white/[0.07] flex flex-wrap items-center justify-between gap-4 bg-white/[0.02]">
+          <div className="mt-8 sm:mt-12 bg-[#0c1120]/90 backdrop-blur-xl border border-white/[0.09] rounded-2xl sm:rounded-3xl overflow-x-clip shadow-2xl">
+            <div className="p-4 sm:p-6 lg:px-8 border-b border-white/[0.07] flex flex-wrap items-center justify-between gap-3 sm:gap-4 bg-white/[0.02]">
               <div className="flex items-center gap-3.5">
                 <div className="w-11 h-11 rounded-2xl bg-indigo-500/15 border border-indigo-400/25 flex items-center justify-center text-indigo-300 numora-card">
                   <Fingerprint className="w-5 h-5" />
@@ -1101,7 +1101,7 @@ export default function NumoraHome() {
                   <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-semibold">
                     Intelligence Dossier
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white tabular-nums tracking-tight">
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tabular-nums tracking-tight break-all">
                     {result.e164}
                   </h2>
                 </div>
@@ -1128,7 +1128,7 @@ export default function NumoraHome() {
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 sm:px-8 border-b border-white/[0.07]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 p-4 sm:p-6 lg:px-8 border-b border-white/[0.07]">
               <div className="bg-[#060913]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
                 <p className="text-xs uppercase tracking-wider text-slate-500 font-medium">
                   Carrier / Network
@@ -1161,7 +1161,7 @@ export default function NumoraHome() {
               </div>
             </div>
 
-            <div className="p-6 sm:px-8">
+            <div className="p-4 sm:p-6 lg:px-8">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-widest text-indigo-300">
@@ -1383,7 +1383,7 @@ export default function NumoraHome() {
               </div>
 
               {!unlocked && (
-                <div className="mt-6 p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-indigo-950/45 via-[#090e1c] to-[#060913] border border-indigo-400/25 space-y-6 numora-card">
+                <div className="mt-5 sm:mt-6 p-4 sm:p-6 lg:p-8 rounded-2xl bg-gradient-to-b from-indigo-950/45 via-[#090e1c] to-[#060913] border border-indigo-400/25 space-y-5 sm:space-y-6 numora-card">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-left border-b border-white/[0.07] pb-5">
                     <div className="flex items-start gap-3.5">
                       <div className="w-11 h-11 rounded-2xl bg-indigo-500/15 border border-indigo-400/25 text-indigo-300 flex items-center justify-center shrink-0 mt-0.5 numora-card">

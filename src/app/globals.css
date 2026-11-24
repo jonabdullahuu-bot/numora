@@ -137,3 +137,18 @@ html {
 .numora-card:has(input):hover {
   transform: none;
 }
+
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@media print {
+  header, form, nav, button {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+}
