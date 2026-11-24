@@ -124,7 +124,7 @@ export default function DashboardPage() {
     <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
       <SiteHeader />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-14 space-y-10 animate-fade-up">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-8 sm:space-y-10 animate-fade-up">
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
@@ -132,7 +132,7 @@ export default function DashboardPage() {
               <KeyRound className="w-3.5 h-3.5" />
               <span>Token Wallet & Lookup History</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.15]">
               NumoraLookup Dashboard
             </h1>
             <p className="text-sm sm:text-base text-slate-400 max-w-xl">
@@ -141,7 +141,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <Link
               href="/pricing"
               className="px-4 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-xs sm:text-sm font-semibold text-white inline-flex items-center gap-2 transition"
@@ -179,7 +179,7 @@ export default function DashboardPage() {
               <span>Credits Remaining</span>
               <Coins className="w-4 h-4 text-emerald-400" />
             </div>
-            <div className="mt-3 text-4xl font-extrabold text-white tabular-nums">
+            <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
               {wallet ? wallet.creditsRemaining : 0}
             </div>
             <p className="mt-2 text-xs text-slate-400">
@@ -193,7 +193,7 @@ export default function DashboardPage() {
               <span>Unlocked Numbers</span>
               <PhoneCall className="w-4 h-4 text-sky-400" />
             </div>
-            <div className="mt-3 text-4xl font-extrabold text-white tabular-nums">
+            <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
               {wallet?.unlockedNumbers?.length ?? 0}
             </div>
             <p className="mt-2 text-xs text-slate-400">
@@ -217,14 +217,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Active Token & Restore Card */}
-        <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 sm:p-8 shadow-xl space-y-6">
+        <div className="rounded-2xl sm:rounded-3xl bg-[#0c1120] border border-white/[0.09] p-5 sm:p-8 shadow-xl space-y-5 sm:space-y-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.07]">
             <div className="space-y-1.5">
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">
                 Active Private Access Token
               </div>
               {wallet?.accessToken ? (
-                <div className="font-mono text-xl sm:text-2xl font-extrabold tracking-wider text-white">
+                <div className="font-mono text-base sm:text-2xl font-extrabold tracking-wider text-white break-all">
                   {wallet.accessToken}
                 </div>
               ) : (
@@ -298,7 +298,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Unlocked Numbers History */}
-        <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 sm:p-8 shadow-xl space-y-5">
+        <div className="rounded-2xl sm:rounded-3xl bg-[#0c1120] border border-white/[0.09] p-5 sm:p-8 shadow-xl space-y-4 sm:space-y-5">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-bold text-white">Unlocked Lookup History</h2>

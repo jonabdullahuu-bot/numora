@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: Props) {
     <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
       <SiteHeader />
 
-      <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 animate-fade-up">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-4 sm:px-6 lg:px-8 lg:px-8 py-10 sm:py-16 animate-fade-up">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}

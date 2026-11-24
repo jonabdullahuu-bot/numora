@@ -37,7 +37,7 @@ export default function BlogIndexPage() {
               className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 numora-card"
             >
               <div>
-                <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-400 mb-3">
                   <span className="rounded-md bg-slate-800 px-2.5 py-1 font-medium text-emerald-400">
                     {post.category}
                   </span>
@@ -62,7 +62,7 @@ export default function BlogIndexPage() {
           ))}
         </section>
 
-        <section className="mt-16 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-slate-900 to-emerald-950/30 p-8 sm:p-10 text-center animate-fade-up-1 numora-card">
+        <section className="mt-12 sm:mt-16 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-slate-900 to-emerald-950/30 p-6 sm:p-10 text-center animate-fade-up-1 numora-card">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Have a Suspicious Number Right Now?
           </h2>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://numoralookup.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
     template: "%s | NumoraLookup",
@@ -42,6 +50,7 @@ export const metadata: Metadata = {
     title: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
     description:
       "Inspect carrier routing, mobile vs. VoIP line type, and scam risk signals for any phone number in seconds.",
+    url: "/",
     siteName: "NumoraLookup",
     type: "website",
     images: ["/logo.jpg?v=2"],

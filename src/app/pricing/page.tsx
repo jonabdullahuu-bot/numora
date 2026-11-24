@@ -203,13 +203,13 @@ export default function PricingPage() {
     <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-100">
       <SiteHeader />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-16 space-y-14 animate-fade-up">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-10 sm:space-y-14 animate-fade-up">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-semibold">
             <CreditCard className="w-3.5 h-3.5" />
             <span>Simple One-Time Passes · No Subscriptions</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.12]">
             Pay Once. Unlock Dossiers Anytime.
           </h1>
           <p className="text-slate-400 text-base leading-relaxed">
@@ -229,7 +229,7 @@ export default function PricingPage() {
                   <div className="text-[11px] uppercase tracking-wider text-emerald-300/80 font-semibold">
                     Your Private Access Token · {activeWallet.creditsRemaining} Credit{activeWallet.creditsRemaining === 1 ? '' : 's'} Remaining
                   </div>
-                  <div className="font-mono text-base sm:text-lg font-bold tracking-wider text-white">
+                  <div className="font-mono text-sm sm:text-lg font-bold tracking-wider text-white break-all">
                     {activeWallet.accessToken}
                   </div>
                 </div>
@@ -257,7 +257,7 @@ export default function PricingPage() {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Standard Pass */}
-          <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-8 flex flex-col justify-between shadow-xl">
+          <div className="rounded-2xl sm:rounded-3xl bg-[#0c1120] border border-white/[0.09] p-5 sm:p-8 flex flex-col justify-between shadow-xl">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
@@ -269,7 +269,7 @@ export default function PricingPage() {
               </div>
 
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums">
+                <span className="text-3xl sm:text-5xl font-extrabold text-white tabular-nums">
                   $7.95
                 </span>
                 <span className="text-xs font-semibold text-indigo-300">
@@ -316,7 +316,7 @@ export default function PricingPage() {
           </div>
 
           {/* Premium Pass */}
-          <div className="rounded-3xl bg-gradient-to-b from-indigo-950/70 via-[#0d152c] to-[#080d1b] border border-sky-400/50 p-8 flex flex-col justify-between shadow-2xl">
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-b from-indigo-950/70 via-[#0d152c] to-[#080d1b] border border-sky-400/50 p-5 sm:p-8 flex flex-col justify-between shadow-2xl">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-sky-300">
@@ -328,7 +328,7 @@ export default function PricingPage() {
               </div>
 
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums">
+                <span className="text-3xl sm:text-5xl font-extrabold text-white tabular-nums">
                   $15.95
                 </span>
                 <span className="text-xs font-semibold text-sky-300">
@@ -473,7 +473,7 @@ export default function PricingPage() {
             </div>
 
             <form onSubmit={handleRestoreToken} className="w-full md:w-auto flex flex-col gap-2">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <input
                   type="text"
                   value={restoreInput}
