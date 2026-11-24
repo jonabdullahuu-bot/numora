@@ -80,7 +80,6 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
     (await resolveCustomerEmailFromPaddle(params.transactionId, params.customerId));
 
   if (!recipient) {
-    // Release claim so a later webhook/verify call with email can still send
     await supabaseAdmin
       .from('access_tokens')
       .update({ email_sent: false })
@@ -93,32 +92,64 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
     .update({ customer_email: recipient })
     .eq('token', params.accessToken);
 
+  const text = [
+    'NumoraLookup — Access Pass Active',
+    '',
+    `Plan: ${params.planLabel} (${params.creditsGranted} lookup credits)`,
+    `Private Access Token: ${params.accessToken}`,
+    '',
+    'Use your token on any device:',
+    '1. Open https://numoralookup.com/dashboard (or https://numoralookup.com/pricing)',
+    `2. Paste your token (${params.accessToken}) to restore credits and view unlocked reports`,
+    '',
+    `Transaction ID: ${params.transactionId}`,
+    'Validity: 30 days (automatically extends each time you use a credit).',
+    'Support: support@numoralookup.com',
+  ].join('\n');
+
   const html = `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#050811; color:#f8fafc; padding:32px 20px;">
-      <div style="max-width:520px; margin:0 auto; background:#0c1120; border:1px solid #1e293b; border-radius:16px; padding:28px;">
-        <div style="font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#34d399;">
-          NumoraLookup · Access Pass Active
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#050811; color:#f8fafc; padding:32px 16px;">
+      <div style="max-width:540px; margin:0 auto; background:#0c1120; border:1px solid #1e293b; border-radius:16px; padding:28px;">
+        <div style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#34d399; background:rgba(16,185,129,0.1); border:1px solid rgba(52,211,153,0.25); padding:5px 10px; border-radius:999px;">
+          NumoraLookup · Pass Confirmed
         </div>
-        <h1 style="margin:10px 0 12px; font-size:22px; color:#ffffff;">
-          Your Private Access Token
+
+        <h1 style="margin:14px 0 10px; font-size:22px; line-height:1.3; color:#ffffff;">
+          Your Private Access Token is Ready
         </h1>
+
         <p style="margin:0 0 20px; font-size:14px; line-height:1.6; color:#94a3b8;">
-          Thank you for your <strong style="color:#ffffff;">${params.planLabel}</strong> purchase. Save this token to access your <strong style="color:#ffffff;">${params.creditsGranted} lookup credits</strong> on any phone, tablet, or computer:
+          Thanks for purchasing <strong style="color:#ffffff;">${params.planLabel}</strong>. Your account has <strong style="color:#ffffff;">${params.creditsGranted} lookup credits</strong> ready to use across any browser or device.
         </p>
-        <div style="background:#050811; border:1px solid #334155; border-radius:12px; padding:16px; text-align:center; margin-bottom:20px;">
-          <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#64748b; margin-bottom:6px;">
+
+        <div style="background:#050811; border:1px solid #334155; border-radius:12px; padding:18px; text-align:center; margin-bottom:22px;">
+          <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#64748b; margin-bottom:8px;">
             Private Access Token
           </div>
           <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:24px; font-weight:800; letter-spacing:0.12em; color:#34d399;">
             ${params.accessToken}
           </div>
         </div>
+
+        <div style="background:#080d1a; border:1px solid #1e293b; border-radius:12px; padding:16px; margin-bottom:22px;">
+          <div style="font-size:12px; font-weight:700; color:#e2e8f0; margin-bottom:8px;">
+            How to use on another phone or computer:
+          </div>
+          <ol style="margin:0; padding-left:18px; font-size:13px; line-height:1.65; color:#94a3b8;">
+            <li>Open <strong style="color:#e2e8f0;">numoralookup.com/dashboard</strong></li>
+            <li>Paste <strong style="color:#34d399;">${params.accessToken}</strong> into the restore token box</li>
+            <li>Search numbers or open your unlocked dossiers</li>
+          </ol>
+        </div>
+
         <a href="https://numoralookup.com/dashboard" style="display:block; text-align:center; background:#10b981; color:#020617; font-weight:700; font-size:14px; text-decoration:none; padding:13px 18px; border-radius:10px;">
-          Open Dashboard & Search Numbers
+          Open Dashboard
         </a>
-        <p style="margin:20px 0 0; font-size:12px; line-height:1.5; color:#64748b;">
-          Transaction ID: ${params.transactionId}<br/>
-          Valid for 30 days (automatically extends each time you use a credit). Need help? Reply to support@numoralookup.com.
+
+        <p style="margin:22px 0 0; padding-top:16px; border-top:1px solid #1e293b; font-size:12px; line-height:1.6; color:#64748b;">
+          Transaction ID: <span style="color:#94a3b8;">${params.transactionId}</span><br/>
+          Valid for 30 days (automatically extends each time you use a credit).<br/>
+          Need help? Contact <a href="mailto:support@numoralookup.com" style="color:#94a3b8;">support@numoralookup.com</a>.
         </p>
       </div>
     </div>
@@ -135,6 +166,7 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
       to: [recipient],
       subject: `Your NumoraLookup Access Token (${params.accessToken})`,
       html,
+      text,
     }),
   });
 
