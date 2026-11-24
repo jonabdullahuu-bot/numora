@@ -171,49 +171,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { data: cached } = await supabaseAdmin
-      .from('phone_cache')
-      .select('*')
-      .eq('e164_number', e164)
-      .maybeSingle();
-
     let report: PhoneReport;
-    if (cached) {
-      report = {
-        e164: cached.e164_number,
-        country: sanitizeText(cached.country_code, countryFallback),
-        carrier: sanitizeText(cached.carrier, 'Carrier Unlisted'),
-        lineType: sanitizeText(cached.line_type, 'Mobile'),
-        location: sanitizeText(
-          `${cached.city || ''}, ${cached.state_region || ''}`.replace(/^, |, $/g, ''),
-          'Verified Region'
-        ),
-        spamRisk: cached.spam_score > 50 ? 'High' : 'Low',
-        ownerName: sanitizeText(cached.owner_name, 'Alexander Vance'),
-        ownerEmail: sanitizeText(cached.owner_email, 'a.vance88@gmail.com'),
-        ownerAddress: sanitizeText(cached.owner_address, '742 Evergreen Terrace, Apt 4B'),
-      };
-    } else {
-      try {
-        report = await fetchGlobalPhoneData(e164, countryFallback);
-      } catch (lookupErr: any) {
-        if (lookupErr?.message === 'Phone number is not valid according to carrier numbering rules.') {
-          return NextResponse.json({ error: lookupErr.message }, { status: 400 });
-        }
-        report = buildDemoReport(e164, countryFallback);
+    try {
+      report = await fetchGlobalPhoneData(e164, countryFallback);
+    } catch (lookupErr: any) {
+      if (lookupErr?.message === 'Phone number is not valid according to carrier numbering rules.') {
+        return NextResponse.json({ error: lookupErr.message }, { status: 400 });
       }
-
-      await supabaseAdmin.from('phone_cache').upsert({
-        e164_number: report.e164,
-        country_code: report.country,
-        carrier: report.carrier,
-        line_type: report.lineType,
-        city: report.location,
-        owner_name: report.ownerName,
-        owner_email: report.ownerEmail,
-        owner_address: report.ownerAddress,
-      });
+      report = buildDemoReport(e164, countryFallback);
     }
+
+    await supabaseAdmin.from('phone_cache').upsert({
+      e164_number: report.e164,
+      country_code: report.country,
+      carrier: report.carrier,
+      line_type: report.lineType,
+      city: report.location,
+      owner_name: report.ownerName,
+      owner_email: report.ownerEmail,
+      owner_address: report.ownerAddress,
+    });
 
     let isUnlocked = false;
     let walletState: TokenSpendOutcome['walletState'] = undefined;
@@ -238,15 +215,20 @@ export async function POST(req: NextRequest) {
       unlocked: false,
       walletState,
       report: {
-        e164: report.e164,
-        country: report.country,
-        carrier: report.carrier,
-        lineType: report.lineType,
-        location: report.location,
-        spamRisk: report.spamRisk,
+        ...report,
+        isPrepaid: null,
+        activityScore: null,
+        activityStatus: 'Locked — Unlock full dossier to view 0–100 activity telemetry',
+        riskSummary: 'Unlock full forensic dossier to inspect burner VoIP classification & activity score.',
+        redFlags: [
+          'Burner / Non-Fixed VoIP classification locked in preview',
+          'Live telecom activity score (0–100) & prepaid billing status locked in preview',
+        ],
+        safetyGuidance: ['Unlock report to view tailored telecom safety & verification guidance.'],
+        warnings: [],
         ownerName: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022\u2022\u2022',
-        ownerEmail: '\u2022\u2022\u2022\u2022\u2022@\u2022\u2022\u2022\u2022.com',
-        ownerAddress: '\u2022\u2022\u2022 \u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022 St, \u2022\u2022\u2022\u2022',
+        ownerEmail: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
+        ownerAddress: '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',
       },
     });
   } catch (err: any) {

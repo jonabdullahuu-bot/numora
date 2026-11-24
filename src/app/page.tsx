@@ -1162,31 +1162,223 @@ export default function NumoraHome() {
             </div>
 
             <div className="p-6 sm:px-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-                  Extended Telecom & Directory Dossier
-                </h3>
-                <span className="text-xs text-slate-500">
-                  {unlocked ? 'Full report unlocked' : 'Protected preview'}
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-indigo-300">
+                    Deep Telecom, VoIP & Line Activity Forensics
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Multi-layer carrier routing, virtual burner classification, and live reachability telemetry
+                  </p>
+                </div>
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.05] border border-white/[0.08] text-slate-300">
+                  {unlocked ? 'Full Forensic Dossier Unlocked' : 'Protected Preview'}
                 </span>
               </div>
 
               <div
-                className={`rounded-2xl border border-white/[0.07] bg-[#060913]/70 divide-y divide-white/[0.06] px-5 ${
+                className={`space-y-6 ${
                   !unlocked ? 'select-none blur-[5px] opacity-55 pointer-events-none' : ''
                 }`}
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3.5 gap-1">
-                  <span className="text-sm text-slate-400">Subscriber Directory Status</span>
-                  <span className="font-semibold text-white">{result.ownerName}</span>
+                {/* Module 1: Overall Risk & Scam Verdict Banner */}
+                <div
+                  className={`p-5 rounded-2xl border ${
+                    result.spamRisk === 'High'
+                      ? 'bg-rose-500/10 border-rose-500/30'
+                      : result.spamRisk === 'Medium'
+                      ? 'bg-amber-500/10 border-amber-400/30'
+                      : 'bg-emerald-500/10 border-emerald-500/25'
+                  }`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                      1. Forensic Risk & Burner Verdict
+                    </span>
+                    <span
+                      className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                        result.spamRisk === 'High'
+                          ? 'bg-rose-500/20 text-rose-300'
+                          : result.spamRisk === 'Medium'
+                          ? 'bg-amber-500/20 text-amber-200'
+                          : 'bg-emerald-500/20 text-emerald-300'
+                      }`}
+                    >
+                      {result.spamRisk} Anomaly Risk
+                    </span>
+                  </div>
+                  <p className="text-sm sm:text-base font-semibold text-white mt-2">
+                    {result.riskSummary || 'Telecom & routing profile analyzed.'}
+                  </p>
+                  {Array.isArray(result.redFlags) && result.redFlags.length > 0 && (
+                    <ul className="mt-3 space-y-1.5 border-t border-white/[0.08] pt-3">
+                      {result.redFlags.map((flag: string, idx: number) => (
+                        <li key={idx} className="text-xs sm:text-sm text-slate-200 flex items-start gap-2">
+                          <span className="text-indigo-400 font-bold mt-0.5">?</span>
+                          <span>{flag}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3.5 gap-1">
-                  <span className="text-sm text-slate-400">National Format & Contact Clues</span>
-                  <span className="font-semibold text-white">{result.ownerEmail}</span>
+
+                {/* Module 2 & 3: Line Forensics + Live Line Activity Score */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                  <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-3.5">
+                    <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-300">
+                        2. Line & Burner VoIP Forensics
+                      </h4>
+                      <span className="text-[11px] text-slate-400">Carrier Intel</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Line Classification</span>
+                      <span className="font-semibold text-white">{result.lineType}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Virtual / Non-Fixed VoIP</span>
+                      <span
+                        className={`font-semibold ${
+                          result.isNonFixedVoip
+                            ? 'text-rose-400'
+                            : result.isVoip
+                            ? 'text-amber-300'
+                            : 'text-emerald-400'
+                        }`}
+                      >
+                        {result.isNonFixedVoip
+                          ? 'Yes (App / Virtual Burner)'
+                          : result.isVoip
+                          ? 'Fixed VoIP (Wireline/Cloud)'
+                          : 'No (Physical Telecom Line)'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Prepaid Billing Status</span>
+                      <span className="font-semibold text-white">
+                        {result.isPrepaid === true
+                          ? 'Prepaid Line'
+                          : result.isPrepaid === false
+                          ? 'Postpaid / Contract Carrier'
+                          : 'Not Disclosed by Carrier'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Underlying Carrier</span>
+                      <span className="font-semibold text-white">{result.carrier}</span>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-3.5">
+                    <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-sky-300">
+                        3. Live Line Activity & Reachability
+                      </h4>
+                      <span className="text-[11px] font-semibold text-slate-300 tabular-nums">
+                        {typeof result.activityScore === 'number'
+                          ? `Score: ${result.activityScore} / 100`
+                          : 'Network Status'}
+                      </span>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                        <span>Telecom Activity Index</span>
+                        <span className="font-semibold text-white">
+                          {typeof result.activityScore === 'number'
+                            ? `${result.activityScore}%`
+                            : 'Verified'}
+                        </span>
+                      </div>
+                      <div className="w-full h-2.5 rounded-full bg-white/[0.07] overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${
+                            typeof result.activityScore === 'number' && result.activityScore <= 30
+                              ? 'bg-rose-400'
+                              : typeof result.activityScore === 'number' && result.activityScore < 70
+                              ? 'bg-amber-400'
+                              : 'bg-emerald-400'
+                          }`}
+                          style={{
+                            width: `${
+                              typeof result.activityScore === 'number'
+                                ? Math.max(8, Math.min(100, result.activityScore))
+                                : 82
+                            }%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Connection State</span>
+                      <span className="font-semibold text-white text-right">
+                        {result.activityStatus || 'Active Carrier Assignment'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Numbering Plan Valid</span>
+                      <span className="font-semibold text-emerald-400">
+                        {result.isValid !== false ? 'Valid & Assignable' : 'Invalid'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Telemetry Source</span>
+                      <span className="font-semibold text-slate-200 uppercase">
+                        {result.dataSource === 'trestle'
+                          ? 'Trestle Phone Intelligence'
+                          : 'Global Telecom Registry'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3.5 gap-1">
-                  <span className="text-sm text-slate-400">Registered Telecom Region</span>
-                  <span className="font-semibold text-white">{result.ownerAddress}</span>
+
+                {/* Module 4: International Numbering & Safety Audit */}
+                <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                      4. International Numbering & Safety Audit
+                    </h4>
+                    <span className="text-[11px] text-slate-400">E.164 & Hygiene</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-slate-400 block">E.164 Canonical</span>
+                      <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
+                        {result.e164}
+                      </span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-slate-400 block">International Dialing</span>
+                      <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
+                        {result.internationalFormat || result.e164}
+                      </span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                      <span className="text-slate-400 block">National / Local Format</span>
+                      <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
+                        {result.nationalFormat || result.e164}
+                      </span>
+                    </div>
+                  </div>
+
+                  {Array.isArray(result.safetyGuidance) && result.safetyGuidance.length > 0 && (
+                    <div className="pt-2 border-t border-white/[0.06]">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                        Recommended Verification Steps
+                      </p>
+                      <ul className="space-y-1.5">
+                        {result.safetyGuidance.map((tip: string, idx: number) => (
+                          <li key={idx} className="text-xs sm:text-sm text-slate-300 flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                            <span>{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
 
