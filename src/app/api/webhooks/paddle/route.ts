@@ -1,6 +1,7 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
 import { Environment, Paddle } from '@paddle/paddle-node-sdk';
 import { supabaseAdmin } from '@/lib/supabase';
+import { deliverAccessTokenEmail } from '@/lib/sendTokenEmail';
 
 const paddle = new Paddle(process.env.PADDLE_API_KEY!, {
   environment:
@@ -132,6 +133,20 @@ export async function POST(req: NextRequest) {
       }
     }
 
+      const finalTokenRow = await supabaseAdmin
+        .from('access_tokens')
+        .select('token, plan_label')
+        .eq('paddle_transaction_id', tx.id)
+        .maybeSingle();
+
+      if (finalTokenRow?.data?.token) {
+        await deliverAccessTokenEmail({
+          transactionId: tx.id,
+          accessToken: finalTokenRow.data.token,
+          planLabel: finalTokenRow.data.plan_label || planLabel,
+          creditsGranted: creditsToGrant,
+          customerId: (tx as any).customerId || (tx as any).customer_id || null,
+        }).catch(() => {});
     return NextResponse.json({ received: true });
   } catch (e) {
     console.error('Paddle webhook processing error:', e);

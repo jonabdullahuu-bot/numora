@@ -1,6 +1,7 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { supabaseAdmin } from '@/lib/supabase';
+import { deliverAccessTokenEmail } from '@/lib/sendTokenEmail';
 
 function generateAccessToken(): string {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -66,6 +67,13 @@ export async function POST(req: NextRequest) {
           );
         }
       }
+
+      await deliverAccessTokenEmail({
+        transactionId: cleanTxId,
+        accessToken: existing.token,
+        planLabel: existing.plan_label,
+        creditsGranted: existing.plan_id === 'pro' ? 12 : 4,
+      }).catch(() => {});
 
       return NextResponse.json({
         verified: true,
@@ -171,6 +179,13 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+
+    await deliverAccessTokenEmail({
+      transactionId: cleanTxId,
+      accessToken,
+      planLabel,
+      creditsGranted,
+    }).catch(() => {});
 
     return NextResponse.json({
       verified: true,
