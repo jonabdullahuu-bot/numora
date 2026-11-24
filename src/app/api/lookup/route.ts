@@ -3,6 +3,20 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildDemoReport, fetchGlobalPhoneData, PhoneReport } from '@/lib/phoneLookup';
 
+const CACHE_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+const rateBucket = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateBucket.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateBucket.set(ip, { count: 1, resetAt: now + 60_000 });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > 25; // max 25 lookups/minute per IP
+}
+
 function sanitizeText(val: unknown, fallback: string): string {
   const s = String(val || '').trim();
   if (
@@ -145,6 +159,15 @@ export async function POST(req: NextRequest) {
   let countryFallback = 'INTL';
 
   try {
+    const forwardedFor = req.headers.get('x-forwarded-for') || 'unknown';
+    const clientIp = forwardedFor.split(',')[0].trim();
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { error: 'Too many lookup requests. Please wait a minute and try again.' },
+        { status: 429 }
+      );
+    }
+
     const { rawNumber, transactionId, accessToken, onlyIfAlreadyUnlocked } = await req.json();
 
     const parsed = parsePhoneNumberFromString(String(rawNumber || ''));
@@ -171,26 +194,62 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let report: PhoneReport;
+    // Check fresh 14-day cache before spending a Trestle query
+    let report: PhoneReport | null = null;
     try {
-      report = await fetchGlobalPhoneData(e164, countryFallback);
-    } catch (lookupErr: any) {
-      if (lookupErr?.message === 'Phone number is not valid according to carrier numbering rules.') {
-        return NextResponse.json({ error: lookupErr.message }, { status: 400 });
+      const { data: cached } = await supabaseAdmin
+        .from('phone_cache')
+        .select('*')
+        .eq('e164_number', e164)
+        .maybeSingle();
+
+      if (cached?.raw_report && cached?.updated_at) {
+        const ageMs = Date.now() - new Date(cached.updated_at).getTime();
+        if (ageMs >= 0 && ageMs < CACHE_TTL_MS && cached.raw_report.dataSource === 'trestle') {
+          report = cached.raw_report as PhoneReport;
+        }
       }
-      report = buildDemoReport(e164, countryFallback);
+    } catch {
+      // Cache miss or raw_report column not yet created — fall through to live fetch
     }
 
-    await supabaseAdmin.from('phone_cache').upsert({
-      e164_number: report.e164,
-      country_code: report.country,
-      carrier: report.carrier,
-      line_type: report.lineType,
-      city: report.location,
-      owner_name: report.ownerName,
-      owner_email: report.ownerEmail,
-      owner_address: report.ownerAddress,
-    });
+    if (!report) {
+      try {
+        report = await fetchGlobalPhoneData(e164, countryFallback);
+      } catch (lookupErr: any) {
+        if (lookupErr?.message === 'Phone number is not valid according to carrier numbering rules.') {
+          return NextResponse.json({ error: lookupErr.message }, { status: 400 });
+        }
+        report = buildDemoReport(e164, countryFallback);
+      }
+
+      // Persist both summary columns and full raw_report JSON when available
+      try {
+        await supabaseAdmin.from('phone_cache').upsert({
+          e164_number: report.e164,
+          country_code: report.country,
+          carrier: report.carrier,
+          line_type: report.lineType,
+          city: report.location,
+          owner_name: report.ownerName,
+          owner_email: report.ownerEmail,
+          owner_address: report.ownerAddress,
+          raw_report: report,
+          updated_at: new Date().toISOString(),
+        });
+      } catch {
+        await supabaseAdmin.from('phone_cache').upsert({
+          e164_number: report.e164,
+          country_code: report.country,
+          carrier: report.carrier,
+          line_type: report.lineType,
+          city: report.location,
+          owner_name: report.ownerName,
+          owner_email: report.ownerEmail,
+          owner_address: report.ownerAddress,
+        });
+      }
+    }
 
     let isUnlocked = false;
     let walletState: TokenSpendOutcome['walletState'] = undefined;
