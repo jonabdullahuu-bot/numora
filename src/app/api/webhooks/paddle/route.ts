@@ -69,7 +69,10 @@ export async function POST(req: NextRequest) {
 
       if (reportErr) {
         console.error('unlocked_reports upsert error:', reportErr);
-        return NextResponse.json({ error: 'Failed to record report', details: reportErr.message }, { status: 500 });
+        return NextResponse.json(
+          { error: 'Failed to record report', details: reportErr.message },
+          { status: 500 }
+        );
       }
 
       const { data: existingTx, error: existingTxErr } = await supabaseAdmin
@@ -80,7 +83,10 @@ export async function POST(req: NextRequest) {
 
       if (existingTxErr) {
         console.error('access_tokens lookup by tx error:', existingTxErr);
-        return NextResponse.json({ error: 'Database lookup failed', details: existingTxErr.message }, { status: 500 });
+        return NextResponse.json(
+          { error: 'Database lookup failed', details: existingTxErr.message },
+          { status: 500 }
+        );
       }
 
       if (!existingTx) {
@@ -95,7 +101,10 @@ export async function POST(req: NextRequest) {
 
         if (existingTokenErr) {
           console.error('access_tokens lookup by token error:', existingTokenErr);
-          return NextResponse.json({ error: 'Token lookup failed', details: existingTokenErr.message }, { status: 500 });
+          return NextResponse.json(
+            { error: 'Token lookup failed', details: existingTokenErr.message },
+            { status: 500 }
+          );
         }
 
         if (existingTokenRow) {
@@ -112,7 +121,10 @@ export async function POST(req: NextRequest) {
 
           if (updateErr) {
             console.error('access_tokens update error:', updateErr);
-            return NextResponse.json({ error: 'Token update failed', details: updateErr.message }, { status: 500 });
+            return NextResponse.json(
+              { error: 'Token update failed', details: updateErr.message },
+              { status: 500 }
+            );
           }
         } else {
           const { error: insertErr } = await supabaseAdmin.from('access_tokens').insert({
@@ -127,11 +139,13 @@ export async function POST(req: NextRequest) {
 
           if (insertErr) {
             console.error('access_tokens insert error:', insertErr);
-            return NextResponse.json({ error: 'Token insert failed', details: insertErr.message }, { status: 500 });
+            return NextResponse.json(
+              { error: 'Token insert failed', details: insertErr.message },
+              { status: 500 }
+            );
           }
         }
       }
-    }
 
       const finalTokenRow = await supabaseAdmin
         .from('access_tokens')
@@ -147,11 +161,12 @@ export async function POST(req: NextRequest) {
           creditsGranted: creditsToGrant,
           customerId: (tx as any).customerId || (tx as any).customer_id || null,
         }).catch(() => {});
+      }
+    }
+
     return NextResponse.json({ received: true });
   } catch (e) {
     console.error('Paddle webhook processing error:', e);
     return NextResponse.json({ error: 'Webhook processing error' }, { status: 500 });
   }
 }
-
-
