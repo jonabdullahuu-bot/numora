@@ -4,36 +4,24 @@ export function SiteHeader() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
-          <a href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
-            <img
-              src="/logo.jpg"
-              alt="NumoraLookup Logo"
-              className="h-9 w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card"
-            />
-            <div className="flex items-baseline gap-2 min-w-0">
-              <span className="text-xl font-bold tracking-tight text-white truncate">
-                NumoraLookup
-              </span>
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="/" className="flex items-center gap-3 group">
+            <img src="/logo.jpg" alt="NumoraLookup Logo" className="h-9 w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card" />
+            <div className="flex items-baseline gap-2">
+              <span className="text-xl font-bold tracking-tight text-white">NumoraLookup</span>
             </div>
           </a>
 
-          <nav className="flex items-center gap-4 sm:gap-6 text-sm shrink-0">
-            <a
-              href="/pricing"
-              className="text-slate-300 hover:text-white transition font-medium whitespace-nowrap"
-            >
+          <nav className="flex items-center gap-6 text-sm">
+            <a href="/pricing" className="text-slate-300 hover:text-white transition font-medium">
               Pricing
             </a>
-            <Link
-              href="/blog"
-              className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors whitespace-nowrap"
-            >
+            <Link href="/blog" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
               Blog
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.1] text-white text-xs font-semibold transition whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.1] text-white text-xs font-semibold transition"
             >
               Dashboard
             </Link>
