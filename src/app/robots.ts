@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next";
+﻿import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   const baseUrl =
@@ -9,8 +9,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/blog"],
-        disallow: ["/api/"],
+        allow: "/",
+        disallow: ["/api/", "/dashboard"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

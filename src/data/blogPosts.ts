@@ -1,4 +1,4 @@
-export interface BlogPost {
+﻿export interface BlogPost {
   slug: string;
   title: string;
   description: string;
@@ -186,4 +186,58 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     ],
   },
+
+  {
+    slug: "wrong-number-text-scam-voip",
+    title: "Why You Keep Getting Random 'Wrong Number' Texts — And How VoIP Scams Work",
+    description:
+      "Receiving harmless-looking wrong-number texts? Learn why scammers send accidental messages from virtual VoIP numbers to confirm active lines—and how to check them safely.",
+    category: "Scam Prevention",
+    readTime: "5 min read",
+    publishedAt: "2026-11-25",
+    keywords: [
+      "wrong number text scam",
+      "random wrong number texts",
+      "voip text scam checker",
+      "unknown number text lookup",
+    ],
+    sections: [
+      {
+        heading: "Why Scammers Send 'Wrong Number' Texts",
+        body: [
+          "Messages like 'Hey Sarah, are we still meeting for coffee?' or 'Hi, is this Dr. Miller's office?' are rarely honest typos. Modern text-scam networks skip links and obvious pitches because carrier spam filters block them immediately.",
+          "Instead, they send a short, normal-sounding question to test which numbers from leaked lists belong to real people who reply to strangers. Once you answer 'Sorry, wrong number,' the sender apologizes, strikes up a friendly chat, and tries to move the conversation to WhatsApp or Telegram.",
+        ],
+      },
+      {
+        heading: "Why the Area Code Looks Local",
+        body: [
+          "Seeing a familiar local area code does not mean the sender lives nearby. Scammers buy bulk virtual phone numbers through VoIP (Voice over Internet Protocol) and cloud messaging gateways that let anyone pick almost any area code in seconds.",
+          "Unlike a traditional mobile SIM card registered to a physical wireless carrier, virtual VoIP numbers can be discarded and rotated as soon as carriers flag them.",
+        ],
+      },
+      {
+        heading: "4 Safe Steps When You Receive an Unknown Text",
+        body: [
+          "1. Do not reply—not even to say 'wrong number.' Silence keeps your number off active-responder lists.",
+          "2. Never click links or move the chat to WhatsApp or Telegram.",
+          "3. Check the line type and carrier on NumoraLookup using the full country code (such as +1 or +44) to see whether the number is a standard mobile carrier line or a virtual VoIP gateway.",
+          "4. Use your phone's built-in Block and Report Junk option so mobile carriers can flag the sender's number block.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What happens if I reply 'wrong number' to a spam text?",
+        answer:
+          "Replying confirms to the sender's automated system that your phone number is active and monitored by a real person, which typically leads to more scam messages or a scripted friendly follow-up.",
+      },
+      {
+        question: "How can I check if a wrong-number text came from a VoIP burner?",
+        answer:
+          "Enter the full phone number with its country code into NumoraLookup to inspect its telecom carrier, line classification (mobile, landline, or VoIP), and spam risk indicators.",
+      },
+    ],
+  },
 ];
+
