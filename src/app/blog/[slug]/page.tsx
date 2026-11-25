@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BLOG_POSTS } from "../../../data/blogPosts";
@@ -38,7 +38,12 @@ export default async function BlogPostPage({ params }: Props) {
   const post = BLOG_POSTS.find((p) => p.slug === slug);
   if (!post) notFound();
 
-  const relatedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const currentIndex = BLOG_POSTS.findIndex((p) => p.slug === post.slug);
+  const rotatedPosts = [
+    ...BLOG_POSTS.slice(currentIndex + 1),
+    ...BLOG_POSTS.slice(0, currentIndex),
+  ];
+  const relatedPosts = rotatedPosts.slice(0, 4);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
