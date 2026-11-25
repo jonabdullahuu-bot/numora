@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,24 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteUrl}/#organization`,
+  name: "NumoraLookup",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.jpg?v=2`,
+  email: "support@numoralookup.com",
+  sameAs: [
+    "https://x.com/NumoraLookup",
+    "https://www.youtube.com/@NumoraLookup",
+    "https://www.reddit.com/user/NumoraLookup/",
+    "https://www.tiktok.com/@numoralookup",
+    "https://www.instagram.com/numoralookup/",
+    "https://www.facebook.com/profile.php?id=61596552735679",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,8 +94,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+          }}
+        />
         {children}
+        <Analytics />
       </body>
     </html>
   );
 }
+
