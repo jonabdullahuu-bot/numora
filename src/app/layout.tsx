@@ -76,7 +76,6 @@ const organizationSchema = {
   sameAs: [
     "https://x.com/NumoraLookup",
     "https://www.youtube.com/@NumoraLookup",
-    "https://www.reddit.com/user/NumoraLookup/",
     "https://www.tiktok.com/@numoralookup",
     "https://www.instagram.com/numoralookup/",
     "https://www.facebook.com/profile.php?id=61596552735679",
@@ -107,4 +106,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
