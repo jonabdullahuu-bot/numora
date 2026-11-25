@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';
@@ -53,7 +53,7 @@ export default function OptOutPage() {
           </h1>
           <p className="text-sm text-slate-400 leading-relaxed">
             Enter your international phone number (including country code such as <code className="text-slate-200">+1</code>,{' '}
-            <code className="text-slate-200">+44</code>, or <code className="text-slate-200">+383</code>) to purge any cached
+            <code className="text-slate-200">+44</code>) to purge any cached
             entry and block future lookups on NumoraLookup.
           </p>
         </div>
