@@ -80,6 +80,7 @@ const organizationSchema = {
     "https://www.tiktok.com/@numoralookup",
     "https://www.instagram.com/numoralookup/",
     "https://www.facebook.com/profile.php?id=61596552735679",
+    "https://medium.com/@numoralookup",
   ],
 };
 
