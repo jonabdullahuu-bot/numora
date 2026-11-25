@@ -45,6 +45,20 @@ export default async function BlogPostPage({ params }: Props) {
   ];
   const relatedPosts = rotatedPosts.slice(0, 4);
 
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    "https://numoralookup.com";
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${siteUrl}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${siteUrl}/blog/${post.slug}` },
+    ],
+  };
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -72,6 +86,10 @@ export default async function BlogPostPage({ params }: Props) {
       <SiteHeader />
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-4 sm:px-6 lg:px-8 lg:px-8 py-10 sm:py-16 animate-fade-up">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -194,3 +212,4 @@ export default async function BlogPostPage({ params }: Props) {
     </div>
   );
 }
+

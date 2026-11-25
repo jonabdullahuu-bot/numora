@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   title: {
-    default: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
+    default: "NumoraLookup | Reverse Phone Lookup, VoIP & Carrier Check (No Subscription)",
     template: "%s | NumoraLookup",
   },
   description:
-    "Check any unknown phone number in seconds. Identify carrier routing, VoIP burner lines (Google Voice, TextNow), country origin, and spam/catfish risk signals anonymously.",
+    "Check any unknown phone number in seconds with zero subscriptions or fake loading bars. Detect Google Voice & TextNow VoIP burners, carrier routing, and scam risk 100% privately.",
   keywords: [
     "NumoraLookup",
     "reverse phone lookup",
@@ -48,38 +48,47 @@ export const metadata: Metadata = {
     apple: "/logo.jpg?v=2",
   },
   openGraph: {
-    title: "NumoraLookup — Reverse Phone Lookup, Carrier & VoIP Scam Checker",
+    title: "NumoraLookup | Instant VoIP, Carrier & Scam Phone Lookup (No Subscription)",
     description:
-      "Inspect carrier routing, mobile vs. VoIP line type, and scam risk signals for any phone number in seconds.",
+      "Inspect carrier routing, mobile vs. VoIP burner line type, and scam risk signals for any phone number in seconds. Owner is never notified.",
     url: "/",
     siteName: "NumoraLookup",
     type: "website",
-    images: ["/logo.jpg?v=2"],
   },
   twitter: {
-    card: "summary",
-    title: "NumoraLookup — Reverse Phone Lookup & Scam Checker",
+    card: "summary_large_image",
+    title: "NumoraLookup | Instant VoIP & Carrier Phone Lookup",
     description:
-      "Verify unknown callers, detect VoIP burners, and check carrier telemetry in seconds.",
-    images: ["/logo.jpg?v=2"],
+      "Detect Google Voice & TextNow burners, verify carriers, and check scam risk in seconds. No monthly subscriptions.",
   },
 };
 
-const organizationSchema = {
+const structuredDataGraph = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${siteUrl}/#organization`,
-  name: "NumoraLookup",
-  url: siteUrl,
-  logo: `${siteUrl}/logo.jpg?v=2`,
-  email: "support@numoralookup.com",
-  sameAs: [
-    "https://x.com/NumoraLookup",
-    "https://www.youtube.com/@NumoraLookup",
-    "https://www.tiktok.com/@numoralookup",
-    "https://www.instagram.com/numoralookup/",
-    "https://www.facebook.com/profile.php?id=61596552735679",
-    "https://medium.com/@numoralookup",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "NumoraLookup",
+      url: siteUrl,
+      logo: `${siteUrl}/logo.jpg?v=2`,
+      email: "support@numoralookup.com",
+      sameAs: [
+        "https://x.com/NumoraLookup",
+        "https://www.youtube.com/@NumoraLookup",
+        "https://www.tiktok.com/@numoralookup",
+        "https://www.instagram.com/numoralookup/",
+        "https://www.facebook.com/profile.php?id=61596552735679",
+        "https://medium.com/@numoralookup",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "NumoraLookup",
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
   ],
 };
 
@@ -97,7 +106,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredDataGraph).replace(/</g, "\\u003c"),
           }}
         />
         {children}
@@ -106,5 +115,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-

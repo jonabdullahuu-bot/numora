@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { createPortal } from "react-dom";
 import { SiteFooter } from "../components/SiteChrome";
@@ -544,6 +544,7 @@ export default function NumoraHome() {
   const [verifyingPayment, setVerifyingPayment] = useState(false);
   const [paymentStatusMessage, setPaymentStatusMessage] = useState<string>('');
   const [wallet, setWallet] = useState<PassWallet | null>(null);
+  const [homeMobileMenuOpen, setHomeMobileMenuOpen] = useState<boolean>(false);
 
   const pickerRef = useRef<HTMLDivElement>(null);
   const activeTargetNumberRef = useRef<string>('');
@@ -911,33 +912,116 @@ export default function NumoraHome() {
         }}
       />
 
-      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
-          <a href="/" className="flex items-center gap-3 group">
-            <img src="/logo.jpg" alt="NumoraLookup Logo" className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card" />
-            <div className="flex items-baseline gap-2">
-              <span className="text-base sm:text-xl font-bold tracking-tight text-white truncate">NumoraLookup</span>
-              </div>
+                  <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+          <a
+            href="/"
+            onClick={() => setHomeMobileMenuOpen(false)}
+            className="flex items-center gap-2 sm:gap-3 group min-w-0"
+          >
+            <img
+              src="/logo.jpg"
+              alt="NumoraLookup Logo"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card"
+            />
+            <span className="text-sm sm:text-xl font-bold tracking-tight text-white truncate">
+              NumoraLookup
+            </span>
           </a>
 
-          <nav className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm shrink-0">
-            <a href="/pricing" className="text-slate-300 hover:text-white transition font-medium">
+          {(() => {
+            const creditsCount = wallet?.creditsRemaining ?? 0;
+            const hasCredits = creditsCount > 0;
+            const navLinkClass =
+              "text-slate-300 hover:text-white transition font-medium whitespace-nowrap";
+            const homeCreditBadge = (
+              <span
+                aria-label={`${creditsCount} ${creditsCount === 1 ? "credit" : "credits"} remaining`}
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border text-[11px] sm:text-xs font-semibold whitespace-nowrap tabular-nums select-none ${
+                  hasCredits
+                    ? "bg-emerald-500/15 border-emerald-400/35 text-emerald-300"
+                    : "bg-slate-900/80 border-slate-700/80 text-slate-300"
+                }`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full shrink-0 ${
+                    hasCredits ? "bg-emerald-400" : "bg-slate-500"
+                  }`}
+                />
+                <span>
+                  {creditsCount} {creditsCount === 1 ? "Credit" : "Credits"}
+                </span>
+              </span>
+            );
+
+            return (
+              <>
+                {/* Desktop & Tablet: Pricing, Blog, Dashboard, then Credits */}
+                <nav className="hidden sm:flex items-center gap-5 md:gap-6 text-xs sm:text-sm shrink-0">
+                  <a href="/pricing" className={navLinkClass}>
+                    Pricing
+                  </a>
+                  <Link href="/blog" className={navLinkClass}>
+                    Blog
+                  </Link>
+                  <a href="/dashboard" className={navLinkClass}>
+                    Dashboard
+                  </a>
+                  {homeCreditBadge}
+                </nav>
+
+                {/* Phone: Credits outside menu + Dropdown button */}
+                <div className="flex sm:hidden items-center gap-2 shrink-0">
+                  {homeCreditBadge}
+                  <button
+                    type="button"
+                    onClick={() => setHomeMobileMenuOpen((prev) => !prev)}
+                    aria-expanded={homeMobileMenuOpen}
+                    aria-label={homeMobileMenuOpen ? "Close menu" : "Open menu"}
+                    className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.12] text-white transition cursor-pointer"
+                  >
+                    {homeMobileMenuOpen ? (
+                      <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </>
+            );
+          })()}
+        </div>
+
+        {/* Phone Dropdown Menu */}
+        {homeMobileMenuOpen && (
+          <div className="sm:hidden border-t border-slate-800/80 bg-[#070b16]/95 backdrop-blur-md px-4 py-3 space-y-1">
+            <a
+              href="/pricing"
+              onClick={() => setHomeMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+            >
               Pricing
             </a>
-            <Link href="/blog" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">Blog</Link>
-            {wallet && wallet.creditsRemaining > 0 ? (
-              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] sm:text-xs font-semibold tabular-nums">
-                <Coins className="w-3.5 h-3.5" />
-                {wallet.creditsRemaining} Credits Left
-              </span>
-            ) : (
-              <a
-                href="/dashboard"
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.1] text-white text-[11px] sm:text-xs font-semibold transition"
-              >Dashboard</a>
-            )}
-          </nav>
-        </div>
+            <Link
+              href="/blog"
+              onClick={() => setHomeMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+            >
+              Blog
+            </Link>
+            <a
+              href="/dashboard"
+              onClick={() => setHomeMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+            >
+              Dashboard
+            </a>
+          </div>
+        )}
       </header>
       <div className="h-16 w-full shrink-0" aria-hidden="true" />
 
@@ -1057,22 +1141,43 @@ export default function NumoraHome() {
             </div>
           </div>
 
-          <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-            <span>Try sample:</span>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
+            <span className="font-medium text-slate-300">Try 1-click free scan:</span>
             {SAMPLE_NUMBERS.map((sample) => (
               <button
                 key={`${sample.iso}-${sample.localNumber}`}
                 type="button"
                 onClick={() => handleSampleClick(sample)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.09] border border-white/[0.08] text-slate-300 transition cursor-pointer tabular-nums"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-400/25 hover:border-indigo-400/50 text-slate-200 transition cursor-pointer tabular-nums"
               >
                 <CountryFlag iso={sample.iso} name={sample.label} />
-                <span>{sample.label}:</span>
-                <span className="text-indigo-300">
+                <span className="font-medium">{sample.label}:</span>
+                <span className="text-indigo-300 font-semibold">
                   {sample.dialCode} {sample.localNumber}
                 </span>
               </button>
             ))}
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-300">
+            <span className="inline-flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
+              </svg>
+              <span>Instant Results (No Fake Loading Bar)</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
+              </svg>
+              <span>One-Time Passes (No Subscriptions)</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
+              </svg>
+              <span>100% Private (Owner Never Notified)</span>
+            </span>
           </div>
 
           {loading && (
@@ -1844,4 +1949,7 @@ export default function NumoraHome() {
     </div>
   );
 }
+
+
+
 

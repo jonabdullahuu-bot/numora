@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
 function normalizeToken(raw: unknown): string {
@@ -20,7 +20,15 @@ export async function GET(req: NextRequest) {
     .eq('token', token)
     .maybeSingle();
 
-  if (error || !data) {
+  if (error) {
+    console.error('[GET /api/tokens] Supabase error:', error);
+    return NextResponse.json(
+      { error: 'Unable to verify access token right now. Please try again.' },
+      { status: 500 }
+    );
+  }
+
+  if (!data) {
     return NextResponse.json({ error: 'Access token not found.' }, { status: 404 });
   }
 
@@ -55,7 +63,15 @@ export async function POST(req: NextRequest) {
       .eq('token', token)
       .maybeSingle();
 
-    if (error || !data) {
+    if (error) {
+      console.error('[POST /api/tokens] Supabase error:', error);
+      return NextResponse.json(
+        { error: 'Unable to verify access token right now. Please try again.' },
+        { status: 500 }
+      );
+    }
+
+    if (!data) {
       return NextResponse.json({ error: 'Invalid access token.' }, { status: 404 });
     }
 
@@ -99,6 +115,7 @@ export async function POST(req: NextRequest) {
       .maybeSingle();
 
     if (updateErr || !updated) {
+      if (updateErr) console.error('[POST /api/tokens] Update error:', updateErr);
       return NextResponse.json({ error: 'Could not redeem credit. Please try again.' }, { status: 409 });
     }
 
@@ -115,3 +132,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -34,7 +34,21 @@ export default function DashboardPage() {
   const [statusMsg, setStatusMsg] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
 
-  const syncToken = async (rawToken: string, showFeedback = false) => {
+  const clearCachedWallet = () => {
+    try {
+      window.localStorage.removeItem('numora_pass_wallet_v1');
+      window.dispatchEvent(new Event('storage'));
+    } catch {
+      // ignore storage errors
+    }
+    setWallet(null);
+  };
+
+  const syncToken = async (
+    rawToken: string,
+    showFeedback = false,
+    isAutoSync = false
+  ) => {
     const cleaned = rawToken.trim().toUpperCase();
     if (!cleaned) return;
 
@@ -43,10 +57,24 @@ export default function DashboardPage() {
     if (showFeedback) setStatusMsg('');
 
     try {
-      const res = await fetch(`/api/tokens?token=${encodeURIComponent(cleaned)}`);
+      const res = await fetch(`/api/tokens?token=${encodeURIComponent(cleaned)}`, {
+        cache: 'no-store',
+      });
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
+        if (res.status === 404 || res.status === 410) {
+          if (isAutoSync) {
+            clearCachedWallet();
+            return;
+          }
+          if (
+            wallet?.accessToken &&
+            wallet.accessToken.trim().toUpperCase() === cleaned
+          ) {
+            clearCachedWallet();
+          }
+        }
         setErrorMsg(data?.error || 'Could not find that access token.');
       } else {
         const nextWallet: StoredWallet = {
@@ -70,9 +98,10 @@ export default function DashboardPage() {
           'numora_pass_wallet_v1',
           JSON.stringify(nextWallet)
         );
+        window.dispatchEvent(new Event('storage'));
         if (showFeedback) {
           setStatusMsg(
-            `Synced token ${nextWallet.accessToken} — ${nextWallet.creditsRemaining} credit${
+            `Synced token ${nextWallet.accessToken} - ${nextWallet.creditsRemaining} credit${
               nextWallet.creditsRemaining === 1 ? '' : 's'
             } available.`
           );
@@ -92,7 +121,7 @@ export default function DashboardPage() {
       const parsed: StoredWallet = JSON.parse(raw);
       setWallet(parsed);
       if (parsed?.accessToken) {
-        syncToken(parsed.accessToken, false);
+        syncToken(parsed.accessToken, false, true);
       }
     } catch {
       // ignore storage read errors
@@ -101,7 +130,7 @@ export default function DashboardPage() {
 
   const handleRestoreSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await syncToken(tokenInput, true);
+    await syncToken(tokenInput, true, false);
     setTokenInput('');
   };
 
@@ -255,7 +284,7 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   disabled={loading}
-                  onClick={() => syncToken(wallet.accessToken!, true)}
+                  onClick={() => syncToken(wallet.accessToken!, true, false)}
                   className="px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-slate-200 font-semibold text-xs inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50 transition"
                 >
                   <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />

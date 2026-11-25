@@ -1,7 +1,8 @@
-'use client';
+﻿'use client';
 
 import { SiteHeader, SiteFooter } from "../../components/SiteChrome";
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { initializePaddle, Paddle } from '@paddle/paddle-js';
 import {
   CheckCircle2,
@@ -10,10 +11,9 @@ import {
   Lock,
   CreditCard,
   Scale,
-  KeyRound,
   Copy,
   Check,
-  RefreshCw,
+  ArrowRight,
 } from 'lucide-react';
 
 interface StoredWallet {
@@ -31,12 +31,8 @@ export default function PricingPage() {
   const [openingTier, setOpeningTier] = useState<'single' | 'pro' | null>(null);
   const [message, setMessage] = useState<string>('');
   const [activeWallet, setActiveWallet] = useState<StoredWallet | null>(null);
-  const [restoreInput, setRestoreInput] = useState<string>('');
-  const [restoring, setRestoring] = useState<boolean>(false);
-  const [restoreError, setRestoreError] = useState<string>('');
   const [copiedToken, setCopiedToken] = useState<boolean>(false);
 
-  // Sync existing token from localStorage and refresh live balance from Supabase
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem('numora_pass_wallet_v1');
@@ -91,7 +87,8 @@ export default function PricingPage() {
                 }),
               });
               const verifyData = await verifyRes.json().catch(() => ({}));
-              const credits = verifyData?.creditsRemaining ?? verifyData?.creditsGranted ?? fallbackCredits;
+              const credits =
+                verifyData?.creditsRemaining ?? verifyData?.creditsGranted ?? fallbackCredits;
               const nextWallet: StoredWallet = {
                 accessToken: verifyData?.accessToken,
                 transactionId: String(payload.transaction_id),
@@ -110,13 +107,11 @@ export default function PricingPage() {
               setActiveWallet(nextWallet);
               setOpeningTier(null);
               setMessage(
-                `Payment verified! ${credits} lookup credits are active. Save your Private Access Token below to use your credits on any PC or browser.`
+                `Payment verified! ${credits} lookup credit${credits === 1 ? '' : 's'} active. We also emailed your backup pass key.`
               );
             } catch {
               setOpeningTier(null);
-              setMessage(
-                `Payment completed! Return to the search page to unlock any dossier.`
-              );
+              setMessage('Payment completed! Return to the search page to unlock any report.');
             }
           } else if (event?.name === 'checkout.closed') {
             setOpeningTier(null);
@@ -135,7 +130,7 @@ export default function PricingPage() {
         : process.env.NEXT_PUBLIC_PADDLE_SINGLE_PRICE_ID;
 
     if (!priceId || !paddle) {
-      setMessage('Checkout is still initializing—please wait a moment and try again.');
+      setMessage('Checkout is still initializing - please wait a moment and try again.');
       return;
     }
 
@@ -156,42 +151,6 @@ export default function PricingPage() {
     });
   };
 
-  const handleRestoreToken = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleaned = restoreInput.trim().toUpperCase();
-    if (!cleaned) return;
-
-    setRestoring(true);
-    setRestoreError('');
-    try {
-      const res = await fetch(`/api/tokens?token=${encodeURIComponent(cleaned)}`);
-      const data = await res.json();
-      if (!res.ok) {
-        setRestoreError(data?.error || 'Could not find that access token.');
-      } else {
-        const restored: StoredWallet = {
-          accessToken: data.accessToken,
-          transactionId: data.transactionId,
-          planId: data.planId === 'pro' ? 'pro' : 'single',
-          planLabel: data.planLabel,
-          creditsRemaining: data.creditsRemaining,
-          unlockedNumbers: data.unlockedNumbers || [],
-          expiresAt: data.expiresAt,
-        };
-        window.localStorage.setItem('numora_pass_wallet_v1', JSON.stringify(restored));
-        setActiveWallet(restored);
-        setRestoreInput('');
-        setMessage(
-          `Access Token restored! You have ${data.creditsRemaining} lookup credit${data.creditsRemaining === 1 ? '' : 's'} ready on this device.`
-        );
-      }
-    } catch {
-      setRestoreError('Network error while verifying token. Please try again.');
-    } finally {
-      setRestoring(false);
-    }
-  };
-
   const handleCopyToken = () => {
     if (!activeWallet?.accessToken) return;
     navigator.clipboard.writeText(activeWallet.accessToken);
@@ -207,19 +166,19 @@ export default function PricingPage() {
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-semibold">
             <CreditCard className="w-3.5 h-3.5" />
-            <span>Simple One-Time Passes · No Subscriptions</span>
+            <span>One-Time Passes · No Subscriptions</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.12]">
-            Pay Once. Unlock Dossiers Anytime.
+            Pay Once. Unlock Reports Anytime.
           </h1>
           <p className="text-slate-400 text-base leading-relaxed">
-            Every NumoraLookup Pass is a single one-time purchase with zero recurring monthly fees.
-            Inspect carrier routing, virtual/VoIP line classification, regional telemetry, and
-            available directory status across 200+ countries.
+            Every NumoraLookup Pass is a one-time payment with no monthly subscription. Check
+            carrier routing, VoIP vs. mobile line type, prepaid status, and activity scores across
+            200+ countries.
           </p>
         </div>
 
-        {/* Active Token & Balance Banner */}
+        {/* Active Pass & Credit Balance Banner */}
         {(message || activeWallet?.accessToken) && (
           <div className="max-w-3xl mx-auto p-5 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-sm text-emerald-100 space-y-3 numora-card">
             {message && <p className="font-medium text-emerald-200">{message}</p>}
@@ -227,7 +186,7 @@ export default function PricingPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                 <div className="space-y-1">
                   <div className="text-[11px] uppercase tracking-wider text-emerald-300/80 font-semibold">
-                    Your Private Access Token · {activeWallet.creditsRemaining} Credit{activeWallet.creditsRemaining === 1 ? '' : 's'} Remaining
+                    Active Pass · {activeWallet.creditsRemaining} Credit{activeWallet.creditsRemaining === 1 ? '' : 's'} Remaining
                   </div>
                   <div className="font-mono text-sm sm:text-lg font-bold tracking-wider text-white break-all">
                     {activeWallet.accessToken}
@@ -239,15 +198,19 @@ export default function PricingPage() {
                     onClick={handleCopyToken}
                     className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs flex items-center gap-1.5 cursor-pointer"
                   >
-                    {copiedToken ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copiedToken ? 'Copied' : 'Copy Token'}</span>
+                    {copiedToken ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                    <span>{copiedToken ? 'Copied' : 'Copy Key'}</span>
                   </button>
-                  <a
+                  <Link
                     href="/"
                     className="px-4 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold text-xs shrink-0"
                   >
                     Search Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             )}
@@ -278,22 +241,22 @@ export default function PricingPage() {
               </div>
 
               <p className="text-sm text-slate-400 mt-3 leading-relaxed">
-                Great for screening a handful of unknown texts, missed calls, or online profiles
-                without committing to a subscription.
+                Great for checking a few unknown callers, suspicious texts, or online profiles
+                without a subscription.
               </p>
 
               <ul className="mt-6 space-y-3 text-sm text-slate-300 border-t border-white/[0.07] pt-6">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span>4 full intelligence dossier unlocks</span>
+                  <span>4 full report unlocks</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span>Carrier operator, VoIP & line classification</span>
+                  <span>Carrier, VoIP/burner & prepaid telemetry</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span>Private Access Token for multi-device use</span>
+                  <span>No account signup required · Multi-device ready</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
@@ -337,22 +300,22 @@ export default function PricingPage() {
               </div>
 
               <p className="text-sm text-slate-300 mt-3 leading-relaxed">
-                Save 33% per report vs. Standard Pass—ideal for ongoing call screening, dating
-                safety checks, and marketplace due diligence.
+                Save 33% per report vs. Standard Pass - ideal for dating safety, marketplace
+                checks, and frequent number screening.
               </p>
 
               <ul className="mt-6 space-y-3 text-sm text-slate-200 border-t border-white/[0.09] pt-6">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>12 full intelligence dossier unlocks (3x credits)</span>
+                  <span>12 full report unlocks (3x credits)</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>Carrier operator, VoIP & line classification</span>
+                  <span>Carrier, VoIP/burner & prepaid telemetry</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>Private Access Token for multi-device use</span>
+                  <span>No account signup required · Multi-device ready</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
@@ -375,123 +338,40 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* How Search Credits & Access Tokens Work */}
-        <section className="max-w-4xl mx-auto pt-4 space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
-              <span>Seamless Workflow</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              How Search Credits & Access Tokens Work
-            </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              We use private Access Tokens so you can manage searches securely and switch devices
-              without needing to create a permanent password-protected account.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Step 01 */}
-            <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-7 flex flex-col justify-between shadow-xl numora-card">
-              <div>
-                <div className="text-2xl font-extrabold text-emerald-400 tabular-nums">01</div>
-                <h3 className="mt-3 text-lg font-bold text-white">Select a Credit Pass</h3>
-                <p className="mt-2.5 text-sm text-slate-400 leading-relaxed">
-                  Choose either the 4-credit ($7.95) or 12-credit ($15.95) package. Complete a
-                  secure encrypted checkout with zero recurring commitments.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.07] space-y-2 text-xs">
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Payment Type</span>
-                  <span className="text-slate-300 text-right">One-Time Checkout</span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Activation</span>
-                  <span className="text-slate-300 text-right">Instant Token Issued</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 02 */}
-            <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-7 flex flex-col justify-between shadow-xl numora-card">
-              <div>
-                <div className="text-2xl font-extrabold text-emerald-400 tabular-nums">02</div>
-                <h3 className="mt-3 text-lg font-bold text-white">Receive Your Private Token</h3>
-                <p className="mt-2.5 text-sm text-slate-400 leading-relaxed">
-                  Upon checkout, you receive a private Access Token (e.g., <span className="font-mono text-slate-200">NMR-8K4P2M9Q</span>). It is saved to your browser automatically and ready to copy for backup.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.07] space-y-2 text-xs">
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Token Format</span>
-                  <span className="text-slate-300 text-right">Alphanumeric Key</span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Validity</span>
-                  <span className="text-slate-300 text-right">30 Days (Extends on Use)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 03 */}
-            <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-7 flex flex-col justify-between shadow-xl numora-card">
-              <div>
-                <div className="text-2xl font-extrabold text-emerald-400 tabular-nums">03</div>
-                <h3 className="mt-3 text-lg font-bold text-white">Investigate & Sync Anywhere</h3>
-                <p className="mt-2.5 text-sm text-slate-400 leading-relaxed">
-                  Each new intelligence unlock spends 1 credit. Re-opening an already-unlocked
-                  number costs 0 extra credits, and you can enter your token on any PC.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.07] space-y-2 text-xs">
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Repeat Views</span>
-                  <span className="text-slate-300 text-right">0 Credits (Saved History)</span>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500 font-semibold uppercase">Multi-Device</span>
-                  <span className="text-slate-300 text-right">Restore on Any PC</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Restore Token Box for Different PCs / Browsers */}
-          <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-1.5 max-w-md">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
-                <KeyRound className="w-3.5 h-3.5" />
-                <span>Already Have a Token?</span>
-              </div>
-              <h3 className="text-lg font-bold text-white">Restore Credits on This PC</h3>
-              <p className="text-xs sm:text-sm text-slate-400">
-                Bought credits on another computer or cleared your browser? Enter your{' '}
-                <span className="font-mono text-slate-300">NMR-XXXXXXXX</span> token to sync your
-                remaining balance.
+        {/* Quick Pre-Purchase Questions */}
+        <section className="max-w-4xl mx-auto pt-2 space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="rounded-2xl bg-[#0c1120] border border-white/[0.08] p-5 space-y-2">
+              <h2 className="text-sm font-bold text-white">Do I need an account?</h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                No. Credits activate right away in your browser, and we email a backup pass key so
+                you can switch devices anytime.
               </p>
             </div>
+            <div className="rounded-2xl bg-[#0c1120] border border-white/[0.08] p-5 space-y-2">
+              <h2 className="text-sm font-bold text-white">Does re-checking cost a credit?</h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                No. Each new number unlock uses 1 credit, and reopening an already-unlocked
+                report uses 0 extra credits.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-[#0c1120] border border-white/[0.08] p-5 space-y-2">
+              <h2 className="text-sm font-bold text-white">Is there any subscription?</h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Never. Both passes are one-time purchases with zero recurring billing or hidden
+                renewals.
+              </p>
+            </div>
+          </div>
 
-            <form onSubmit={handleRestoreToken} className="w-full md:w-auto flex flex-col gap-2">
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <input
-                  type="text"
-                  value={restoreInput}
-                  onChange={(e) => setRestoreInput(e.target.value)}
-                  placeholder="NMR-XXXXXXXX"
-                  className="w-full sm:w-52 px-4 py-2.5 rounded-xl bg-slate-950/90 border border-white/15 text-sm font-mono uppercase text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-400"
-                />
-                <button
-                  type="submit"
-                  disabled={restoring || !restoreInput.trim()}
-                  className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${restoring ? 'animate-spin' : ''}`} />
-                  <span>{restoring ? 'Syncing...' : 'Restore'}</span>
-                </button>
-              </div>
-              {restoreError && <p className="text-xs text-rose-400">{restoreError}</p>}
-            </form>
+          <div className="text-center pt-1">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-emerald-400 hover:text-emerald-300 font-medium transition"
+            >
+              <span>Already purchased a pass? View balance or restore on another device</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </section>
 
