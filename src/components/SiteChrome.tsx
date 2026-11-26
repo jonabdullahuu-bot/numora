@@ -58,6 +58,20 @@ const SOCIAL_LINKS = [
       </svg>
     ),
   },
+  {
+    name: "Quora",
+    href: "https://www.quora.com/profile/Numora-Lookup",
+    svg: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M11.5 2.4C16.3 2.4 20.1 6.2 20.1 11.1C20.1 16 16.3 19.8 11.5 19.8C6.7 19.8 2.9 16 2.9 11.1C2.9 6.2 6.7 2.4 11.5 2.4ZM11.5 5.1C8.8 5.1 6.9 7.6 6.9 11.1C6.9 14.6 8.8 17.1 11.5 17.1C14.2 17.1 16.1 14.6 16.1 11.1C16.1 7.6 14.2 5.1 11.5 5.1Z"
+        />
+        <path d="M10.1 15.3C12.4 14.1 14.6 15.3 16.4 17.6C17.3 18.8 18 19.6 18.9 19.6C19.5 19.6 19.9 19.2 20.2 18.6L21.2 19.3C20.6 20.9 19.4 22 17.8 22C16.1 22 14.9 20.8 13.7 19.1C12.6 17.6 11.6 16.6 10.4 16.6C10 16.6 9.6 16.7 9.3 16.9L10.1 15.3Z" />
+      </svg>
+    ),
+  },
 ];
 
 export function SiteHeader() {
@@ -289,9 +303,6 @@ export function SiteFooter() {
             </Link>
             <a href="mailto:support@numoralookup.com" className="hover:text-white numora-link">
               support@numoralookup.com
-            </a>
-            <a href="https://www.quora.com/profile/Numora-Lookup" target="_blank" rel="noopener noreferrer" className="hover:text-white numora-link">
-              Quora
             </a>
           </div>
         </div>
