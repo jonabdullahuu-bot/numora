@@ -323,7 +323,7 @@ const WORKFLOW_STEPS = [
       'Select a country flag or paste any international number from an unknown text, missed call, or profile.',
     bullets: [
       { label: 'Query Sources', value: 'SMS, Missed Calls, Profiles' },
-      { label: 'Coverage', value: '200+ Countries & Regions' },
+      { label: 'Coverage', value: '190+ Countries' },
       { label: 'Opt-Out Respect', value: 'Suppressed Numbers Blocked' },
     ],
     icon: PhoneCall,
@@ -368,7 +368,7 @@ const FORENSICS_MODULES = [
     specs: [
       ['Line Type', 'Mobile, Landline, or VoIP'],
       ['Geographic Scope', 'Country & Regional Area'],
-      ['Cache Layer', 'Supabase Instant Retrieval'],
+      ['Lookup Cache', 'Instant Lookup Cache'],
     ],
     icon: Radio,
   },
@@ -424,7 +424,7 @@ const FORENSICS_MODULES = [
     description:
       'Validates E.164 formatting before querying upstream data, preventing wasted lookups on mistyped or invalid numbers.',
     specs: [
-      ['Parser Engine', 'libphonenumber-js'],
+      ['Validation Engine', 'International Format Engine'],
       ['Error Feedback', 'Clear Invalid-Format Alerts'],
     ],
     icon: PhoneForwarded,
@@ -1773,7 +1773,7 @@ export default function NumoraHome() {
               <Zap className="w-4 h-4 text-sky-400 shrink-0" />
               <p className="text-xs text-slate-300">
                 <strong className="text-white">Instant Results:</strong> Direct browser lookups with
-                Supabase caching.
+                instant lookup caching.
               </p>
             </div>
             <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
@@ -1933,15 +1933,7 @@ export default function NumoraHome() {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-amber-500/[0.06] border border-amber-400/20 p-5 flex items-start gap-3.5 text-xs text-slate-300 leading-relaxed numora-card">
-            <Scale className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
-            <p>
-              <strong className="text-amber-200">Important Boundary:</strong> NumoraLookup provides
-              informational phone lookup and risk context only. It is not a consumer reporting
-              agency under the Fair Credit Reporting Act (FCRA) and must not be used for credit,
-              employment, insurance, or tenant screening decisions.
-            </p>
-          </div>
+          
         </section>
       </main>
 
