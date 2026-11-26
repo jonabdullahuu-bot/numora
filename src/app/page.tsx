@@ -1,4 +1,5 @@
-﻿'use client';
+'use client';
+import { DetectionMarquee } from '@/components/DetectionMarquee';
 
 import { createPortal } from "react-dom";
 import { SiteFooter } from "../components/SiteChrome";
@@ -1706,6 +1707,7 @@ export default function NumoraHome() {
           </div>
         )}
 
+        <div className="relative mt-16 z-30"><DetectionMarquee /></div>
         <section id="workflow" className="relative mt-24 space-y-8 animate-fade-up-1 z-30">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
