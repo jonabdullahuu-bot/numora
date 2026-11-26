@@ -74,6 +74,7 @@ const structuredDataGraph = {
       logo: `${siteUrl}/logo.jpg?v=2`,
       email: "support@numoralookup.com",
       sameAs: [
+      "https://www.quora.com/profile/Numora-Lookup",
         "https://x.com/NumoraLookup",
         "https://www.youtube.com/@NumoraLookup",
         "https://www.tiktok.com/@numoralookup",

@@ -290,6 +290,9 @@ export function SiteFooter() {
             <a href="mailto:support@numoralookup.com" className="hover:text-white numora-link">
               support@numoralookup.com
             </a>
+            <a href="https://www.quora.com/profile/Numora-Lookup" target="_blank" rel="noopener noreferrer" className="hover:text-white numora-link">
+              Quora
+            </a>
           </div>
         </div>
 
