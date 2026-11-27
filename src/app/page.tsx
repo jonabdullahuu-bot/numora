@@ -1712,75 +1712,106 @@ export default function NumoraHome() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-400">
-                Telecom Verification Workflow
+                Sample Telemetry Output
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-2">
-                How to Check a Phone Number with NumoraLookup
+                Real Mobile Line vs. VoIP Burner: What You See
               </h2>
             </div>
             <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              Investigate unknown calls, texts, and profiles in three structured steps—right in your
-              browser with no app download required.
+              Before you reply to an unknown text or move a dating chat off-app, inspect the underlying carrier routing and line classification in seconds.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {WORKFLOW_STEPS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.step}
-                  className="rounded-3xl bg-[#0c1120]/85 border border-white/[0.08] hover:border-indigo-400/30 p-6 sm:p-7 flex flex-col justify-between transition shadow-xl"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-5">
-                      <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-400/20 tabular-nums">
-                        {item.step}
-                      </span>
-                      <span className="text-xs font-medium text-sky-300">{item.badge}</span>
-                    </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="rounded-3xl bg-[#0c1120]/90 border border-amber-500/25 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-5">
+                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-400/25">
+                    High Risk · Disposable App
+                  </span>
+                  <span className="text-xs font-mono text-slate-400">+1 (415) 555-0194</span>
+                </div>
 
-                    <div className="w-11 h-11 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-indigo-300 mb-4 numora-card">
-                      <Icon className="w-5 h-5" />
-                    </div>
+                <h3 className="text-xl font-bold text-white">Non-Fixed VoIP Burner Line</h3>
+                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                  Typical signature of free texting apps (TextNow, Google Voice, virtual cloud gateways) used in wrong-number and romance scam scripts.
+                </p>
 
-                    <h3 className="text-xl font-bold text-white leading-snug">{item.title}</h3>
-                    <p className="text-sm text-slate-400 mt-2.5 leading-relaxed">{item.description}</p>
+                <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5 text-xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Line Classification</span>
+                    <span className="font-semibold text-amber-300">Non-Fixed VoIP</span>
                   </div>
-
-                  <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5">
-                    {item.bullets.map((b) => (
-                      <div key={b.label} className="flex items-center justify-between text-xs gap-2">
-                        <span className="text-slate-500">{b.label}</span>
-                        <span className="font-semibold text-slate-200 text-right">{b.value}</span>
-                      </div>
-                    ))}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Underlying Gateway</span>
+                    <span className="font-semibold text-slate-200">Bandwidth.com / Virtual CLEC</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">SIM Card Binding</span>
+                    <span className="font-semibold text-amber-300">None (App-Based)</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Caller Notification</span>
+                    <span className="font-semibold text-emerald-300">0% Passive (Never Alerted)</span>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-[#0c1120]/90 border border-emerald-500/25 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-5">
+                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/25">
+                    Standard · Physical Carrier
+                  </span>
+                  <span className="text-xs font-mono text-slate-400">+1 (312) 555-0148</span>
+                </div>
+
+                <h3 className="text-xl font-bold text-white">Verified Mobile Network Line</h3>
+                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                  Standard wireless subscriber line provisioned through a tier-1 mobile network operator with physical SIM/eSIM registration.
+                </p>
+
+                <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5 text-xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Line Classification</span>
+                    <span className="font-semibold text-emerald-300">Mobile (Wireless)</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Carrier Network</span>
+                    <span className="font-semibold text-slate-200">Verizon Wireless / AT&T</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">SIM Card Binding</span>
+                    <span className="font-semibold text-emerald-300">Active Hardware SIM / eSIM</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-slate-500">Pricing Model</span>
+                    <span className="font-semibold text-slate-200">Free Carrier Check · One-Time Passes</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <p className="text-xs text-slate-300">
-                <strong className="text-white">Privacy First:</strong> Opt-out numbers are respected
-                and suppressed.
+                <strong className="text-white">Opt-Out Registry:</strong> Suppressed numbers are respected and blocked from lookup.
               </p>
             </div>
             <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
               <Zap className="w-4 h-4 text-sky-400 shrink-0" />
               <p className="text-xs text-slate-300">
-                <strong className="text-white">Instant Results:</strong> Direct browser lookups with
-                instant lookup caching.
+                <strong className="text-white">E.164 Normalization:</strong> Supports 190+ country dialing codes directly in your browser.
               </p>
             </div>
             <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
               <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
               <p className="text-xs text-slate-300">
-                <strong className="text-white">No App Required:</strong> Works smoothly across
-                desktop & mobile web.
+                <strong className="text-white">Zero Subscriptions:</strong> Free carrier telemetry upfront; optional one-time passes only.
               </p>
             </div>
           </div>
