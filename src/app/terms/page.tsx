@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import React from 'react';
 import { Scale } from "@/components/NumoraIcons";
 import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "Terms of Service and non-FCRA usage boundaries for NumoraLookup carrier telemetry, VoIP checks, and reverse phone lookups.",
+  alternates: {
+    canonical: "/terms",
+  },
+};
 
 export default function TermsPage() {
   return (

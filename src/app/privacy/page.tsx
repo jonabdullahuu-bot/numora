@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import React from 'react';
 import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How NumoraLookup handles passive reverse phone lookups, zero-notification privacy, access tokens, and data suppression requests.",
+  alternates: {
+    canonical: "/privacy",
+  },
+};
 
 export default function PrivacyPage() {
   return (

@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import React from 'react';
 import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
 import { RefreshCcw, ShieldCheck } from "@/components/NumoraIcons";
+
+export const metadata: Metadata = {
+  title: "Refund Policy",
+  description: "NumoraLookup refund policy for one-time Standard and Premium phone lookup passes, unused credits, and billing support.",
+  alternates: {
+    canonical: "/refund",
+  },
+};
 
 export default function RefundPolicyPage() {
   return (
