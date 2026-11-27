@@ -42,7 +42,7 @@ export default function OptOutPage() {
     <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-200">
       <SiteHeader />
 
-      <main className="flex-1 max-w-xl mx-auto w-full px-6 py-16 space-y-8 animate-fade-up">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10 animate-fade-up">
       <PageStudioBanner
         image="/images/optout-vault.jpg"
         alt="Titanium and frosted glass privacy vault dial"
@@ -50,6 +50,7 @@ export default function OptOutPage() {
         title="Control how your number appears in lookups."
         subtitle="Submit your phone number to immediately suppress it from NumoraLookup results with zero account required."
       />
+      <div className="max-w-2xl mx-auto space-y-8">
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/20 text-blue-300 text-xs font-semibold">
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -99,7 +100,7 @@ export default function OptOutPage() {
           <button
             type="submit"
             disabled={loading}
-            className="numora-action w-full py-3.5 px-5 rounded-xl bg-[#4d6fa9] hover:bg-blue-400 text-slate-950 font-bold text-sm transition cursor-pointer disabled:opacity-50"
+            className="liquid-glass-blue text-white w-full py-3.5 px-5 rounded-xl bg-[#4d6fa9] text-white font-bold text-sm transition cursor-pointer disabled:opacity-50"
           >
             {loading ? 'Processing Suppression...' : 'Suppress Number from NumoraLookup'}
           </button>
@@ -121,6 +122,7 @@ export default function OptOutPage() {
             </div>
           )}
         </form>
+            </div>
       </main>
 
       <SiteFooter />
