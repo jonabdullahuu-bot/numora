@@ -182,17 +182,17 @@ export default function UnlockDossierCard({
     report.spamRisk === 'High'
       ? 'bg-red-500/15 text-red-300 border-red-500/40'
       : report.spamRisk === 'Medium'
-      ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
-      : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40';
+      ? 'bg-[#cfa058]/12 text-[#dfc087] border-[#cfa058]/35'
+      : 'bg-[#4d6fa9]/15 text-blue-300 border-[#8aa5d6]/40';
 
   return (
-    <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden text-left">
+    <div className="mt-8 rounded-2xl border border-white/[0.09] bg-[#1b1d23]/90 shadow-2xl overflow-hidden text-left">
       {/* Top Dossier Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 bg-slate-950/70 px-6 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.09] bg-[#141519]/70 px-6 py-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-cyan-400">
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-[#4f7de8] animate-pulse" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#7fa4f2]">
               Intelligence Dossier · Verified E.164
             </span>
           </div>
@@ -203,7 +203,7 @@ export default function UnlockDossierCard({
 
         <div className="flex items-center gap-3">
           {wallet && wallet.creditsRemaining > 0 && (
-            <span className="rounded-full border border-cyan-500/40 bg-cyan-500/10 px-3.5 py-1 text-xs font-semibold text-cyan-300">
+            <span className="rounded-full border border-[#8aa5d6]/30 bg-[#4d6fa9]/10 px-3.5 py-1 text-xs font-semibold text-blue-200">
               {wallet.creditsRemaining} {wallet.creditsRemaining === 1 ? 'Credit' : 'Credits'} Left
             </span>
           )}
@@ -214,21 +214,21 @@ export default function UnlockDossierCard({
       </div>
 
       {/* Free Carrier & Network Telemetry Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 border-b border-slate-800/80">
-        <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-          <p className="text-xs uppercase tracking-wider text-slate-400">Carrier Network</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 border-b border-white/[0.09]">
+        <div className="rounded-xl border border-white/[0.09] bg-[#141519]/50 p-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-400">Carrier Network</p>
           <p className="mt-1.5 text-sm font-semibold text-white">{report.carrier}</p>
         </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-          <p className="text-xs uppercase tracking-wider text-slate-400">Line Classification</p>
+        <div className="rounded-xl border border-white/[0.09] bg-[#141519]/50 p-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-400">Line Classification</p>
           <p className="mt-1.5 text-sm font-semibold text-white">{report.lineType}</p>
         </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-          <p className="text-xs uppercase tracking-wider text-slate-400">Registered Region</p>
+        <div className="rounded-xl border border-white/[0.09] bg-[#141519]/50 p-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-400">Registered Region</p>
           <p className="mt-1.5 text-sm font-semibold text-white">{report.location}</p>
         </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-          <p className="text-xs uppercase tracking-wider text-slate-400">Country Code</p>
+        <div className="rounded-xl border border-white/[0.09] bg-[#141519]/50 p-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-400">Country Code</p>
           <p className="mt-1.5 text-sm font-semibold text-white">{report.country}</p>
         </div>
       </div>
@@ -236,24 +236,24 @@ export default function UnlockDossierCard({
       {/* Subscriber Identity & Paywall Upgrade Vault */}
       <div className="p-6">
         {unlocked ? (
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-5">
+          <div className="rounded-xl border border-[#8aa5d6]/30 bg-blue-950/20 p-5">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#8aa5d6]">
                 Full Subscriber & Identity Record Unlocked
               </span>
-              <span className="text-xs text-slate-400">One-Time Pass Verified</span>
+              <span className="text-xs text-zinc-400">One-Time Pass Verified</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-lg bg-slate-950/70 p-3.5 border border-slate-800">
-                <p className="text-xs text-slate-400">Registered Owner</p>
+              <div className="rounded-lg bg-[#141519]/70 p-3.5 border border-white/[0.09]">
+                <p className="text-xs text-zinc-400">Registered Owner</p>
                 <p className="mt-1 text-base font-semibold text-white">{report.ownerName}</p>
               </div>
-              <div className="rounded-lg bg-slate-950/70 p-3.5 border border-slate-800">
-                <p className="text-xs text-slate-400">Associated Email</p>
+              <div className="rounded-lg bg-[#141519]/70 p-3.5 border border-white/[0.09]">
+                <p className="text-xs text-zinc-400">Associated Email</p>
                 <p className="mt-1 text-base font-semibold text-white">{report.ownerEmail}</p>
               </div>
-              <div className="rounded-lg bg-slate-950/70 p-3.5 border border-slate-800">
-                <p className="text-xs text-slate-400">Billing / Street Location</p>
+              <div className="rounded-lg bg-[#141519]/70 p-3.5 border border-white/[0.09]">
+                <p className="text-xs text-zinc-400">Billing / Street Location</p>
                 <p className="mt-1 text-base font-semibold text-white">{report.ownerAddress}</p>
               </div>
             </div>
@@ -262,21 +262,21 @@ export default function UnlockDossierCard({
           <div className="space-y-6">
             {/* Redacted Preview Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 opacity-85">
-              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5">
-                <p className="text-[11px] uppercase tracking-wider text-slate-500">Registered Owner</p>
-                <p className="mt-1 font-mono text-sm text-slate-300 select-none blur-[3px]">
+              <div className="rounded-xl border border-white/[0.09] bg-[#141519]/60 p-3.5">
+                <p className="text-[11px] uppercase tracking-wider text-zinc-500">Registered Owner</p>
+                <p className="mt-1 font-mono text-sm text-zinc-300 select-none blur-[3px]">
                   {report.ownerName}
                 </p>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5">
-                <p className="text-[11px] uppercase tracking-wider text-slate-500">Associated Email</p>
-                <p className="mt-1 font-mono text-sm text-slate-300 select-none blur-[3px]">
+              <div className="rounded-xl border border-white/[0.09] bg-[#141519]/60 p-3.5">
+                <p className="text-[11px] uppercase tracking-wider text-zinc-500">Associated Email</p>
+                <p className="mt-1 font-mono text-sm text-zinc-300 select-none blur-[3px]">
                   {report.ownerEmail}
                 </p>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5">
-                <p className="text-[11px] uppercase tracking-wider text-slate-500">Street Location</p>
-                <p className="mt-1 font-mono text-sm text-slate-300 select-none blur-[3px]">
+              <div className="rounded-xl border border-white/[0.09] bg-[#141519]/60 p-3.5">
+                <p className="text-[11px] uppercase tracking-wider text-zinc-500">Street Location</p>
+                <p className="mt-1 font-mono text-sm text-zinc-300 select-none blur-[3px]">
                   {report.ownerAddress}
                 </p>
               </div>
@@ -284,22 +284,22 @@ export default function UnlockDossierCard({
 
             {/* Instant Credit Unlock Banner (if buyer already has remaining credits) */}
             {wallet && wallet.creditsRemaining > 0 && (
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-cyan-500/40 bg-cyan-950/30 p-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-[#8aa5d6]/30 bg-[#141a26] p-4">
                 <div>
                   <p className="text-sm font-semibold text-white">
                     You have {wallet.creditsRemaining} report{' '}
                     {wallet.creditsRemaining === 1 ? 'credit' : 'credits'} available from your{' '}
                     {wallet.planName}
                   </p>
-                  <p className="text-xs text-cyan-200/80">
-                    Unlock {report.e164} right now with 1 click—no extra payment required.
+                  <p className="text-xs text-blue-200/80">
+                    Unlock {report.e164} right now with 1 click (no extra payment required).
                   </p>
                 </div>
                 <button
                   type="button"
                   disabled={verifying}
                   onClick={handleUseExistingCredit}
-                  className="w-full sm:w-auto shrink-0 rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-cyan-300 transition cursor-pointer disabled:opacity-50"
+                  className="numora-action w-full sm:w-auto shrink-0 rounded-xl bg-[#4f7de8] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#5e8af0] transition cursor-pointer disabled:opacity-50"
                 >
                   {verifying ? 'Unlocking...' : 'Use 1 Credit to Unlock Now'}
                 </button>
@@ -307,19 +307,19 @@ export default function UnlockDossierCard({
             )}
 
             {/* 10x Upgraded Interactive Tier Selector */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-5 sm:p-6">
+            <div className="rounded-2xl border border-white/[0.09] bg-[#141519]/80 p-5 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
                 <div>
                   <h4 className="text-lg font-bold text-white">
                     Choose a One-Time Pass to Reveal Full Dossier
                   </h4>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-zinc-400 mt-0.5">
                     Instant unblur for <span className="text-slate-200 font-mono">{report.e164}</span>{' '}
                     + extra credits for future searches. Zero recurring subscriptions.
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 border border-slate-800 px-3 py-1.5 text-[11px] font-medium text-slate-300">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#1b1d23] border border-white/[0.09] px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                  <span className="h-2 w-2 rounded-full bg-blue-400" />
                   256-Bit Encrypted Checkout
                 </span>
               </div>
@@ -333,36 +333,36 @@ export default function UnlockDossierCard({
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedTier('single')}
                   className={`relative rounded-xl border p-5 transition cursor-pointer flex flex-col justify-between ${
                     selectedTier === 'single'
-                      ? 'border-cyan-400 bg-slate-900 shadow-lg shadow-cyan-500/10'
-                      : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
+                      ? 'border-[#5e8af0]/60 bg-[#1b1d23] shadow-lg shadow-black/40'
+                      : 'border-white/[0.09] bg-[#1b1d23]/40 hover:border-white/[0.12]'
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                      <span className="text-xs font-bold uppercase tracking-wider text-zinc-300">
                         Standard Pass
                       </span>
-                      <span className="rounded-md bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-300">
+                      <span className="rounded-md bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-zinc-300">
                         $1.99 / lookup
                       </span>
                     </div>
 
                     <div className="mt-3 flex items-baseline gap-2">
                       <span className="text-3xl font-extrabold text-white">$7.95</span>
-                      <span className="text-xs text-slate-400">one-time · 4 credits</span>
+                      <span className="text-xs text-zinc-400">one-time · 4 credits</span>
                     </div>
 
-                    <ul className="mt-4 space-y-2 text-xs text-slate-300">
+                    <ul className="mt-4 space-y-2 text-xs text-zinc-300">
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         Instant unblur for {report.e164}
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         3 extra full report credits (never expire)
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         Owner name, email & registered address
                       </li>
                     </ul>
@@ -377,13 +377,13 @@ export default function UnlockDossierCard({
                     }}
                     className={`mt-5 w-full rounded-xl py-3 px-4 text-sm font-bold transition cursor-pointer disabled:opacity-50 ${
                       selectedTier === 'single'
-                        ? 'bg-white text-slate-950 hover:bg-slate-200'
+                        ? 'bg-white text-white hover:bg-slate-200'
                         : 'bg-slate-800 text-white hover:bg-slate-700'
                     }`}
                   >
                     {checkoutLoading === 'single'
                       ? 'Opening Checkout...'
-                      : 'Unlock with Standard — $7.95'}
+                      : 'Unlock with Standard ($7.95)'}
                   </button>
                 </div>
 
@@ -395,40 +395,40 @@ export default function UnlockDossierCard({
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedTier('pro')}
                   className={`relative rounded-xl border p-5 transition cursor-pointer flex flex-col justify-between ${
                     selectedTier === 'pro'
-                      ? 'border-cyan-400 bg-gradient-to-b from-cyan-950/40 to-slate-900 shadow-lg shadow-cyan-500/15'
-                      : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
+                      ? 'border-[#5e8af0]/60 bg-[#1b1d23]   shadow-lg shadow-black/50'
+                      : 'border-white/[0.09] bg-[#1b1d23]/40 hover:border-white/[0.12]'
                   }`}
                 >
-                  <div className="absolute -top-3 right-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-950 shadow">
+                  <div className="absolute -top-3 right-4 rounded-full bg-[#1b1d23] from-[#4f7de8] to-[#3a64c8] px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow">
                     Best Value · Save 33%
                   </div>
 
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
+                      <span className="text-xs font-bold uppercase tracking-wider text-blue-200">
                         Premium Pass
                       </span>
-                      <span className="rounded-md bg-cyan-500/15 border border-cyan-500/30 px-2 py-0.5 text-[11px] font-semibold text-cyan-300">
+                      <span className="rounded-md bg-[#4d6fa9]/12 border border-[#8aa5d6]/25 px-2 py-0.5 text-[11px] font-semibold text-blue-200">
                         $1.33 / lookup
                       </span>
                     </div>
 
                     <div className="mt-3 flex items-baseline gap-2">
                       <span className="text-3xl font-extrabold text-white">$15.95</span>
-                      <span className="text-xs text-slate-400">one-time · 12 credits</span>
+                      <span className="text-xs text-zinc-400">one-time · 12 credits</span>
                     </div>
 
                     <ul className="mt-4 space-y-2 text-xs text-slate-200">
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         Instant unblur for {report.e164}
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         11 extra full report credits (never expire)
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="text-cyan-400 font-bold">✓</span>
+                        <span className="text-[#7fa4f2] font-bold">✓</span>
                         Full identity, carrier & fraud risk dossier
                       </li>
                     </ul>
@@ -441,13 +441,13 @@ export default function UnlockDossierCard({
                       e.stopPropagation();
                       openPaddleCheckout('pro');
                     }}
-                    className="mt-5 w-full rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 py-3 px-4 text-sm font-extrabold text-slate-950 hover:from-cyan-300 hover:to-blue-400 transition shadow-lg shadow-cyan-500/20 cursor-pointer disabled:opacity-50"
+                    className="mt-5 group numora-premium-btn w-full py-3.5 px-5 rounded-xl text-white text-sm font-semibold tracking-tight flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {checkoutLoading === 'pro'
                       ? 'Opening Checkout...'
                       : verifying
                       ? 'Verifying Payment...'
-                      : 'Unlock with Premium — $15.95'}
+                      : 'Unlock with Premium ($15.95)'}
                   </button>
                 </div>
               </div>
@@ -458,7 +458,7 @@ export default function UnlockDossierCard({
                 </div>
               )}
 
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-slate-400">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-zinc-400">
                 <span>• Single one-time charge (no auto-renewal)</span>
                 <span>• Instant digital delivery</span>
                 <span>• Powered by Paddle Merchant of Record</span>

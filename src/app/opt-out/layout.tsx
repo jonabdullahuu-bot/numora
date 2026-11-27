@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Phone Number Opt-Out & Privacy Removal — NumoraLookup",
+  title: "Phone Number Opt-Out & Privacy Removal, NumoraLookup",
   description:
     "Request removal of your phone number from NumoraLookup search results. Fast, free self-service opt-out for personal privacy.",
   alternates: {

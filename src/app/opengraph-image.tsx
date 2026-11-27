@@ -14,7 +14,7 @@ export default function OpenGraphImage() {
           justifyContent: "space-between",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(135deg, #020617 0%, #0f172a 58%, #064e3b 100%)",
+          background: "#141519",
           padding: "52px 60px",
           color: "#f8fafc",
           fontFamily: "sans-serif",
@@ -38,8 +38,8 @@ export default function OpenGraphImage() {
                 width: 44,
                 height: 44,
                 borderRadius: 12,
-                background: "#10b981",
-                color: "#020617",
+                background: "#4d6fa9",
+                color: "#141519",
                 fontSize: 24,
                 fontWeight: 900,
               }}
@@ -56,12 +56,12 @@ export default function OpenGraphImage() {
               display: "flex",
               alignItems: "center",
               borderRadius: 999,
-              border: "1px solid rgba(16, 185, 129, 0.5)",
-              background: "rgba(16, 185, 129, 0.14)",
+              border: "1px solid rgba(77, 111, 169, 0.5)",
+              background: "rgba(77, 111, 169, 0.14)",
               padding: "8px 18px",
               fontSize: 16,
               fontWeight: 700,
-              color: "#34d399",
+              color: "#4d6fa9",
               letterSpacing: 0.6,
             }}
           >
@@ -116,7 +116,7 @@ export default function OpenGraphImage() {
               flexDirection: "column",
               width: "42%",
               background: "rgba(15, 23, 42, 0.94)",
-              border: "2px solid rgba(16, 185, 129, 0.45)",
+              border: "2px solid rgba(77, 111, 169, 0.45)",
               borderRadius: 24,
               padding: 28,
               gap: 16,
@@ -137,7 +137,7 @@ export default function OpenGraphImage() {
                   borderRadius: 999,
                   background: "rgba(245, 158, 11, 0.18)",
                   border: "1px solid rgba(245, 158, 11, 0.5)",
-                  color: "#fbbf24",
+                  color: "#b89b6a",
                   padding: "4px 12px",
                   fontSize: 14,
                   fontWeight: 800,
@@ -163,7 +163,7 @@ export default function OpenGraphImage() {
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ color: "#94a3b8" }}>Line Type</span>
-                <span style={{ color: "#fbbf24", fontWeight: 700 }}>Non-Fixed VoIP</span>
+                <span style={{ color: "#b89b6a", fontWeight: 700 }}>Non-Fixed VoIP</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ color: "#94a3b8" }}>Carrier</span>
@@ -171,7 +171,7 @@ export default function OpenGraphImage() {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ color: "#94a3b8" }}>Privacy</span>
-                <span style={{ color: "#34d399", fontWeight: 700 }}>Owner Never Notified</span>
+                <span style={{ color: "#4d6fa9", fontWeight: 700 }}>Owner Never Notified</span>
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function OpenGraphImage() {
             width: "100%",
           }}
         >
-          <span style={{ fontSize: 22, fontWeight: 800, color: "#34d399" }}>
+          <span style={{ fontSize: 22, fontWeight: 800, color: "#4d6fa9" }}>
             numoralookup.com
           </span>
           <div style={{ display: "flex", gap: 24, fontSize: 18, color: "#94a3b8" }}>

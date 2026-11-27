@@ -122,7 +122,7 @@ function evaluateForensics(params: {
   if (params.isNonFixedVoip) {
     riskPoints += 2;
     redFlags.push(
-      'Non-Fixed VoIP detected — line can be registered online via virtual texting apps without a physical SIM.'
+      'Non-Fixed VoIP detected, line can be registered online via virtual texting apps without a physical SIM.'
     );
     safetyGuidance.push(
       'Treat unsolicited financial, crypto, or romance requests from Non-Fixed VoIP lines with extreme caution.'
@@ -130,19 +130,19 @@ function evaluateForensics(params: {
   } else if (params.isVoip) {
     riskPoints += 1;
     redFlags.push(
-      'Fixed VoIP routing detected — typically tied to internet/cloud PBX or cable telephony.'
+      'Fixed VoIP routing detected, typically tied to internet/cloud PBX or cable telephony.'
     );
   }
 
   if (params.rawLineType.toLowerCase().includes('premium')) {
     riskPoints += 2;
-    redFlags.push('Premium-rate number classification — returning missed calls may incur high per-minute fees.');
+    redFlags.push('Premium-rate number classification, returning missed calls may incur high per-minute fees.');
   }
 
   if (params.isPrepaid === true) {
     riskPoints += 1;
     redFlags.push(
-      'Prepaid billing profile — line does not require a long-term postpaid credit contract.'
+      'Prepaid billing profile, line does not require a long-term postpaid credit contract.'
     );
   }
 
@@ -150,7 +150,7 @@ function evaluateForensics(params: {
     if (params.activityScore <= 30) {
       riskPoints += 2;
       redFlags.push(
-        `Low telecom activity score (${params.activityScore}/100) — number may be disconnected, newly provisioned, or used briefly as a burner.`
+        `Low telecom activity score (${params.activityScore}/100), number may be disconnected, newly provisioned, or used briefly as a burner.`
       );
       safetyGuidance.push(
         'Verify the caller through an independent channel before sharing verification codes or personal details.'
@@ -158,7 +158,7 @@ function evaluateForensics(params: {
     } else if (params.activityScore < 70) {
       riskPoints += 1;
       redFlags.push(
-        `Moderate telecom activity score (${params.activityScore}/100) — intermittent network usage detected.`
+        `Moderate telecom activity score (${params.activityScore}/100), intermittent network usage detected.`
       );
     }
   }
@@ -181,10 +181,10 @@ function evaluateForensics(params: {
 
   const riskSummary =
     spamRisk === 'High'
-      ? 'Elevated Scam / Burner Signals — multiple virtual or low-activity indicators triggered.'
+      ? 'Elevated Scam / Burner Signals, multiple virtual or low-activity indicators triggered.'
       : spamRisk === 'Medium'
-      ? 'Moderate Caution — VoIP, prepaid, or mid-range line activity traits present.'
-      : 'Low Telecom Anomaly Risk — established carrier line with normal routing profile.';
+      ? 'Moderate Caution, VoIP, prepaid, or mid-range line activity traits present.'
+      : 'Low Telecom Anomaly Risk, established carrier line with normal routing profile.';
 
   return { spamRisk, riskSummary, redFlags, safetyGuidance };
 }

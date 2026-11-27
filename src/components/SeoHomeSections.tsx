@@ -11,7 +11,7 @@ const HOME_FAQS = [
   },
   {
     q: "Is my reverse phone lookup 100% anonymous?",
-    a: "Yes. Searches are completely confidential—the owner of the phone number never receives any text, missed call, or notification.",
+    a: "Yes. Searches are completely confidential, so the phone owner never receives a text, missed call, or alert.",
   },
   {
     q: "Can NumoraLookup detect VoIP burner numbers like Google Voice or TextNow?",
@@ -46,7 +46,7 @@ export function SeoHomeSections() {
       {/* Interactive FAQ Accordion */}
       <section id="faq" className="relative max-w-3xl mx-auto animate-fade-up animate-fade-up-1 z-0">
         <div className="text-center mb-8">
-          <span className="inline-block rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-medium text-emerald-400 mb-3">
+          <span className="inline-block rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/30 px-3 py-1 text-xs font-medium text-[#8aa5d6] mb-3">
             Answers & Transparency
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
@@ -60,20 +60,20 @@ export function SeoHomeSections() {
             return (
               <div
                 key={item.q}
-                className="rounded-xl border border-slate-800 bg-slate-900/70 overflow-hidden transition-all duration-200 hover:border-slate-700 numora-card"
+                className="rounded-xl border border-white/[0.09] bg-[#1b1d23]/70 overflow-hidden transition-all duration-200 hover:border-white/[0.12] numora-card"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaq(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between text-left px-5 py-4 font-semibold text-sm sm:text-base text-white hover:text-emerald-400 transition-colors"
+                  className="w-full flex items-center justify-between text-left px-5 py-4 font-semibold text-sm sm:text-base text-white hover:text-[#8aa5d6] transition-colors"
                 >
                   <span>{item.q}</span>
-                  <span className="ml-4 text-emerald-400 text-lg font-bold">
+                  <span className="ml-4 text-[#8aa5d6] text-lg font-bold">
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-4 text-sm text-slate-400 leading-relaxed border-t border-slate-800/60 pt-3">
+                  <div className="px-5 pb-4 text-sm text-zinc-400 leading-relaxed border-t border-white/[0.09] pt-3">
                     {item.a}
                   </div>
                 )}
@@ -87,19 +87,19 @@ export function SeoHomeSections() {
       <section className="relative animate-fade-up animate-fade-up-1 z-0">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#8aa5d6]">
               NumoraLookup Safety Hub
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
               Latest Scam & Caller Safety Guides
             </h2>
-            <p className="text-sm text-slate-400 mt-1">
+            <p className="text-sm text-zinc-400 mt-1">
               Learn how to spot fake numbers, VoIP burners, and catfish tactics.
             </p>
           </div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 transition-all self-start sm:self-auto numora-btn"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#8aa5d6]/40 bg-[#4d6fa9]/10 px-4 py-2 text-sm font-semibold text-[#8aa5d6] hover:bg-[#4d6fa9] hover:text-slate-950 transition-all self-start sm:self-auto numora-btn"
           >
             View all articles →
           </Link>
@@ -110,20 +110,20 @@ export function SeoHomeSections() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-950/30 numora-card"
+              className="group rounded-2xl border border-white/[0.09] bg-[#1b1d23]/60 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-[#8aa5d6]/50 hover:shadow-xl hover:shadow-blue-950/30 numora-card"
             >
               <div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8aa5d6]">
                   {post.category}
                 </span>
-                <h3 className="text-base font-bold text-white mt-2 mb-2 group-hover:text-emerald-400 transition-colors line-clamp-3">
+                <h3 className="text-base font-bold text-white mt-2 mb-2 group-hover:text-[#8aa5d6] transition-colors line-clamp-3">
                   {post.title}
                 </h3>
-                <p className="text-xs text-slate-400 line-clamp-2">
+                <p className="text-xs text-zinc-400 line-clamp-2">
                   {post.description}
                 </p>
               </div>
-              <span className="text-xs font-medium text-emerald-400/90 mt-4 group-hover:translate-x-1 transition-transform inline-block">
+              <span className="text-xs font-medium text-[#8aa5d6]/90 mt-4 group-hover:translate-x-1 transition-transform inline-block">
                 {post.readTime} →
               </span>
             </Link>

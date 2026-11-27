@@ -210,7 +210,7 @@ export async function POST(req: NextRequest) {
         }
       }
     } catch {
-      // Cache miss or raw_report column not yet created — fall through to live fetch
+      // Cache miss or raw_report column not yet created, fall through to live fetch
     }
 
     if (!report) {
@@ -277,7 +277,7 @@ export async function POST(req: NextRequest) {
         ...report,
         isPrepaid: null,
         activityScore: null,
-        activityStatus: 'Locked — Unlock full dossier to view 0–100 activity telemetry',
+        activityStatus: 'Locked, Unlock full dossier to view 0–100 activity telemetry',
         riskSummary: 'Unlock full forensic dossier to inspect burner VoIP classification & activity score.',
         redFlags: [
           'Burner / Non-Fixed VoIP classification locked in preview',

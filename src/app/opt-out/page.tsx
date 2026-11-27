@@ -1,7 +1,7 @@
-﻿'use client';
-
+'use client';
+import PageStudioBanner from "@/components/PageStudioBanner";
 import React, { useState } from 'react';
-import { ShieldCheck, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, AlertTriangle } from "@/components/NumoraIcons";
 import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
 
 export default function OptOutPage() {
@@ -43,15 +43,22 @@ export default function OptOutPage() {
       <SiteHeader />
 
       <main className="flex-1 max-w-xl mx-auto w-full px-6 py-16 space-y-8 animate-fade-up">
+      <PageStudioBanner
+        image="/images/optout-vault.jpg"
+        alt="Titanium and frosted glass privacy vault dial"
+        eyebrow="Self-Serve Suppression Vault"
+        title="Control how your number appears in lookups."
+        subtitle="Submit your phone number to immediately suppress it from NumoraLookup results with zero account required."
+      />
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/20 text-blue-300 text-xs font-semibold">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Self-Serve Suppression Registry</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
             Remove My Phone Number
           </h1>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-sm text-zinc-400 leading-relaxed">
             Enter your international phone number (including country code such as <code className="text-slate-200">+1</code>,{' '}
             <code className="text-slate-200">+44</code>) to purge any cached
             entry and block future lookups on NumoraLookup.
@@ -60,10 +67,10 @@ export default function OptOutPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl bg-[#0c1120] border border-slate-800/90 p-6 sm:p-8 space-y-5 shadow-xl numora-card"
+          className="rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-6 sm:p-8 space-y-5 shadow-xl numora-card"
         >
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
               Phone Number (with Country Code)
             </label>
             <input
@@ -72,12 +79,12 @@ export default function OptOutPage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+1 212 555 0199"
-              className="w-full px-4 py-3 rounded-xl bg-[#050811] border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 tabular-nums"
+              className="w-full px-4 py-3 rounded-xl bg-[#141519] border border-white/[0.09] text-white placeholder-slate-500 focus:outline-none focus:border-[#8aa5d6] tabular-nums"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
               Optional Note
             </label>
             <input
@@ -85,14 +92,14 @@ export default function OptOutPage() {
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Personal privacy preference"
-              className="w-full px-4 py-3 rounded-xl bg-[#050811] border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
+              className="w-full px-4 py-3 rounded-xl bg-[#141519] border border-white/[0.09] text-white placeholder-slate-500 focus:outline-none focus:border-[#8aa5d6]"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition cursor-pointer disabled:opacity-50"
+            className="numora-action w-full py-3.5 px-5 rounded-xl bg-[#4d6fa9] hover:bg-blue-400 text-slate-950 font-bold text-sm transition cursor-pointer disabled:opacity-50"
           >
             {loading ? 'Processing Suppression...' : 'Suppress Number from NumoraLookup'}
           </button>
@@ -105,8 +112,8 @@ export default function OptOutPage() {
           )}
 
           {confirmedNumber && (
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-xs text-emerald-200 flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="p-4 rounded-xl bg-[#4d6fa9]/10 border border-[#8aa5d6]/30 text-xs text-blue-200 flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-[#8aa5d6] shrink-0" />
               <span>
                 <strong>{confirmedNumber}</strong> has been added to the suppression registry and
                 removed from cache.

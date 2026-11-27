@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scale } from 'lucide-react';
+import { Scale } from "@/components/NumoraIcons";
 import { SiteHeader, SiteFooter } from '../../components/SiteChrome';
 
 export default function TermsPage() {
@@ -7,11 +7,11 @@ export default function TermsPage() {
     <div className="min-h-screen w-full flex flex-col bg-numora-grid text-slate-200">
       <SiteHeader />
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-14 space-y-8 text-sm leading-relaxed text-slate-300 animate-fade-up">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-6 py-14 space-y-8 text-sm leading-relaxed text-zinc-300 animate-fade-up">
         <div>
-          <p className="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Legal & Billing</p>
+          <p className="text-xs uppercase tracking-widest text-[#8aa5d6] font-semibold">Legal & Billing</p>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-1">Terms of Service</h1>
-          <p className="text-xs text-slate-500 mt-2">Last Updated: November 2026</p>
+          <p className="text-xs text-zinc-500 mt-2">Last Updated: November 2026</p>
         </div>
 
         <section className="space-y-3">
@@ -25,8 +25,8 @@ export default function TermsPage() {
 
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white">2. Permissible Use & FCRA Disclaimer</h2>
-          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-400/25 text-xs text-amber-100 flex items-start gap-3">
-            <Scale className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl bg-[#b89b6a]/10 border border-[#b89b6a]/25 text-xs text-amber-100 flex items-start gap-3">
+            <Scale className="w-4 h-4 text-[#d5be96] shrink-0 mt-0.5" />
             <p>
               NumoraLookup is NOT a Consumer Reporting Agency as defined by the Fair Credit Reporting Act (15 U.S.C. § 1681 et seq.).
               You may not use NumoraLookup or any report obtained through NumoraLookup to evaluate eligibility for credit, employment,
@@ -55,14 +55,14 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-white">4. Refunds & Buyer Support</h2>
           <p>
             Refund eligibility and procedures are governed by our{' '}
-            <a href="/refund" className="text-emerald-400 underline hover:text-emerald-300">
+            <a href="/refund" className="text-[#8aa5d6] underline hover:text-blue-300">
               Refund Policy
             </a>
             . Unused passes may be refunded within 14 calendar days of purchase.
           </p>
-          <p className="text-slate-400">
+          <p className="text-zinc-400">
             For customer support or billing assistance, contact{' '}
-            <a href="mailto:support@numoralookup.com" className="text-emerald-400 hover:underline">
+            <a href="mailto:support@numoralookup.com" className="text-[#8aa5d6] hover:underline">
               support@numoralookup.com
             </a>{' '}
             or use the receipt link provided in your Paddle confirmation email.

@@ -21,7 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-spot-voip-burner-number-scam",
     title: "How to Spot a VoIP Burner Number (Google Voice & TextNow) Before You Reply",
     description:
-      "Learn how scammers use disposable VoIP numbers from Google Voice, TextNow, and Twilio to fake local area codes—and how a carrier lookup exposes them in seconds.",
+      "Learn how scammers use disposable VoIP numbers from Google Voice, TextNow, and Twilio to fake local area codes, and how a carrier lookup exposes them in seconds.",
     category: "Scam Prevention",
     readTime: "5 min read",
     publishedAt: "2026-11-10",
@@ -50,7 +50,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "How to Verify a Line Before You Respond",
         body: [
-          "Before replying or sharing personal details, run the full phone number with its country code through NumoraLookup's lookup tool. Checking the upstream carrier and line type immediately tells you whether you are dealing with a real mobile subscriber or a disposable internet line—with 100% search privacy.",
+          "Before replying or sharing personal details, run the full phone number with its country code through NumoraLookup's lookup tool. Checking the upstream carrier and line type immediately tells you whether you are dealing with a real mobile subscriber or a disposable internet line, with 100% search privacy.",
         ],
       },
     ],
@@ -63,7 +63,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         question: "Does the person know when I look up their phone number?",
         answer:
-          "No. Reverse phone lookups query telecom routing and public intelligence databases silently—the owner of the phone number is never alerted or pinged.",
+          "No. Reverse phone lookups query telecom routing and public intelligence databases silently, the owner of the phone number is never alerted or pinged.",
       },
     ],
   },
@@ -94,7 +94,7 @@ export const BLOG_POSTS: BlogPost[] = [
         body: [
           "1. Mismatched Location & Area Code: The caller claims to be a local buyer or neighbor, yet carrier routing traces to a virtual gateway hundreds of miles away.",
           "2. Urgent Bank or Delivery Links: Legitimate banks and couriers do not ask you to verify passwords or pay customs fees through shortened links sent from standard 10-digit mobile or VoIP numbers.",
-          "3. Overpayment & Courier Excuses on Marketplaces: If a buyer on Facebook Marketplace or Craigslist insists on sending a courier with a cashier's check, check their phone line—nearly all of these scripts run on disposable VoIP numbers.",
+          "3. Overpayment & Courier Excuses on Marketplaces: If a buyer on Facebook Marketplace or Craigslist insists on sending a courier with a cashier's check, check their phone line, nearly all of these scripts run on disposable VoIP numbers.",
           "4. Refusal to Take a Live Video Call: Online romance personas who always have a broken camera or poor signal typically pair stolen photos with a virtual phone number.",
           "5. High-Pressure Secrecy: Anyone telling you not to verify their identity or demanding gift cards, wire transfers, or crypto is running a fraud script.",
         ],
@@ -117,7 +117,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "is-reverse-phone-lookup-legal",
     title: "Is Reverse Phone Lookup Legal? Privacy Rules & FCRA Guidelines Explained",
     description:
-      "Understand when searching an unknown phone number is 100% legal for personal safety—and the strict FCRA rules you must follow.",
+      "Understand when searching an unknown phone number is 100% legal for personal safety, and the strict FCRA rules you must follow.",
     category: "Privacy & Legal",
     readTime: "4 min read",
     publishedAt: "2026-11-15",
@@ -189,9 +189,9 @@ export const BLOG_POSTS: BlogPost[] = [
 
   {
     slug: "wrong-number-text-scam-voip",
-    title: "Why You Keep Getting Random 'Wrong Number' Texts — And How VoIP Scams Work",
+    title: "Why You Keep Getting Random 'Wrong Number' Texts, And How VoIP Scams Work",
     description:
-      "Receiving harmless-looking wrong-number texts? Learn why scammers send accidental messages from virtual VoIP numbers to confirm active lines—and how to check them safely.",
+      "Receiving harmless-looking wrong-number texts? Learn why scammers send accidental messages from virtual VoIP numbers to confirm active lines, and how to check them safely.",
     category: "Scam Prevention",
     readTime: "5 min read",
     publishedAt: "2026-11-25",
@@ -219,7 +219,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "4 Safe Steps When You Receive an Unknown Text",
         body: [
-          "1. Do not reply—not even to say 'wrong number.' Silence keeps your number off active-responder lists.",
+          "1. Do not reply, not even to say 'wrong number.' Silence keeps your number off active-responder lists.",
           "2. Never click links or move the chat to WhatsApp or Telegram.",
           "3. Check the line type and carrier on NumoraLookup using the full country code (such as +1 or +44) to see whether the number is a standard mobile carrier line or a virtual VoIP gateway.",
           "4. Use your phone's built-in Block and Report Junk option so mobile carriers can flag the sender's number block.",
@@ -272,7 +272,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "How to Keep Your Search Completely Private",
         body: [
-          "1. Avoid calling back unknown numbers directly—even a quick hang-up exposes your caller ID and confirms your line is active.",
+          "1. Avoid calling back unknown numbers directly, even a quick hang-up exposes your caller ID and confirms your line is active.",
           "2. Do not reply to suspicious texts to ask 'Who is this?'",
           "3. Run the number with its country code on NumoraLookup first to check whether it belongs to a real mobile carrier or a disposable VoIP burner app, with zero alerts sent to the owner.",
         ],
@@ -309,7 +309,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Why Area Codes No Longer Tell You the Real Carrier",
         body: [
-          "Because of Local Number Portability (LNP), anyone can transfer a phone number from Verizon to T-Mobile—or port a traditional number onto an internet VoIP platform—while keeping the exact same digits and area code.",
+          "Because of Local Number Portability (LNP), anyone can transfer a phone number from Verizon to T-Mobile (or port a traditional number onto an internet VoIP platform) while keeping the exact same digits and area code.",
           "Static area-code prefix charts are frequently outdated. To know which network actually operates a line today, you need a live carrier and line-type lookup.",
         ],
       },
@@ -324,7 +324,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "How to Run a Carrier Check in Seconds",
         body: [
-          "Enter the full phone number along with its country code (such as +1, +44, or +49) into NumoraLookup. Within seconds, you will see the E.164 formatted number, country origin, line classification (mobile, landline, or VoIP), and carrier routing intelligence—without subscribing to a monthly plan.",
+          "Enter the full phone number along with its country code (such as +1, +44, or +49) into NumoraLookup. Within seconds, you will see the E.164 formatted number, country origin, line classification (mobile, landline, or VoIP), and carrier routing intelligence, without subscribing to a monthly plan.",
         ],
       },
     ],

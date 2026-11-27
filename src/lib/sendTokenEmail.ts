@@ -93,7 +93,7 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
     .eq('token', params.accessToken);
 
   const text = [
-    'NumoraLookup — Access Pass Active',
+    'NumoraLookup, Access Pass Active',
     '',
     `Plan: ${params.planLabel} (${params.creditsGranted} lookup credits)`,
     `Private Access Token: ${params.accessToken}`,
@@ -110,7 +110,7 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#050811; color:#f8fafc; padding:32px 16px;">
       <div style="max-width:540px; margin:0 auto; background:#0c1120; border:1px solid #1e293b; border-radius:16px; padding:28px;">
-        <div style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#34d399; background:rgba(16,185,129,0.1); border:1px solid rgba(52,211,153,0.25); padding:5px 10px; border-radius:999px;">
+        <div style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#8aa5d6; background:rgba(77, 111, 169,0.1); border:1px solid rgba(52,211,153,0.25); padding:5px 10px; border-radius:999px;">
           NumoraLookup · Pass Confirmed
         </div>
 
@@ -126,7 +126,7 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
           <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#64748b; margin-bottom:8px;">
             Private Access Token
           </div>
-          <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:24px; font-weight:800; letter-spacing:0.12em; color:#34d399;">
+          <div style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:24px; font-weight:800; letter-spacing:0.12em; color:#8aa5d6;">
             ${params.accessToken}
           </div>
         </div>
@@ -137,12 +137,12 @@ export async function deliverAccessTokenEmail(params: SendTokenEmailParams): Pro
           </div>
           <ol style="margin:0; padding-left:18px; font-size:13px; line-height:1.65; color:#94a3b8;">
             <li>Open <strong style="color:#e2e8f0;">numoralookup.com/dashboard</strong></li>
-            <li>Paste <strong style="color:#34d399;">${params.accessToken}</strong> into the restore token box</li>
+            <li>Paste <strong style="color:#8aa5d6;">${params.accessToken}</strong> into the restore token box</li>
             <li>Search numbers or open your unlocked dossiers</li>
           </ol>
         </div>
 
-        <a href="https://numoralookup.com/dashboard" style="display:block; text-align:center; background:#10b981; color:#020617; font-weight:700; font-size:14px; text-decoration:none; padding:13px 18px; border-radius:10px;">
+        <a href="https://numoralookup.com/dashboard" style="display:block; text-align:center; background:#4d6fa9; color:#141519; font-weight:700; font-size:14px; text-decoration:none; padding:13px 18px; border-radius:10px;">
           Open Dashboard
         </a>
 

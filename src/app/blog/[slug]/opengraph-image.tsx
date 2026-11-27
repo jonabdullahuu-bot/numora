@@ -34,7 +34,7 @@ export default async function BlogOpenGraphImage({
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(135deg, #020617 0%, #0f172a 60%, #064e3b 100%)",
+            "#141519",
           padding: "56px 64px",
           color: "#f8fafc",
           fontFamily: "sans-serif",
@@ -57,8 +57,8 @@ export default async function BlogOpenGraphImage({
                 width: 44,
                 height: 44,
                 borderRadius: 12,
-                background: "#10b981",
-                color: "#020617",
+                background: "#4d6fa9",
+                color: "#141519",
                 fontSize: 24,
                 fontWeight: 900,
               }}
@@ -75,12 +75,12 @@ export default async function BlogOpenGraphImage({
               display: "flex",
               alignItems: "center",
               borderRadius: 999,
-              border: "1px solid rgba(16, 185, 129, 0.55)",
-              background: "rgba(16, 185, 129, 0.16)",
+              border: "1px solid rgba(77, 111, 169, 0.55)",
+              background: "rgba(77, 111, 169, 0.16)",
               padding: "8px 20px",
               fontSize: 16,
               fontWeight: 800,
-              color: "#34d399",
+              color: "#4d6fa9",
               letterSpacing: 1,
             }}
           >
@@ -129,7 +129,7 @@ export default async function BlogOpenGraphImage({
             width: "100%",
           }}
         >
-          <span style={{ fontSize: 22, fontWeight: 800, color: "#34d399" }}>
+          <span style={{ fontSize: 22, fontWeight: 800, color: "#4d6fa9" }}>
             numoralookup.com/blog
           </span>
           <div

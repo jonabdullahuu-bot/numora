@@ -1,5 +1,5 @@
-﻿'use client';
-
+'use client';
+import PageStudioBanner from "@/components/PageStudioBanner";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { SiteHeader, SiteFooter } from '@/components/SiteChrome';
@@ -14,7 +14,7 @@ import {
   ArrowUpRight,
   Clock,
   Sparkles,
-} from 'lucide-react';
+} from "@/components/NumoraIcons";
 
 interface StoredWallet {
   accessToken?: string;
@@ -154,17 +154,24 @@ export default function DashboardPage() {
       <SiteHeader />
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-8 sm:space-y-10 animate-fade-up">
+      <PageStudioBanner
+        image="/images/carrier-chip.jpg"
+        alt="Titanium telecom microchip on matte obsidian"
+        eyebrow="Access Token Wallet"
+        title="Your credits and unlocked dossiers in one place."
+        subtitle="Restore your NMR access token across browsers, track remaining lookup credits, and revisit unlocked reports without re-spending."
+      />
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 text-emerald-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/25 text-blue-300 text-xs font-semibold">
               <KeyRound className="w-3.5 h-3.5" />
               <span>Token Wallet & Lookup History</span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.15]">
               NumoraLookup Dashboard
             </h1>
-            <p className="text-sm sm:text-base text-slate-400 max-w-xl">
+            <p className="text-sm sm:text-base text-zinc-400 max-w-xl">
               Check your remaining lookup credits, back up or restore your Private Access
               Token, and reopen previously unlocked phone dossiers.
             </p>
@@ -175,12 +182,12 @@ export default function DashboardPage() {
               href="/pricing"
               className="px-4 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-xs sm:text-sm font-semibold text-white inline-flex items-center gap-2 transition"
             >
-              <Sparkles className="w-4 h-4 text-sky-400" />
+              <Sparkles className="w-4 h-4 text-[#8aa5d6]" />
               <span>Get More Credits</span>
             </Link>
             <Link
               href="/"
-              className="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition"
+              className="px-4 py-2.5 rounded-xl bg-blue-400 hover:bg-blue-300 text-slate-950 text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition"
             >
               <Search className="w-4 h-4" />
               <span>New Lookup</span>
@@ -193,7 +200,7 @@ export default function DashboardPage() {
             className={`p-4 rounded-2xl border text-sm ${
               errorMsg
                 ? 'bg-rose-500/10 border-rose-400/30 text-rose-200'
-                : 'bg-emerald-500/10 border-emerald-400/30 text-emerald-200'
+                : 'bg-[#4d6fa9]/10 border-[#8aa5d6]/30 text-blue-200'
             }`}
           >
             {errorMsg || statusMsg}
@@ -203,53 +210,53 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Credits Remaining */}
-          <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 shadow-xl numora-card">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-6 shadow-xl numora-card">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-400">
               <span>Credits Remaining</span>
-              <Coins className="w-4 h-4 text-emerald-400" />
+              <Coins className="w-4 h-4 text-[#8aa5d6]" />
             </div>
             <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
               {wallet ? wallet.creditsRemaining : 0}
             </div>
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs text-zinc-400">
               {wallet?.planLabel || 'No active pass linked yet'}
             </p>
           </div>
 
           {/* Unlocked Dossiers */}
-          <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 shadow-xl numora-card">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-6 shadow-xl numora-card">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-400">
               <span>Unlocked Numbers</span>
-              <PhoneCall className="w-4 h-4 text-sky-400" />
+              <PhoneCall className="w-4 h-4 text-[#8aa5d6]" />
             </div>
             <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
               {wallet?.unlockedNumbers?.length ?? 0}
             </div>
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs text-zinc-400">
               Re-opening unlocked numbers costs 0 extra credits
             </p>
           </div>
 
           {/* Token Validity */}
-          <div className="rounded-3xl bg-[#0c1120] border border-white/[0.09] p-6 shadow-xl numora-card">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-6 shadow-xl numora-card">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-400">
               <span>Token Status</span>
-              <Clock className="w-4 h-4 text-indigo-400" />
+              <Clock className="w-4 h-4 text-[#8aa5d6]" />
             </div>
             <div className="mt-3 text-xl font-bold text-white truncate">
               {wallet?.accessToken ? 'Active' : 'Not Connected'}
             </div>
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs text-zinc-400">
               Validity: {formattedExpiry}
             </p>
           </div>
         </div>
 
         {/* Active Token & Restore Card */}
-        <div className="rounded-2xl sm:rounded-3xl bg-[#0c1120] border border-white/[0.09] p-5 sm:p-8 shadow-xl space-y-5 sm:space-y-6">
+        <div className="rounded-2xl sm:rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-5 sm:p-8 shadow-xl space-y-5 sm:space-y-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/[0.07]">
             <div className="space-y-1.5">
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#8aa5d6]">
                 Active Private Access Token
               </div>
               {wallet?.accessToken ? (
@@ -257,9 +264,9 @@ export default function DashboardPage() {
                   {wallet.accessToken}
                 </div>
               ) : (
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-zinc-400">
                   No token found in this browser yet. Purchase a pass on{' '}
-                  <Link href="/pricing" className="text-sky-400 underline">
+                  <Link href="/pricing" className="text-[#8aa5d6] underline">
                     Pricing
                   </Link>{' '}
                   or enter an existing <span className="font-mono text-slate-200">NMR-</span> token below.
@@ -275,7 +282,7 @@ export default function DashboardPage() {
                   className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs inline-flex items-center gap-1.5 cursor-pointer transition"
                 >
                   {copied ? (
-                    <Check className="w-4 h-4 text-emerald-400" />
+                    <Check className="w-4 h-4 text-[#8aa5d6]" />
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
@@ -302,8 +309,8 @@ export default function DashboardPage() {
               <h2 className="text-base font-bold text-white">
                 Switch Device or Restore Token
               </h2>
-              <p className="text-xs text-slate-400">
-                Paste a saved <span className="font-mono text-slate-300">NMR-XXXXXXXX</span> code to load your balance on this device.
+              <p className="text-xs text-zinc-400">
+                Paste a saved <span className="font-mono text-zinc-300">NMR-XXXXXXXX</span> code to load your balance on this device.
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -312,12 +319,12 @@ export default function DashboardPage() {
                 value={tokenInput}
                 onChange={(e) => setTokenInput(e.target.value)}
                 placeholder="NMR-XXXXXXXX"
-                className="w-full sm:w-52 px-4 py-2.5 rounded-xl bg-slate-950/90 border border-white/15 text-sm font-mono uppercase text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-400"
+                className="w-full sm:w-52 px-4 py-2.5 rounded-xl bg-[#141519]/90 border border-white/15 text-sm font-mono uppercase text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#8aa5d6]"
               />
               <button
                 type="submit"
                 disabled={loading || !tokenInput.trim()}
-                className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm inline-flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50 transition"
+                className="numora-action px-4 py-2.5 rounded-xl bg-[#4d6fa9] hover:bg-blue-400 text-slate-950 font-bold text-xs sm:text-sm inline-flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50 transition"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                 <span>{loading ? 'Syncing...' : 'Load Token'}</span>
@@ -327,11 +334,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Unlocked Numbers History */}
-        <div className="rounded-2xl sm:rounded-3xl bg-[#0c1120] border border-white/[0.09] p-5 sm:p-8 shadow-xl space-y-4 sm:space-y-5">
+        <div className="rounded-2xl sm:rounded-3xl bg-[#1b1d23] border border-white/[0.09] apple-card p-5 sm:p-8 shadow-xl space-y-4 sm:space-y-5">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-bold text-white">Unlocked Lookup History</h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-zinc-400 mt-0.5">
                 Click any number to view its dossier again without spending another credit.
               </p>
             </div>
@@ -348,7 +355,7 @@ export default function DashboardPage() {
                   <span className="font-mono text-sm font-bold text-white">
                     {num}
                   </span>
-                  <span className="text-xs font-semibold text-emerald-400 inline-flex items-center gap-1">
+                  <span className="text-xs font-semibold text-[#8aa5d6] inline-flex items-center gap-1">
                     <span>Open</span>
                     <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
@@ -357,7 +364,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="p-8 rounded-2xl bg-white/[0.02] border border-dashed border-white/10 text-center space-y-3">
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-zinc-400">
                 No unlocked phone dossiers yet.
               </p>
               <Link

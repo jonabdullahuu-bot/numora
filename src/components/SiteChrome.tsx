@@ -140,22 +140,22 @@ export function SiteHeader() {
   const hasCredits = creditsCount > 0;
 
   const navLinkClass =
-    "text-slate-300 hover:text-white transition font-medium whitespace-nowrap";
+    "liquid-glass-pill inline-flex items-center justify-center h-9 px-4 rounded-full text-sm text-zinc-200 hover:text-white font-medium whitespace-nowrap";
   const mobileNavLinkClass =
-    "block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition";
+    "block px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:bg-white/[0.06] hover:text-white transition";
 
   const creditBadge = (
     <span
       aria-label={`${creditsCount} ${creditsCount === 1 ? "credit" : "credits"} remaining`}
-      className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border text-[11px] sm:text-xs font-semibold whitespace-nowrap tabular-nums select-none ${
+      className={`inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full border text-xs font-semibold whitespace-nowrap tabular-nums select-none ${
         hasCredits
-          ? "bg-emerald-500/15 border-emerald-400/35 text-emerald-300"
-          : "bg-slate-900/80 border-slate-700/80 text-slate-300"
+          ? "bg-[#4d6fa9]/15 border-[#8aa5d6]/35 text-[#b7cceb]"
+          : "bg-[#1b1d23]/80 border-white/[0.12] text-zinc-300"
       }`}
     >
       <span
         className={`h-1.5 w-1.5 rounded-full shrink-0 ${
-          hasCredits ? "bg-emerald-400" : "bg-slate-500"
+          hasCredits ? "bg-[#8aa5d6]" : "bg-zinc-500"
         }`}
       />
       <span>
@@ -166,8 +166,8 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+      <header className="fixed top-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-6xl z-50 rounded-2xl liquid-glass-nav transition-all duration-300">
+        <div className="w-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
           <a
             href="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -176,7 +176,7 @@ export function SiteHeader() {
             <img
               src="/logo.jpg"
               alt="NumoraLookup Logo"
-              className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-white/15 shadow-sm shrink-0"
             />
             <span className="text-sm sm:text-xl font-bold tracking-tight text-white truncate">
               NumoraLookup
@@ -184,7 +184,7 @@ export function SiteHeader() {
           </a>
 
           {/* Desktop & Tablet: Pricing, Blog, Dashboard, then Credits */}
-          <nav className="hidden sm:flex items-center gap-5 md:gap-6 text-xs sm:text-sm shrink-0">
+          <nav className="hidden sm:flex items-center gap-2.5 shrink-0">
             <a href="/pricing" className={navLinkClass}>
               Pricing
             </a>
@@ -205,7 +205,7 @@ export function SiteHeader() {
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.12] text-white transition cursor-pointer"
+              className="liquid-glass-pill inline-flex items-center justify-center h-9 w-9 rounded-full text-white cursor-pointer"
             >
               {mobileMenuOpen ? (
                 <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2">
@@ -222,7 +222,7 @@ export function SiteHeader() {
 
         {/* Phone Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="sm:hidden border-t border-slate-800/80 bg-[#070b16]/95 backdrop-blur-md px-4 py-3 space-y-1">
+          <div className="sm:hidden border-t border-white/[0.08] bg-[#1b1d23]/95 backdrop-blur-md rounded-b-2xl px-4 py-3 space-y-1.5">
             <a
               href="/pricing"
               onClick={() => setMobileMenuOpen(false)}
@@ -254,9 +254,9 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="relative w-full border-t border-slate-800/80 bg-[#050811]/85 backdrop-blur-md text-slate-400 mt-auto">
+    <footer className="relative w-full border-t border-white/[0.09] bg-[#141519]/85 backdrop-blur-md text-zinc-400 mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-6">
-        <div className="rounded-xl border border-slate-800/90 bg-slate-900/50 p-4 sm:p-5 text-xs sm:text-sm leading-relaxed text-slate-300 numora-card">
+        <div className="rounded-xl border border-white/[0.09] bg-[#1b1d23]/50 p-4 sm:p-5 text-xs sm:text-sm leading-relaxed text-zinc-300 numora-card">
           <strong className="text-white">Important Boundary:</strong> NumoraLookup provides informational phone lookup and risk context only. It is not a consumer reporting agency under the Fair Credit Reporting Act (FCRA) and must not be used for credit, employment, insurance, or tenant screening decisions.
         </div>
 
@@ -266,7 +266,7 @@ export function SiteFooter() {
               <img
                 src="/logo.jpg"
                 alt="NumoraLookup Logo"
-                className="h-7 w-7 rounded-lg object-cover border border-emerald-500/40 shrink-0"
+                className="h-7 w-7 rounded-lg object-cover border border-[#8aa5d6]/40 shrink-0"
               />
               <span className="font-semibold text-white">NumoraLookup</span>
             </div>
@@ -280,7 +280,7 @@ export function SiteFooter() {
                   rel="noopener noreferrer"
                   aria-label={item.name}
                   title={item.name}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900/70 text-slate-400 hover:border-emerald-500/40 hover:text-emerald-300 transition"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.09] bg-[#1b1d23]/70 text-zinc-400 hover:border-[#8aa5d6]/40 hover:text-blue-300 transition"
                 >
                   {item.svg}
                 </a>
@@ -288,7 +288,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-slate-400">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-zinc-400">
             <Link href="/terms" className="hover:text-white numora-link">
               Terms of Service
             </Link>
@@ -307,7 +307,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800/70 pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-slate-500">
+        <div className="border-t border-white/[0.09] pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-zinc-500">
           <p>© 2026 NumoraLookup. All rights reserved.</p>
           <p>
             Disclaimer: NumoraLookup is not a Consumer Reporting Agency under the Fair Credit Reporting Act (FCRA) and may not be used for employment, tenant screening, or credit decisions.

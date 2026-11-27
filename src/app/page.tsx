@@ -1,5 +1,8 @@
 'use client';
 import { DetectionMarquee } from '@/components/DetectionMarquee';
+import HeroSignalConstellation from '@/components/HeroSignalConstellation';
+import TelemetryRadarBento from '@/components/TelemetryRadarBento';
+import AppleFeatureShowcase from '@/components/AppleFeatureShowcase';
 
 import { createPortal } from "react-dom";
 import { SiteFooter } from "../components/SiteChrome";
@@ -36,7 +39,7 @@ import {
   Coins,
   BadgeCheck,
   CreditCard,
-} from 'lucide-react';
+} from "@/components/NumoraIcons";
 
 interface CountryOption {
   iso: string;
@@ -408,7 +411,7 @@ const FORENSICS_MODULES = [
     title: 'Subscriber & Contact Clues',
     subtitle: 'Corroborate name, email, and address records when available',
     description:
-      'Surfaces available subscriber attributes—such as registered name, linked email, and location—behind a clean unlock flow.',
+      'Surfaces available subscriber attributes (registered name, linked email, and location) behind a single unlock flow.',
     specs: [
       ['Report Fields', 'Name, Email & Address'],
       ['Privacy Controls', 'Self-Serve Opt-Out Registry'],
@@ -894,13 +897,13 @@ export default function NumoraHome() {
       (result?.e164 && (wallet?.unlockedNumbers ?? []).includes(result.e164)));
 
   return (
-    <div className="min-h-screen bg-[#060913] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="min-h-screen bg-[#141519] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-[#4d6fa9]/25 selection:text-white">
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0"
         style={{
           backgroundImage:
-            'radial-gradient(ellipse 80% 45% at 50% -10%, rgba(99, 102, 241, 0.22), transparent), radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.08), transparent)',
+            '#141519',
         }}
       />
       <div
@@ -908,13 +911,13 @@ export default function NumoraHome() {
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, #94a3b8 1px, transparent 1px), linear-gradient(to bottom, #94a3b8 1px, transparent 1px)',
+            '#141519',
           backgroundSize: '48px 48px',
         }}
       />
 
-                  <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-slate-800/80 bg-[#050811]/85 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+                  <header className="fixed top-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-6xl z-50 rounded-2xl liquid-glass-nav transition-all duration-300">
+        <div className="w-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
           <a
             href="/"
             onClick={() => setHomeMobileMenuOpen(false)}
@@ -923,7 +926,7 @@ export default function NumoraHome() {
             <img
               src="/logo.jpg"
               alt="NumoraLookup Logo"
-              className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-emerald-500/40 shadow-sm shrink-0 numora-card"
+              className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl object-cover border border-white/15 shadow-sm shrink-0"
             />
             <span className="text-sm sm:text-xl font-bold tracking-tight text-white truncate">
               NumoraLookup
@@ -934,19 +937,19 @@ export default function NumoraHome() {
             const creditsCount = wallet?.creditsRemaining ?? 0;
             const hasCredits = creditsCount > 0;
             const navLinkClass =
-              "text-slate-300 hover:text-white transition font-medium whitespace-nowrap";
+              "liquid-glass-pill inline-flex items-center justify-center h-9 px-4 rounded-full text-sm text-zinc-200 hover:text-white font-medium whitespace-nowrap";
             const homeCreditBadge = (
               <span
                 aria-label={`${creditsCount} ${creditsCount === 1 ? "credit" : "credits"} remaining`}
-                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border text-[11px] sm:text-xs font-semibold whitespace-nowrap tabular-nums select-none ${
+                className={`inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full border text-xs font-semibold whitespace-nowrap tabular-nums select-none ${
                   hasCredits
-                    ? "bg-emerald-500/15 border-emerald-400/35 text-emerald-300"
-                    : "bg-slate-900/80 border-slate-700/80 text-slate-300"
+                    ? "bg-[#4d6fa9]/15 border-[#8aa5d6]/35 text-[#b7cceb]"
+                    : "bg-[#1b1d23]/80 border-white/[0.12] text-zinc-300"
                 }`}
               >
                 <span
                   className={`h-1.5 w-1.5 rounded-full shrink-0 ${
-                    hasCredits ? "bg-emerald-400" : "bg-slate-500"
+                    hasCredits ? "bg-[#8aa5d6]" : "bg-zinc-500"
                   }`}
                 />
                 <span>
@@ -957,21 +960,19 @@ export default function NumoraHome() {
 
             return (
               <>
-                {/* Desktop & Tablet: Pricing, Blog, Dashboard, then Credits */}
-                <nav className="hidden sm:flex items-center gap-5 md:gap-6 text-xs sm:text-sm shrink-0">
+                <nav className="hidden sm:flex items-center gap-2.5 shrink-0">
                   <a href="/pricing" className={navLinkClass}>
                     Pricing
                   </a>
                   <Link href="/blog" className={navLinkClass}>
                     Blog
                   </Link>
-                  <a href="/dashboard" className={navLinkClass}>
+                  <Link href="/dashboard" className={navLinkClass}>
                     Dashboard
-                  </a>
+                  </Link>
                   {homeCreditBadge}
                 </nav>
 
-                {/* Phone: Credits outside menu + Dropdown button */}
                 <div className="flex sm:hidden items-center gap-2 shrink-0">
                   {homeCreditBadge}
                   <button
@@ -979,7 +980,7 @@ export default function NumoraHome() {
                     onClick={() => setHomeMobileMenuOpen((prev) => !prev)}
                     aria-expanded={homeMobileMenuOpen}
                     aria-label={homeMobileMenuOpen ? "Close menu" : "Open menu"}
-                    className="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.12] text-white transition cursor-pointer"
+                    className="liquid-glass-pill inline-flex items-center justify-center h-9 w-9 rounded-full text-white cursor-pointer"
                   >
                     {homeMobileMenuOpen ? (
                       <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2">
@@ -997,73 +998,66 @@ export default function NumoraHome() {
           })()}
         </div>
 
-        {/* Phone Dropdown Menu */}
         {homeMobileMenuOpen && (
-          <div className="sm:hidden border-t border-slate-800/80 bg-[#070b16]/95 backdrop-blur-md px-4 py-3 space-y-1">
+          <div className="sm:hidden border-t border-white/[0.08] bg-[#1b1d23]/95 backdrop-blur-md rounded-b-2xl px-4 py-3 space-y-1.5">
             <a
               href="/pricing"
               onClick={() => setHomeMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:bg-white/[0.06] hover:text-white transition"
             >
               Pricing
             </a>
             <Link
               href="/blog"
               onClick={() => setHomeMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:bg-white/[0.06] hover:text-white transition"
             >
               Blog
             </Link>
-            <a
+            <Link
               href="/dashboard"
               onClick={() => setHomeMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition"
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:bg-white/[0.06] hover:text-white transition"
             >
               Dashboard
-            </a>
+            </Link>
           </div>
         )}
       </header>
-      <div className="h-16 w-full shrink-0" aria-hidden="true" />
+      <div id="top" className="h-24 w-full shrink-0" aria-hidden="true" />
 
-      <main className="relative flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-14 pb-16 sm:pb-24 animate-fade-up z-20">
-        <div className="text-center space-y-5 max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-xs font-medium shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Global Number Intelligence, Carrier & Risk Lookup</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+      <main className="relative flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16 sm:pb-24 animate-fade-up z-20">
+        <HeroSignalConstellation>
+        <div className="text-center space-y-4 max-w-2xl mx-auto mb-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold tracking-tight text-white leading-[1.06]">
             Know who’s behind{' '}
-            <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-300 bg-clip-text text-transparent">
-              any phone number.
-            </span>
+            <span className="text-[#8aa5d6]">any phone number.</span>
           </h1>
 
-          <p className="text-slate-400 max-w-xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed px-1">
-            Pick a country flag & dial code or enter a full international number to inspect
-            carrier routing, line type, spam risk, and registered subscriber records in seconds.
+          <p className="text-zinc-400 max-w-xl mx-auto text-sm sm:text-base leading-relaxed px-1">
+            Enter any international number to inspect live carrier routing, hardware SIM vs. VoIP
+            burner line type, and scam risk signals in seconds, without notifying the owner.
           </p>
         </div>
 
         <form onSubmit={(e) => handleSearch(e)} className="relative max-w-2xl mx-auto z-40">
-          <div className="relative p-1.5 rounded-2xl bg-gradient-to-r from-indigo-500/30 via-sky-500/20 to-indigo-500/30 shadow-2xl shadow-indigo-950/50 z-40">
-            <div className="relative flex flex-col sm:flex-row gap-2.5 p-1.5 bg-[#0c1120]/95 backdrop-blur-xl rounded-[13px] z-40">
+          <div className="relative p-1.5 rounded-2xl bg-white/[0.06] border border-white/[0.12] shadow-[0_24px_80px_-20px_rgba(0,0,0,0.85)] backdrop-blur-md z-50">
+            <div className="relative flex flex-col sm:flex-row gap-2.5 p-1.5 bg-[#1b1d23]/95 backdrop-blur-xl rounded-[13px] z-40">
               <div className="relative flex items-center flex-1 min-w-0 z-40">
                 <div ref={pickerRef} className="relative shrink-0 z-40">
                   <button
                     type="button"
                     aria-label="Select country code"
                     onClick={() => setDropdownOpen((prev) => !prev)}
-                    className="flex items-center gap-2 bg-white/[0.05] hover:bg-white/[0.09] text-white text-sm font-medium px-3 py-2.5 rounded-xl border border-white/[0.08] focus:outline-none focus:border-indigo-400 cursor-pointer tabular-nums transition numora-card"
+                    className="liquid-glass-pill flex items-center gap-2 text-white text-sm font-medium px-3 py-2.5 rounded-xl focus:outline-none focus:border-[#8aa5d6] cursor-pointer tabular-nums"
                   >
                     <CountryFlag iso={selectedCountry.iso} name={selectedCountry.name} />
                     <span>{selectedCountry.dialCode}</span>
-                    <ChevronDown className="w-4 h-4 text-slate-400" />
+                    <ChevronDown className="w-4 h-4 text-zinc-400" />
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute left-0 mt-2 w-[min(18rem,calc(100vw-2.5rem))] sm:w-80 max-h-72 sm:max-h-80 rounded-2xl bg-[#0b101f] border border-white/[0.12] shadow-2xl flex flex-col overflow-hidden z-[9999]">
+                    <div className="absolute left-0 mt-2 w-[min(18rem,calc(100vw-2.5rem))] sm:w-80 max-h-72 sm:max-h-80 rounded-2xl bg-[#1b1d23] border border-white/[0.12] shadow-2xl flex flex-col overflow-hidden z-[9999]">
       <div className="relative p-2 border-b border-white/[0.08]">
 
                         <input
@@ -1071,7 +1065,7 @@ export default function NumoraHome() {
                           value={countrySearch}
                           onChange={(e) => setCountrySearch(e.target.value)}
                           placeholder="Search all countries or +code..."
-                          className="w-full px-3 py-2 rounded-lg bg-white/[0.05] text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                          className="w-full px-3 py-2 rounded-lg bg-white/[0.05] text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-400/60"
                         />
                       
                       </div>
@@ -1092,13 +1086,13 @@ export default function NumoraHome() {
                                 <CountryFlag iso={c.iso} name={c.name} />
                                 <span className="truncate">{c.name}</span>
                               </span>
-                              <span className="font-semibold text-indigo-300 tabular-nums ml-2 shrink-0">
+                              <span className="font-semibold text-[#8aa5d6] tabular-nums ml-2 shrink-0">
                                 {c.dialCode}
                               </span>
                             </button>
                           ))
                         ) : (
-                          <div className="p-4 text-center text-xs text-slate-500">
+                          <div className="p-4 text-center text-xs text-zinc-500">
                             No matching country found
                           </div>
                         )}
@@ -1108,7 +1102,7 @@ export default function NumoraHome() {
                 </div>
 
                 <div className="flex items-center flex-1 px-3 min-w-0">
-                  <PhoneCall className="w-4 h-4 text-indigo-400 mr-2.5 shrink-0" />
+                  <PhoneCall className="w-4 h-4 text-[#8aa5d6] mr-2.5 shrink-0" />
                   <input
                     type="tel"
                     value={phoneInput}
@@ -1125,7 +1119,7 @@ export default function NumoraHome() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-sky-500 disabled:opacity-50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/25 cursor-pointer shrink-0 numora-btn"
+                className="liquid-glass-blue disabled:opacity-50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2 cursor-pointer shrink-0"
               >
                 {loading ? (
                   <>
@@ -1142,39 +1136,39 @@ export default function NumoraHome() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-            <span className="font-medium text-slate-300">Try 1-click free scan:</span>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-zinc-400">
+            <span className="font-medium text-zinc-300">Try 1-click free scan:</span>
             {SAMPLE_NUMBERS.map((sample) => (
               <button
                 key={`${sample.iso}-${sample.localNumber}`}
                 type="button"
                 onClick={() => handleSampleClick(sample)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-400/25 hover:border-indigo-400/50 text-slate-200 transition cursor-pointer tabular-nums"
+                className="liquid-glass-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-zinc-200 cursor-pointer tabular-nums"
               >
                 <CountryFlag iso={sample.iso} name={sample.label} />
                 <span className="font-medium">{sample.label}:</span>
-                <span className="text-indigo-300 font-semibold">
+                <span className="text-[#8aa5d6] font-semibold">
                   {sample.dialCode} {sample.localNumber}
                 </span>
               </button>
             ))}
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-300">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-zinc-300">
             <span className="inline-flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
               </svg>
               <span>Instant Results (No Fake Loading Bar)</span>
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
               </svg>
               <span>One-Time Passes (No Subscriptions)</span>
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fillRule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 111.42-1.42l2.79 2.79 6.79-6.79a1 1 0 011.42 0z" clipRule="evenodd" />
               </svg>
               <span>100% Private (Owner Never Notified)</span>
@@ -1182,8 +1176,8 @@ export default function NumoraHome() {
           </div>
 
           {loading && (
-            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-full py-2 px-4 max-w-md mx-auto">
-              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-[#8aa5d6] bg-[#4d6fa9]/10 border border-[#8aa5d6]/20 rounded-full py-2 px-4 max-w-md mx-auto">
+              <span className="w-2 h-2 rounded-full bg-[#5e8af0] animate-ping" />
               <span>{SCAN_STAGES[scanStageIndex]}</span>
             </div>
           )}
@@ -1195,16 +1189,17 @@ export default function NumoraHome() {
             </div>
           )}
         </form>
+        </HeroSignalConstellation>
 
         {result && (
-          <div className="mt-8 sm:mt-12 bg-[#0c1120]/90 backdrop-blur-xl border border-white/[0.09] rounded-2xl sm:rounded-3xl overflow-x-clip shadow-2xl">
+          <div className="mt-8 sm:mt-12 bg-[#1b1d23]/90 backdrop-blur-xl border border-white/[0.09] rounded-2xl sm:rounded-3xl overflow-x-clip shadow-2xl">
             <div className="p-4 sm:p-6 lg:px-8 border-b border-white/[0.07] flex flex-wrap items-center justify-between gap-3 sm:gap-4 bg-white/[0.02]">
               <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-indigo-500/15 border border-indigo-400/25 flex items-center justify-center text-indigo-300 numora-card">
+                <div className="w-11 h-11 rounded-2xl bg-[#4d6fa9]/15 border border-[#8aa5d6]/25 flex items-center justify-center text-[#8aa5d6] numora-card">
                   <Fingerprint className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-semibold">
+                  <span className="text-[11px] uppercase tracking-widest text-[#8aa5d6] font-semibold">
                     Intelligence Dossier
                   </span>
                   <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tabular-nums tracking-tight break-all">
@@ -1215,42 +1210,42 @@ export default function NumoraHome() {
 
               <div className="flex flex-wrap items-center gap-2.5">
                 {wallet && wallet.creditsRemaining > 0 && (
-                  <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-300 border border-sky-400/25 flex items-center gap-1.5 tabular-nums">
-                    <Coins className="w-3.5 h-3.5 text-sky-400" />
+                  <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#4d6fa9]/10 text-blue-200 border border-[#8aa5d6]/20 flex items-center gap-1.5 tabular-nums">
+                    <Coins className="w-3.5 h-3.5 text-[#8aa5d6]" />
                     {wallet.creditsRemaining} Credits Available
                   </span>
                 )}
-                <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#4d6fa9]/10 text-blue-300 border border-[#8aa5d6]/25 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6]" />
                   Verified Line · {result.lineType}
                 </span>
               </div>
             </div>
 
             {paymentStatusMessage && (
-              <div className="mx-6 sm:mx-8 mt-6 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-400/25 text-xs sm:text-sm text-emerald-200 flex items-center gap-2 numora-card">
-                <BadgeCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="mx-6 sm:mx-8 mt-6 px-4 py-3 rounded-xl bg-[#4d6fa9]/10 border border-[#8aa5d6]/25 text-xs sm:text-sm text-blue-200 flex items-center gap-2 numora-card">
+                <BadgeCheck className="w-4 h-4 text-[#8aa5d6] shrink-0" />
                 <span>{paymentStatusMessage}</span>
               </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 p-4 sm:p-6 lg:px-8 border-b border-white/[0.07]">
-              <div className="bg-[#060913]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
-                <p className="text-xs uppercase tracking-wider text-slate-500 font-medium">
+              <div className="bg-[#141519]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
+                <p className="text-xs uppercase tracking-wider text-zinc-500 font-medium">
                   Carrier / Network
                 </p>
                 <p className="font-semibold text-white mt-1.5 text-base">{result.carrier}</p>
               </div>
 
-              <div className="bg-[#060913]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
-                <p className="text-xs uppercase tracking-wider text-slate-500 font-medium">
+              <div className="bg-[#141519]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
+                <p className="text-xs uppercase tracking-wider text-zinc-500 font-medium">
                   Region / Country
                 </p>
                 <p className="font-semibold text-white mt-1.5 text-base">{result.location}</p>
               </div>
 
-              <div className="bg-[#060913]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
-                <p className="text-xs uppercase tracking-wider text-slate-500 font-medium">
+              <div className="bg-[#141519]/80 p-4 rounded-2xl border border-white/[0.06] numora-card">
+                <p className="text-xs uppercase tracking-wider text-zinc-500 font-medium">
                   Spam & Fraud Risk
                 </p>
                 <p
@@ -1258,8 +1253,8 @@ export default function NumoraHome() {
                     result.spamRisk === 'High'
                       ? 'text-rose-400'
                       : result.spamRisk === 'Medium'
-                      ? 'text-amber-300'
-                      : 'text-emerald-400'
+                      ? 'text-[#dfc087]'
+                      : 'text-[#8aa5d6]'
                   }`}
                 >
                   {result.spamRisk} Risk
@@ -1270,14 +1265,14 @@ export default function NumoraHome() {
             <div className="p-4 sm:p-6 lg:px-8">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
                 <div>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-indigo-300">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-[#8aa5d6]">
                     Deep Telecom, VoIP & Line Activity Forensics
                   </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-zinc-400 mt-0.5">
                     Multi-layer carrier routing, virtual burner classification, and live reachability telemetry
                   </p>
                 </div>
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.05] border border-white/[0.08] text-slate-300">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.05] border border-white/[0.08] text-zinc-300">
                   {unlocked ? 'Full Forensic Dossier Unlocked' : 'Protected Preview'}
                 </span>
               </div>
@@ -1293,12 +1288,12 @@ export default function NumoraHome() {
                     result.spamRisk === 'High'
                       ? 'bg-rose-500/10 border-rose-500/30'
                       : result.spamRisk === 'Medium'
-                      ? 'bg-amber-500/10 border-amber-400/30'
-                      : 'bg-emerald-500/10 border-emerald-500/25'
+                      ? 'bg-[#cfa058]/10 border-[#cfa058]/30'
+                      : 'bg-[#4d6fa9]/10 border-[#8aa5d6]/25'
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-300">
                       1. Forensic Risk & Burner Verdict
                     </span>
                     <span
@@ -1306,8 +1301,8 @@ export default function NumoraHome() {
                         result.spamRisk === 'High'
                           ? 'bg-rose-500/20 text-rose-300'
                           : result.spamRisk === 'Medium'
-                          ? 'bg-amber-500/20 text-amber-200'
-                          : 'bg-emerald-500/20 text-emerald-300'
+                          ? 'bg-[#cfa058]/15 text-[#e6cca0]'
+                          : 'bg-[#4d6fa9]/20 text-blue-300'
                       }`}
                     >
                       {result.spamRisk} Anomaly Risk
@@ -1320,7 +1315,7 @@ export default function NumoraHome() {
                     <ul className="mt-3 space-y-1.5 border-t border-white/[0.08] pt-3">
                       {result.redFlags.map((flag: string, idx: number) => (
                         <li key={idx} className="text-xs sm:text-sm text-slate-200 flex items-start gap-2">
-                          <span className="text-indigo-400 font-bold mt-0.5">?</span>
+                          <span className="text-[#8aa5d6] font-bold mt-0.5">?</span>
                           <span>{flag}</span>
                         </li>
                       ))}
@@ -1330,27 +1325,27 @@ export default function NumoraHome() {
 
                 {/* Module 2 & 3: Line Forensics + Live Line Activity Score */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                  <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-3.5">
+                  <div className="rounded-2xl border border-white/[0.07] bg-[#141519]/80 p-5 space-y-3.5">
                     <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-300">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#8aa5d6]">
                         2. Line & Burner VoIP Forensics
                       </h4>
-                      <span className="text-[11px] text-slate-400">Carrier Intel</span>
+                      <span className="text-[11px] text-zinc-400">Carrier Intel</span>
                     </div>
 
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Line Classification</span>
+                      <span className="text-zinc-400">Line Classification</span>
                       <span className="font-semibold text-white">{result.lineType}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Virtual / Non-Fixed VoIP</span>
+                      <span className="text-zinc-400">Virtual / Non-Fixed VoIP</span>
                       <span
                         className={`font-semibold ${
                           result.isNonFixedVoip
                             ? 'text-rose-400'
                             : result.isVoip
-                            ? 'text-amber-300'
-                            : 'text-emerald-400'
+                            ? 'text-[#dfc087]'
+                            : 'text-[#8aa5d6]'
                         }`}
                       >
                         {result.isNonFixedVoip
@@ -1361,7 +1356,7 @@ export default function NumoraHome() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Prepaid Billing Status</span>
+                      <span className="text-zinc-400">Prepaid Billing Status</span>
                       <span className="font-semibold text-white">
                         {result.isPrepaid === true
                           ? 'Prepaid Line'
@@ -1371,17 +1366,17 @@ export default function NumoraHome() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Underlying Carrier</span>
+                      <span className="text-zinc-400">Underlying Carrier</span>
                       <span className="font-semibold text-white">{result.carrier}</span>
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-3.5">
+                  <div className="rounded-2xl border border-white/[0.07] bg-[#141519]/80 p-5 space-y-3.5">
                     <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-sky-300">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#8aa5d6]">
                         3. Live Line Activity & Reachability
                       </h4>
-                      <span className="text-[11px] font-semibold text-slate-300 tabular-nums">
+                      <span className="text-[11px] font-semibold text-zinc-300 tabular-nums">
                         {typeof result.activityScore === 'number'
                           ? `Score: ${result.activityScore} / 100`
                           : 'Network Status'}
@@ -1389,7 +1384,7 @@ export default function NumoraHome() {
                     </div>
 
                     <div>
-                      <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                      <div className="flex items-center justify-between text-xs text-zinc-400 mb-1.5">
                         <span>Telecom Activity Index</span>
                         <span className="font-semibold text-white">
                           {typeof result.activityScore === 'number'
@@ -1403,8 +1398,8 @@ export default function NumoraHome() {
                             typeof result.activityScore === 'number' && result.activityScore <= 30
                               ? 'bg-rose-400'
                               : typeof result.activityScore === 'number' && result.activityScore < 70
-                              ? 'bg-amber-400'
-                              : 'bg-emerald-400'
+                              ? 'bg-[#cfa058]'
+                              : 'bg-blue-400'
                           }`}
                           style={{
                             width: `${
@@ -1418,19 +1413,19 @@ export default function NumoraHome() {
                     </div>
 
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Connection State</span>
+                      <span className="text-zinc-400">Connection State</span>
                       <span className="font-semibold text-white text-right">
                         {result.activityStatus || 'Active Carrier Assignment'}
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Numbering Plan Valid</span>
-                      <span className="font-semibold text-emerald-400">
+                      <span className="text-zinc-400">Numbering Plan Valid</span>
+                      <span className="font-semibold text-[#8aa5d6]">
                         {result.isValid !== false ? 'Valid & Assignable' : 'Invalid'}
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">Telemetry Source</span>
+                      <span className="text-zinc-400">Telemetry Source</span>
                       <span className="font-semibold text-slate-200 uppercase">
                         {result.dataSource === 'trestle'
                           ? 'Trestle Phone Intelligence'
@@ -1441,29 +1436,29 @@ export default function NumoraHome() {
                 </div>
 
                 {/* Module 4: International Numbering & Safety Audit */}
-                <div className="rounded-2xl border border-white/[0.07] bg-[#060913]/80 p-5 space-y-4">
+                <div className="rounded-2xl border border-white/[0.07] bg-[#141519]/80 p-5 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-blue-300">
                       4. International Numbering & Safety Audit
                     </h4>
-                    <span className="text-[11px] text-slate-400">E.164 & Hygiene</span>
+                    <span className="text-[11px] text-zinc-400">E.164 & Hygiene</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                     <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-                      <span className="text-slate-400 block">E.164 Canonical</span>
+                      <span className="text-zinc-400 block">E.164 Canonical</span>
                       <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
                         {result.e164}
                       </span>
                     </div>
                     <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-                      <span className="text-slate-400 block">International Dialing</span>
+                      <span className="text-zinc-400 block">International Dialing</span>
                       <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
                         {result.internationalFormat || result.e164}
                       </span>
                     </div>
                     <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-                      <span className="text-slate-400 block">National / Local Format</span>
+                      <span className="text-zinc-400 block">National / Local Format</span>
                       <span className="font-mono font-semibold text-white mt-1 block tabular-nums">
                         {result.nationalFormat || result.e164}
                       </span>
@@ -1472,13 +1467,13 @@ export default function NumoraHome() {
 
                   {Array.isArray(result.safetyGuidance) && result.safetyGuidance.length > 0 && (
                     <div className="pt-2 border-t border-white/[0.06]">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
                         Recommended Verification Steps
                       </p>
                       <ul className="space-y-1.5">
                         {result.safetyGuidance.map((tip: string, idx: number) => (
-                          <li key={idx} className="text-xs sm:text-sm text-slate-300 flex items-start gap-2">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                          <li key={idx} className="text-xs sm:text-sm text-zinc-300 flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-[#8aa5d6] shrink-0 mt-0.5" />
                             <span>{tip}</span>
                           </li>
                         ))}
@@ -1489,51 +1484,51 @@ export default function NumoraHome() {
               </div>
 
               {!unlocked && (
-                <div className="mt-5 sm:mt-6 p-4 sm:p-6 lg:p-8 rounded-2xl bg-gradient-to-b from-indigo-950/45 via-[#090e1c] to-[#060913] border border-indigo-400/25 space-y-5 sm:space-y-6 numora-card">
+                <div className="mt-5 sm:mt-6 p-4 sm:p-6 lg:p-8 rounded-2xl bg-[#1b1d23] from-[#141926] via-[#10131a] to-[#141519] border border-[#8aa5d6]/25 space-y-5 sm:space-y-6 numora-card">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-left border-b border-white/[0.07] pb-5">
                     <div className="flex items-start gap-3.5">
-                      <div className="w-11 h-11 rounded-2xl bg-indigo-500/15 border border-indigo-400/25 text-indigo-300 flex items-center justify-center shrink-0 mt-0.5 numora-card">
+                      <div className="w-11 h-11 rounded-2xl bg-[#4d6fa9]/15 border border-[#8aa5d6]/25 text-[#8aa5d6] flex items-center justify-center shrink-0 mt-0.5 numora-card">
                         <Lock className="w-5 h-5" />
                       </div>
                       <div>
-                        <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-indigo-300">
+                        <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#8aa5d6]">
                           <CreditCard className="w-3.5 h-3.5" />
                           <span>One-Time Pass Selection · No Recurring Billing</span>
                         </div>
                         <h4 className="text-xl sm:text-2xl font-bold text-white mt-0.5">
                           Select a Pass to Reveal Dossier for{' '}
-                          <span className="text-indigo-300 tabular-nums">{result.e164}</span>
+                          <span className="text-[#8aa5d6] tabular-nums">{result.e164}</span>
                         </h4>
-                        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                        <p className="text-xs sm:text-sm text-zinc-400 mt-1">
                           Unlock this subscriber record immediately and keep extra credits for future
-                          lookups—pay once, use anytime.
+                          lookups. Pay once and use credits anytime.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 text-[11px] text-slate-300 bg-white/[0.04] border border-white/[0.08] px-3 py-2 rounded-xl shrink-0">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div className="flex items-center gap-2 text-[11px] text-zinc-300 bg-white/[0.04] border border-white/[0.08] px-3 py-2 rounded-xl shrink-0">
+                      <ShieldCheck className="w-4 h-4 text-[#8aa5d6] shrink-0" />
                       <span>Instant Unblur · Paddle Secured</span>
                     </div>
                   </div>
 
                   {/* If the user already has credits from an earlier checkout in this browser */}
                   {hasCreditForCurrentNumber && wallet && (
-                    <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 numora-card">
+                    <div className="p-4 rounded-2xl bg-[#4d6fa9]/10 border border-[#8aa5d6]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 numora-card">
                       <div className="text-left">
-                        <p className="text-sm font-bold text-emerald-200">
+                        <p className="text-sm font-bold text-blue-200">
                           Active Pass Detected: {wallet.planLabel} ({wallet.creditsRemaining}{' '}
                           credits remaining)
                         </p>
-                        <p className="text-xs text-emerald-300/80 mt-0.5">
-                          Reveal {result.e164} right now with 1 credit—no payment modal needed.
+                        <p className="text-xs text-blue-300/80 mt-0.5">
+                          Reveal {result.e164} right now with 1 credit (no payment modal needed).
                         </p>
                       </div>
                       <button
                         type="button"
                         disabled={verifyingPayment}
                         onClick={handleUseCreditUnlock}
-                        className="px-5 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold text-xs sm:text-sm transition cursor-pointer shrink-0 disabled:opacity-50 numora-btn"
+                        className="px-5 py-2.5 rounded-xl bg-blue-400 hover:bg-blue-300 text-slate-950 font-bold text-xs sm:text-sm transition cursor-pointer shrink-0 disabled:opacity-50 numora-btn"
                       >
                         {verifyingPayment ? 'Unlocking...' : 'Unlock with 1 Credit'}
                       </button>
@@ -1550,16 +1545,16 @@ export default function NumoraHome() {
                       onKeyDown={(e) => e.key === 'Enter' && setSelectedPlan('single')}
                       className={`rounded-2xl p-6 border transition flex flex-col justify-between cursor-pointer ${
                         selectedPlan === 'single'
-                          ? 'bg-[#0f172e] border-indigo-400 shadow-lg shadow-indigo-950/60'
-                          : 'bg-[#060913]/75 border-white/[0.08] hover:border-white/[0.18]'
+                          ? 'bg-[#151a26] border-[#5e8af0]/50 shadow-lg shadow-black/50'
+                          : 'bg-[#141519]/75 border-white/[0.08] hover:border-white/[0.18]'
                       }`}
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                          <span className="text-xs font-bold uppercase tracking-wider text-zinc-300">
                             Standard Pass
                           </span>
-                          <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/[0.06] text-slate-300 border border-white/[0.08] tabular-nums">
+                          <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/[0.06] text-zinc-300 border border-white/[0.08] tabular-nums">
                             ~$1.99 / lookup
                           </span>
                         </div>
@@ -1568,27 +1563,27 @@ export default function NumoraHome() {
                           <span className="text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
                             $7.95
                           </span>
-                          <span className="text-xs font-semibold text-indigo-300">
+                          <span className="text-xs font-semibold text-[#8aa5d6]">
                             one-time · 4 full credits
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                        <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
                           Ideal for checking a couple of unknown callers, texts, or profiles with
                           zero recurring charges.
                         </p>
 
-                        <ul className="mt-4 space-y-2 text-xs text-slate-300 border-t border-white/[0.06] pt-4">
+                        <ul className="mt-4 space-y-2 text-xs text-zinc-300 border-t border-white/[0.06] pt-4">
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>Unlocks {result.e164} + 3 extra report credits</span>
                           </li>
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>Directory status, national format & regional routing</span>
                           </li>
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>Never auto-renews into a monthly bill</span>
                           </li>
                         </ul>
@@ -1611,7 +1606,7 @@ export default function NumoraHome() {
                         <span>
                           {checkoutOpening === 'single'
                             ? 'Opening Secure Checkout...'
-                            : 'Unlock Now — Standard ($7.95)'}
+                            : 'Unlock Now: Standard ($7.95)'}
                         </span>
                       </button>
                     </div>
@@ -1624,15 +1619,15 @@ export default function NumoraHome() {
                       onKeyDown={(e) => e.key === 'Enter' && setSelectedPlan('pro')}
                       className={`relative rounded-2xl p-6 border transition flex flex-col justify-between cursor-pointer ${
                         selectedPlan === 'pro'
-                          ? 'bg-gradient-to-b from-indigo-950/75 via-[#0d152c] to-[#080d1b] border-sky-400 shadow-xl shadow-indigo-950/70'
-                          : 'bg-[#060913]/75 border-white/[0.08] hover:border-white/[0.18]'
+                          ? 'bg-[#151b29] border-[#6c92e6]/55 shadow-xl shadow-black/60'
+                          : 'bg-[#141519]/75 border-white/[0.08] hover:border-white/[0.18]'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-sky-300">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#8aa5d6]">
                           Premium Pass
                         </span>
-                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-sky-400/20 to-indigo-400/20 text-sky-200 border border-sky-400/35 tabular-nums">
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#4d6fa9]/12 text-blue-200 border border-[#8aa5d6]/25 tabular-nums">
                           Best Value · $1.33 / lookup
                         </span>
                       </div>
@@ -1642,27 +1637,27 @@ export default function NumoraHome() {
                           <span className="text-3xl sm:text-4xl font-extrabold text-white tabular-nums">
                             $15.95
                           </span>
-                          <span className="text-xs font-semibold text-sky-300">
+                          <span className="text-xs font-semibold text-[#8aa5d6]">
                             one-time · 12 full credits
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                          Save 33% per report vs. Standard Pass—built for dating checks, marketplace
+                        <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
+                          Save 33% per report vs. Standard Pass. Built for dating checks, marketplace
                           vetting, and ongoing number screening.
                         </p>
 
                         <ul className="mt-4 space-y-2 text-xs text-slate-200 border-t border-white/[0.08] pt-4">
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>Unlocks {result.e164} + 11 extra report credits</span>
                           </li>
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>3x more lookups for only $8.00 more</span>
                           </li>
                           <li className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8aa5d6] shrink-0" />
                             <span>One-time payment · Instant dossier reveal</span>
                           </li>
                         </ul>
@@ -1675,7 +1670,7 @@ export default function NumoraHome() {
                           e.stopPropagation();
                           openPaddleCheckout('pro');
                         }}
-                        className="mt-6 w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-500 via-sky-500 to-indigo-500 hover:brightness-110 text-white text-sm font-extrabold flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/30 cursor-pointer disabled:opacity-50"
+                        className="mt-6 w-full py-3.5 px-4 rounded-xl liquid-glass-blue text-white text-sm font-extrabold flex items-center justify-center gap-2 transition shadow-lg shadow-blue-600/30 cursor-pointer disabled:opacity-50"
                       >
                         <Sparkles className="w-4 h-4" />
                         <span>
@@ -1683,23 +1678,23 @@ export default function NumoraHome() {
                             ? 'Opening Secure Checkout...'
                             : verifyingPayment
                             ? 'Verifying Payment...'
-                            : 'Unlock Now — Premium ($15.95)'}
+                            : 'Unlock Now: Premium ($15.95)'}
                         </span>
                       </button>
                     </div>
                   </div>
 
                   {/* Quick Comparison Strip */}
-                  <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400 numora-card">
+                  <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-[11px] text-zinc-400 numora-card">
                     <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
                       <span>
                         <strong className="text-slate-200">Standard ($7.95):</strong> 4 credits (~$1.99 each)
                       </span>
                       <span>
-                        <strong className="text-sky-300">Premium ($15.95):</strong> 12 credits (~$1.33 each · 33% lower cost per lookup)
+                        <strong className="text-[#8aa5d6]">Premium ($15.95):</strong> 12 credits (~$1.33 each · 33% lower cost per lookup)
                       </span>
                     </div>
-                    <span className="text-slate-400">Single charge via Paddle · No subscription</span>
+                    <span className="text-zinc-400">Single charge via Paddle · No subscription</span>
                   </div>
                 </div>
               )}
@@ -1708,125 +1703,39 @@ export default function NumoraHome() {
         )}
 
         <div className="relative mt-16 z-30"><DetectionMarquee /></div>
-        <section id="workflow" className="relative mt-24 space-y-8 animate-fade-up-1 z-30">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-400">
-                Sample Telemetry Output
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-2">
-                Real Mobile Line vs. VoIP Burner: What You See
-              </h2>
-            </div>
-            <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              Before you reply to an unknown text or move a dating chat off-app, inspect the underlying carrier routing and line classification in seconds.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="rounded-3xl bg-[#0c1120]/90 border border-amber-500/25 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-5">
-                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-400/25">
-                    High Risk · Disposable App
-                  </span>
-                  <span className="text-xs font-mono text-slate-400">+1 (415) 555-0194</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white">Non-Fixed VoIP Burner Line</h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                  Typical signature of free texting apps (TextNow, Google Voice, virtual cloud gateways) used in wrong-number and romance scam scripts.
-                </p>
-
-                <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5 text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Line Classification</span>
-                    <span className="font-semibold text-amber-300">Non-Fixed VoIP</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Underlying Gateway</span>
-                    <span className="font-semibold text-slate-200">Bandwidth.com / Virtual CLEC</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">SIM Card Binding</span>
-                    <span className="font-semibold text-amber-300">None (App-Based)</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Caller Notification</span>
-                    <span className="font-semibold text-emerald-300">0% Passive (Never Alerted)</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-3xl bg-[#0c1120]/90 border border-emerald-500/25 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-5">
-                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/25">
-                    Standard · Physical Carrier
-                  </span>
-                  <span className="text-xs font-mono text-slate-400">+1 (312) 555-0148</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white">Verified Mobile Network Line</h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                  Standard wireless subscriber line provisioned through a tier-1 mobile network operator with physical SIM/eSIM registration.
-                </p>
-
-                <div className="mt-6 pt-5 border-t border-white/[0.07] space-y-2.5 text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Line Classification</span>
-                    <span className="font-semibold text-emerald-300">Mobile (Wireless)</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Carrier Network</span>
-                    <span className="font-semibold text-slate-200">Verizon Wireless / AT&T</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">SIM Card Binding</span>
-                    <span className="font-semibold text-emerald-300">Active Hardware SIM / eSIM</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-slate-500">Pricing Model</span>
-                    <span className="font-semibold text-slate-200">Free Carrier Check · One-Time Passes</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <p className="text-xs text-slate-300">
-                <strong className="text-white">Opt-Out Registry:</strong> Suppressed numbers are respected and blocked from lookup.
-              </p>
-            </div>
-            <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
-              <Zap className="w-4 h-4 text-sky-400 shrink-0" />
-              <p className="text-xs text-slate-300">
-                <strong className="text-white">E.164 Normalization:</strong> Supports 190+ country dialing codes directly in your browser.
-              </p>
-            </div>
-            <div className="px-5 py-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] flex items-center gap-3 numora-card">
-              <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
-              <p className="text-xs text-slate-300">
-                <strong className="text-white">Zero Subscriptions:</strong> Free carrier telemetry upfront; optional one-time passes only.
-              </p>
-            </div>
-          </div>
-        </section>
+        <TelemetryRadarBento />
+        <AppleFeatureShowcase />
 
         <section id="forensics" className="relative mt-24 space-y-8 animate-fade-up-1 z-30">
+          <div className="rounded-3xl apple-card overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-6 p-6 sm:p-8 space-y-2.5">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8aa5d6]">
+                Telecom Hardware Intelligence
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                Live carrier switching & E.164 line forensics
+              </h3>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                Every query resolves active network routing, ported carrier ownership, and virtual VoIP cloud gateways directly in your browser.
+              </p>
+            </div>
+            <div className="lg:col-span-6 relative aspect-[16/9] w-full overflow-hidden bg-[#141519]">
+              <img
+                src="/images/carrier-chip.jpg"
+                alt="Precision milled anodized titanium telecom microchip on obsidian"
+                className="w-full h-full object-cover"
+              />
+              </div>
+          </div>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8aa5d6]">
                 Telecom Forensics · Signal Breakdown
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-2">
                 What Can NumoraLookup Reveal About a Phone Number?
               </h2>
-              <p className="text-sm sm:text-base text-slate-400 mt-2.5 leading-relaxed">
+              <p className="text-sm sm:text-base text-zinc-400 mt-2.5 leading-relaxed">
                 Every phone number carries routing, carrier, and reputation signals. NumoraLookup organizes
                 line metadata and risk indicators into clear fields before you decide to reply or
                 trust an unknown caller.
@@ -1846,8 +1755,8 @@ export default function NumoraHome() {
                   onClick={() => setForensicsFilter(tab.key as any)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                     forensicsFilter === tab.key
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'liquid-glass-blue text-white'
+                      : 'text-zinc-400 hover:text-white'
                   }`}
                 >
                   {tab.label}
@@ -1856,34 +1765,34 @@ export default function NumoraHome() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {visibleModules.map((mod) => {
               const Icon = mod.icon;
               return (
                 <div
                   key={mod.id}
-                  className="rounded-3xl bg-[#0c1120]/80 border border-white/[0.08] hover:border-sky-400/25 p-6 flex flex-col justify-between transition"
+                  className="rounded-3xl bg-[#1b1d23]/80 border border-white/[0.08] apple-card hover:border-white/[0.16] p-6 flex flex-col justify-between transition"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-4">
-                      <span className="text-[11px] font-bold tracking-wider text-sky-300 uppercase">
+                      <span className="text-[11px] font-bold tracking-wider text-[#8aa5d6] uppercase">
                         {mod.tag}
                       </span>
-                      <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-sky-300 numora-card">
+                      <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#8aa5d6] numora-card">
                         <Icon className="w-4 h-4" />
                       </div>
                     </div>
 
                     <h3 className="text-lg font-bold text-white">{mod.title}</h3>
-                    <p className="text-xs font-medium text-indigo-300/90 mt-1">{mod.subtitle}</p>
-                    <p className="text-sm text-slate-400 mt-3 leading-relaxed">{mod.description}</p>
+                    <p className="text-xs font-medium text-[#8aa5d6]/90 mt-1">{mod.subtitle}</p>
+                    <p className="text-sm text-zinc-400 mt-3 leading-relaxed">{mod.description}</p>
 
                     {mod.pills && (
                       <div className="flex flex-wrap gap-1.5 mt-4">
                         {mod.pills.map((pill) => (
                           <span
                             key={pill}
-                            className="text-[11px] px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.07] text-slate-300"
+                            className="text-[11px] px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.07] text-zinc-300"
                           >
                             {pill}
                           </span>
@@ -1895,7 +1804,7 @@ export default function NumoraHome() {
                   <div className="mt-5 pt-4 border-t border-white/[0.07] space-y-2">
                     {mod.specs.map(([k, v]) => (
                       <div key={k} className="flex items-center justify-between text-xs gap-2">
-                        <span className="text-slate-500">{k}</span>
+                        <span className="text-zinc-500">{k}</span>
                         <span className="font-medium text-slate-200 text-right">{v}</span>
                       </div>
                     ))}
@@ -1909,14 +1818,14 @@ export default function NumoraHome() {
         <section className="relative mt-24 space-y-8 animate-fade-up-1 z-30">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8aa5d6]">
                 Everyday Investigations
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-2">
                 Who Uses NumoraLookup?
               </h2>
             </div>
-            <p className="text-sm text-slate-400 max-w-md leading-relaxed">
+            <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
               Built for people who want fast carrier, line-type, and risk context before calling back,
               messaging, or sharing personal details.
             </p>
@@ -1930,8 +1839,8 @@ export default function NumoraHome() {
                 onClick={() => setActiveUseCase(u.id)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold border transition cursor-pointer ${
                   activeUseCase === u.id
-                    ? 'bg-emerald-500/15 border-emerald-400/40 text-emerald-200'
-                    : 'bg-white/[0.03] border-white/[0.08] text-slate-400 hover:text-white'
+                    ? 'bg-[#4d6fa9]/15 border-[#8aa5d6]/40 text-blue-200'
+                    : 'bg-white/[0.03] border-white/[0.08] text-zinc-400 hover:text-white'
                 }`}
               >
                 {u.label}
@@ -1939,25 +1848,25 @@ export default function NumoraHome() {
             ))}
           </div>
 
-          <div className="rounded-3xl bg-[#0c1120]/90 border border-white/[0.09] p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center shadow-xl">
+          <div className="rounded-3xl bg-[#1b1d23]/90 border border-white/[0.09] apple-card p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center shadow-xl">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/20 text-blue-300 text-xs font-semibold">
                 {React.createElement(currentUseCase.icon, { className: 'w-3.5 h-3.5' })}
                 <span>{currentUseCase.badge}</span>
               </div>
               <h3 className="text-2xl font-bold text-white">{currentUseCase.title}</h3>
-              <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+              <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
                 {currentUseCase.description}
               </p>
             </div>
 
-            <div className="lg:col-span-5 rounded-2xl bg-[#060913]/80 border border-white/[0.07] p-5 space-y-3 numora-card">
+            <div className="lg:col-span-5 rounded-2xl bg-[#141519]/80 border border-white/[0.07] p-5 space-y-3 numora-card">
               {currentUseCase.points.map(([label, val]) => (
                 <div
                   key={label}
                   className="flex items-center justify-between text-xs sm:text-sm py-1.5 border-b last:border-b-0 border-white/[0.06]"
                 >
-                  <span className="text-slate-400">{label}</span>
+                  <span className="text-zinc-400">{label}</span>
                   <span className="font-semibold text-white">{val}</span>
                 </div>
               ))}
@@ -1965,6 +1874,54 @@ export default function NumoraHome() {
           </div>
 
           
+        </section>
+      
+        <section className="relative mt-16 z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="group rounded-3xl apple-card overflow-hidden">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#141519]">
+                <img
+                  src="/images/device-verify.jpg"
+                  alt="Smoked glass smartphone verification ring on matte obsidian"
+                  className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition duration-700 ease-out"
+                />
+                </div>
+              <div className="p-6 relative z-10 border-t border-white/[0.06]">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#8aa5d6]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  Dating & Marketplace Safety
+                </div>
+                <h3 className="text-xl font-semibold text-white mt-2">
+                  Verify unknown numbers before sharing personal details
+                </h3>
+                <p className="text-sm text-zinc-400 mt-2 leading-relaxed">
+                  Check whether a new match, buyer, or recruiter is texting from a real mobile carrier or an anonymous disposable app.
+                </p>
+              </div>
+            </div>
+
+            <div className="group rounded-3xl apple-card overflow-hidden">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#141519]">
+                <img
+                  src="/images/optout-vault.jpg"
+                  alt="Brushed titanium and frosted glass privacy vault dial on obsidian"
+                  className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition duration-700 ease-out"
+                />
+                </div>
+              <div className="p-6 relative z-10 border-t border-white/[0.06]">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#8aa5d6]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  Privacy & Opt-Out Control
+                </div>
+                <h3 className="text-xl font-semibold text-white mt-2">
+                  Strict non-FCRA boundaries with instant self-serve suppression
+                </h3>
+                <p className="text-sm text-zinc-400 mt-2 leading-relaxed">
+                  NumoraLookup never alerts the person you look up, and anyone can remove their number from lookup responses in seconds.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 

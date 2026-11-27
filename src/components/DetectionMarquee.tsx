@@ -9,7 +9,7 @@ import {
   Globe2,
   AlertTriangle,
   Smartphone,
-} from 'lucide-react';
+} from "@/components/NumoraIcons";
 
 interface DetectionCard {
   id: string;
@@ -27,36 +27,36 @@ const DETECTION_CARDS: DetectionCard[] = [
   {
     id: 'voip-burner',
     badge: 'Non-Fixed VoIP Detected',
-    badgeStyle: 'text-amber-300 bg-amber-500/10 border-amber-400/30',
+    badgeStyle: 'text-[#dfc087] bg-[#cfa058]/10 border-[#cfa058]/30',
     sampleTag: 'Sample: +1 (415) •••-8412',
     title: 'Burner App / Virtual Line Flagged',
     detail:
       'Identifies cloud texting apps like TextNow, Google Voice, and temporary SIP numbers before you reply.',
-    statusDot: 'bg-amber-400',
+    statusDot: 'bg-[#cfa058]',
     footer: 'Line Type: Non-Fixed VoIP • Elevated Risk',
     icon: 'voip',
   },
   {
     id: 'carrier-verified',
     badge: 'Carrier Verified',
-    badgeStyle: 'text-emerald-300 bg-emerald-500/10 border-emerald-400/30',
+    badgeStyle: 'text-blue-300 bg-[#4d6fa9]/10 border-[#8aa5d6]/30',
     sampleTag: 'Sample: +1 (312) •••-2904',
     title: 'Standard Mobile Network Confirmed',
     detail:
       'Separates real cellular carriers like Verizon, AT&T, and T-Mobile from disposable virtual gateways.',
-    statusDot: 'bg-emerald-400',
+    statusDot: 'bg-blue-400',
     footer: 'Line Type: Mobile • Live Telecom Routing',
     icon: 'mobile',
   },
   {
     id: 'anonymous',
     badge: '100% Anonymous',
-    badgeStyle: 'text-sky-300 bg-sky-500/10 border-sky-400/30',
+    badgeStyle: 'text-blue-200 bg-[#4d6fa9]/10 border-[#8aa5d6]/25',
     sampleTag: 'Zero Alerts Sent',
     title: 'The Caller Is Never Notified',
     detail:
-      'Every search runs passively against carrier routing tables in the background—no pings, texts, or alerts.',
-    statusDot: 'bg-sky-400',
+      'Every search runs passively against carrier routing tables in the background, with no pings, texts, or alerts.',
+    statusDot: 'bg-[#6c92e6]',
     footer: 'Private Passive Lookup • No Login Required',
     icon: 'privacy',
   },
@@ -75,24 +75,24 @@ const DETECTION_CARDS: DetectionCard[] = [
   {
     id: 'no-subscription',
     badge: 'No Subscription Traps',
-    badgeStyle: 'text-indigo-300 bg-indigo-500/10 border-indigo-400/30',
+    badgeStyle: 'text-[#8aa5d6] bg-[#4d6fa9]/10 border-[#8aa5d6]/30',
     sampleTag: 'One-Time Credit Passes',
     title: 'Pay Once, Reopen Unlocked Numbers Free',
     detail:
       'No fake 5-minute progress bars or sneaky $29/month renewals. Your private NMR- token saves unlocked dossiers.',
-    statusDot: 'bg-indigo-400',
+    statusDot: 'bg-[#5a86cc]',
     footer: 'Secured Checkout • 0 Recurring Charges',
     icon: 'billing',
   },
   {
     id: 'global',
     badge: '190+ Countries',
-    badgeStyle: 'text-teal-300 bg-teal-500/10 border-teal-400/30',
+    badgeStyle: 'text-blue-300 bg-[#4d6fa9]/10 border-[#8aa5d6]/30',
     sampleTag: 'Sample: +44 7700 •••419',
     title: 'International Carrier & Format Checks',
     detail:
       'Check US, UK, Canadian, European, and global numbers from one search bar with automatic E.164 parsing.',
-    statusDot: 'bg-teal-400',
+    statusDot: 'bg-blue-400',
     footer: 'Global Number Validation & Routing',
     icon: 'global',
   },
@@ -101,17 +101,17 @@ const DETECTION_CARDS: DetectionCard[] = [
 function CardIcon({ type }: { type: DetectionCard['icon'] }) {
   switch (type) {
     case 'voip':
-      return <Radio className="w-4 h-4 text-amber-400 shrink-0" />;
+      return <Radio className="w-4 h-4 text-[#d8ae68] shrink-0" />;
     case 'mobile':
-      return <Smartphone className="w-4 h-4 text-emerald-400 shrink-0" />;
+      return <Smartphone className="w-4 h-4 text-[#8aa5d6] shrink-0" />;
     case 'privacy':
-      return <EyeOff className="w-4 h-4 text-sky-400 shrink-0" />;
+      return <EyeOff className="w-4 h-4 text-[#8aa5d6] shrink-0" />;
     case 'scam':
       return <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />;
     case 'billing':
-      return <CreditCard className="w-4 h-4 text-indigo-400 shrink-0" />;
+      return <CreditCard className="w-4 h-4 text-[#8aa5d6] shrink-0" />;
     case 'global':
-      return <Globe2 className="w-4 h-4 text-teal-400 shrink-0" />;
+      return <Globe2 className="w-4 h-4 text-[#8aa5d6] shrink-0" />;
   }
 }
 
@@ -124,7 +124,7 @@ function CardRow({ hidden = false }: { hidden?: boolean }) {
       {DETECTION_CARDS.map((card) => (
         <div
           key={`${hidden ? 'dup-' : ''}${card.id}`}
-          className="w-[300px] sm:w-[345px] shrink-0 rounded-2xl bg-[#0c1120] border border-white/[0.09] p-5 shadow-xl flex flex-col justify-between gap-4 hover:border-emerald-400/30 transition-colors"
+          className="w-[300px] sm:w-[345px] shrink-0 rounded-2xl bg-[#1b1d23] border border-white/[0.09] apple-card p-5 shadow-xl flex flex-col justify-between gap-4 hover:border-[#8aa5d6]/30 transition-colors"
         >
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2">
@@ -136,7 +136,7 @@ function CardRow({ hidden = false }: { hidden?: boolean }) {
               <CardIcon type={card.icon} />
             </div>
 
-            <div className="font-mono text-[11px] font-semibold text-slate-400 tracking-wide">
+            <div className="font-mono text-[11px] font-semibold text-zinc-400 tracking-wide">
               {card.sampleTag}
             </div>
 
@@ -144,12 +144,12 @@ function CardRow({ hidden = false }: { hidden?: boolean }) {
               {card.title}
             </h3>
 
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
               {card.detail}
             </p>
           </div>
 
-          <div className="pt-3 border-t border-white/[0.07] text-[11px] font-semibold text-slate-300 flex items-center gap-2">
+          <div className="pt-3 border-t border-white/[0.07] text-[11px] font-semibold text-zinc-300 flex items-center gap-2">
             <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${card.statusDot}`} />
             <span className="truncate">{card.footer}</span>
           </div>
@@ -163,7 +163,7 @@ export function DetectionMarquee() {
   return (
     <section
       aria-label="What NumoraLookup Detects"
-      className="w-full py-10 sm:py-14 overflow-hidden"
+      className="w-full py-10 sm:py-14 overflow-hidden relative z-10"
     >
       <style>{`
         @keyframes numora-detect-marquee {
@@ -190,22 +190,19 @@ export function DetectionMarquee() {
       `}</style>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-7 text-center space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 text-emerald-300 text-xs font-semibold">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4d6fa9]/10 border border-[#8aa5d6]/25 text-blue-300 text-xs font-semibold">
           <ShieldCheck className="w-3.5 h-3.5" />
           <span>What NumoraLookup Detects</span>
         </div>
         <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white">
           Real Carrier Signals. Zero Subscription Tricks.
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-          Illustrative examples of the line-type signals and privacy guarantees built into every scan—hover any card to pause.
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto">
+          Sample line-type signals and privacy checks from a standard scan (hover any card to pause).
         </p>
       </div>
 
-      <div className="numora-detect-container relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-28 bg-gradient-to-r from-[#070b14] to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-28 bg-gradient-to-l from-[#070b14] to-transparent z-10" />
-
+      <div className="numora-detect-container relative w-full overflow-hidden" style={{ WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)", maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)" }}>
         <div className="numora-detect-track">
           <CardRow />
           <CardRow hidden />

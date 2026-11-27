@@ -1,0 +1,222 @@
+/* NumoraLookup Design System: Space Graphite + Muted Steel + Warm Brass */
+:root {
+  --brand-bg: #141519;
+  --brand-surface: #1b1d23;
+  --brand-elevated: #22252d;
+  --brand-steel: #4d6fa9;
+  --brand-steel-hover: #5b7eb8;
+  --brand-steel-soft: #8aa5d6;
+  --brand-brass: #b89b6a;
+  --brand-brass-soft: #d5be96;
+  --btn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body {
+  background-color: #141519;
+  color: #eceef2;
+  font-family: var(--font-sans-custom), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.025em;
+}
+
+@layer components {
+  .liquid-glass-nav {
+    background: rgba(24, 26, 32, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+      0 12px 28px -16px rgba(0, 0, 0, 0.65);
+  }
+
+  .apple-card,
+  .numora-card {
+    background-color: #1b1d23;
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+      0 10px 24px -18px rgba(0, 0, 0, 0.6);
+    transition:
+      transform 280ms var(--btn-ease),
+      border-color 220ms ease,
+      box-shadow 280ms var(--btn-ease);
+  }
+
+  .apple-card:hover,
+  .numora-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+      0 18px 34px -18px rgba(0, 0, 0, 0.78);
+    transform: translateY(-2px);
+  }
+
+  /* Unified High-End Button & Pill Motion System */
+  .liquid-glass-pill,
+  .liquid-glass-blue,
+  .numora-btn,
+  .numora-action,
+  .numora-premium-btn {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transform: translateZ(0);
+    transition:
+      transform 260ms var(--btn-ease),
+      background-color 220ms ease,
+      border-color 220ms ease,
+      box-shadow 280ms var(--btn-ease),
+      color 200ms ease;
+  }
+
+  .liquid-glass-pill::after,
+  .liquid-glass-blue::after,
+  .numora-btn::after,
+  .numora-action::after,
+  .numora-premium-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 62%,
+      transparent 100%
+    );
+    transform: translateX(-135%);
+    transition: transform 620ms var(--btn-ease);
+  }
+
+  .liquid-glass-pill:hover:not(:disabled),
+  .liquid-glass-blue:hover:not(:disabled),
+  .numora-btn:hover:not(:disabled),
+  .numora-action:hover:not(:disabled),
+  .numora-premium-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  .liquid-glass-pill:hover:not(:disabled)::after,
+  .liquid-glass-blue:hover:not(:disabled)::after,
+  .numora-btn:hover:not(:disabled)::after,
+  .numora-action:hover:not(:disabled)::after,
+  .numora-premium-btn:hover:not(:disabled)::after {
+    transform: translateX(135%);
+  }
+
+  .liquid-glass-pill:active:not(:disabled),
+  .liquid-glass-blue:active:not(:disabled),
+  .numora-btn:active:not(:disabled),
+  .numora-action:active:not(:disabled),
+  .numora-premium-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 110ms;
+  }
+
+  .liquid-glass-pill {
+    background-color: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .liquid-glass-pill:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 10px 22px -12px rgba(0, 0, 0, 0.85);
+  }
+
+  .liquid-glass-blue,
+  .numora-btn {
+    background-color: #4d6fa9;
+    border: 1px solid rgba(173, 196, 232, 0.34);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 8px 20px -10px rgba(0, 0, 0, 0.75);
+  }
+
+  .liquid-glass-blue:hover:not(:disabled),
+  .numora-btn:hover:not(:disabled) {
+    background-color: #5b7eb8;
+    border-color: rgba(196, 214, 244, 0.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 14px 28px -12px rgba(24, 42, 74, 0.85);
+  }
+
+  .numora-premium-btn {
+    background-color: #4d6fa9;
+    border: 1px solid rgba(196, 216, 248, 0.42);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1px 0 rgba(14, 22, 38, 0.38),
+      0 10px 24px -12px rgba(18, 34, 66, 0.78);
+  }
+
+  .numora-premium-btn:hover:not(:disabled) {
+    background-color: #5a7eb8;
+    border-color: rgba(216, 232, 255, 0.62);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.44),
+      inset 0 -1px 0 rgba(14, 22, 38, 0.28),
+      0 16px 32px -12px rgba(28, 52, 96, 0.88);
+  }
+}
+
+@keyframes compassSweep {
+  0% { transform: rotate(-84deg); }
+  50% { transform: rotate(84deg); }
+  100% { transform: rotate(-84deg); }
+}
+
+@keyframes tracePulse {
+  0% { stroke-dashoffset: 320; opacity: 0; }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.7; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes nodePop {
+  0% { opacity: 0; transform: scale(0.96) translateY(3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes sonarPing {
+  0% { transform: scale(0.9); opacity: 0.45; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
+@keyframes barBreath {
+  0%, 100% { transform: scaleY(0.85); opacity: 0.78; }
+  50% { transform: scaleY(1.04); opacity: 0.95; }
+}
+
+.animate-compass-sweep {
+  animation: compassSweep 6.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.animate-trace-pulse {
+  stroke-dasharray: 54 266;
+  animation: tracePulse 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-node-pop {
+  animation: nodePop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-sonar-ping {
+  animation: sonarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-bar-breath {
+  transform-origin: bottom;
+  animation: barBreath 2.2s ease-in-out infinite;
+}

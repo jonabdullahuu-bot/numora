@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
 
-        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-8 pb-4 border-b border-slate-800/80">
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-400 mb-8 pb-4 border-b border-white/[0.09]">
           <Link href="/" className="hover:text-white transition-colors">
             Home
           </Link>
@@ -108,15 +108,15 @@ export default async function BlogPostPage({ params }: Props) {
             Blog
           </Link>
           <span>/</span>
-          <span className="text-emerald-400 truncate max-w-[200px] sm:max-w-xs">
+          <span className="text-[#8aa5d6] truncate max-w-[200px] sm:max-w-xs">
             {post.category}
           </span>
         </div>
 
         <article className="animate-fade-up">
           <header className="mb-8">
-            <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-400 mb-3">
-              <span className="rounded-md bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 text-emerald-400 font-medium">
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-zinc-400 mb-3">
+              <span className="rounded-md bg-[#4d6fa9]/10 border border-[#8aa5d6]/30 px-2.5 py-0.5 text-[#8aa5d6] font-medium">
                 {post.category}
               </span>
               <span>{post.readTime}</span>
@@ -126,29 +126,29 @@ export default async function BlogPostPage({ params }: Props) {
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight mb-4">
               {post.title}
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
               {post.description}
             </p>
           </header>
 
-          <div className="my-8 rounded-2xl border border-emerald-500/30 bg-slate-900/90 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 numora-card">
+          <div className="my-8 rounded-2xl border border-[#8aa5d6]/30 bg-[#1b1d23]/90 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 numora-card">
             <div>
               <p className="text-sm font-bold text-white">
                 Want to check a suspicious phone number right now?
               </p>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-zinc-400">
                 100% private carrier, country, and VoIP line check.
               </p>
             </div>
             <Link
               href="/"
-              className="w-full sm:w-auto text-center rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-emerald-400 transition-all shrink-0 numora-btn"
+              className="w-full sm:w-auto text-center rounded-xl bg-[#4d6fa9] px-5 py-2.5 text-sm font-bold text-slate-950 hover:bg-blue-400 transition-all shrink-0 numora-btn"
             >
               Run Lookup →
             </Link>
           </div>
 
-          <div className="space-y-8 text-slate-300 leading-relaxed text-base sm:text-[17px]">
+          <div className="space-y-8 text-zinc-300 leading-relaxed text-base sm:text-[17px]">
             {post.sections.map((section) => (
               <section key={section.heading}>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
@@ -164,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {post.faqs.length > 0 && (
-            <section className="mt-12 pt-8 border-t border-slate-800 animate-fade-up-1">
+            <section className="mt-12 pt-8 border-t border-white/[0.09] animate-fade-up-1">
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-5">
                 Frequently Asked Questions
               </h2>
@@ -172,12 +172,12 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.faqs.map((faq) => (
                   <div
                     key={faq.question}
-                    className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 numora-card"
+                    className="rounded-xl border border-white/[0.09] bg-[#1b1d23]/60 p-5 numora-card"
                   >
                     <h3 className="font-semibold text-white mb-2">
                       {faq.question}
                     </h3>
-                    <p className="text-sm sm:text-base text-slate-400">
+                    <p className="text-sm sm:text-base text-zinc-400">
                       {faq.answer}
                     </p>
                   </div>
@@ -187,16 +187,16 @@ export default async function BlogPostPage({ params }: Props) {
           )}
         </article>
 
-        <section className="mt-14 pt-8 border-t border-slate-800 animate-fade-up-1">
+        <section className="mt-14 pt-8 border-t border-white/[0.09] animate-fade-up-1">
           <h2 className="text-lg font-bold text-white mb-4">Related Safety Guides</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {relatedPosts.map((rel) => (
               <Link
                 key={rel.slug}
                 href={`/blog/${rel.slug}`}
-                className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 hover:border-emerald-500/40 transition-all numora-card"
+                className="rounded-xl border border-white/[0.09] bg-[#1b1d23]/50 p-4 hover:border-[#8aa5d6]/40 transition-all numora-card"
               >
-                <span className="text-xs text-emerald-400 font-medium">
+                <span className="text-xs text-[#8aa5d6] font-medium">
                   {rel.category}
                 </span>
                 <h3 className="text-sm sm:text-base font-bold text-white mt-1">
